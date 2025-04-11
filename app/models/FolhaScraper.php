@@ -39,23 +39,62 @@ class FolhaScraper extends AbstractNewsScraper {
         $xpath = new DOMXPath($dom);
         $newsItems = [];
         
-        // Seleciona os links que indicam um artigo de política (URLs que contenham "/poder/2025/" e terminem em ".shtml")
-        $nodes = $xpath->query("//div[contains(@class, 'c-headline')]//a[contains(@href, '/poder/2025/')]");
+        // Seleciona cada bloco <li> com a classe "c-headline c-headline--newslist"
+        $nodes = $xpath->query("//li[contains(@class, 'c-headline') and contains(@class, 'c-headline--newslist')]");
         debug_log("[Folha] | Listagem: Nós encontrados = " . $nodes->length);
         
-        $articleLinks = [];
         foreach ($nodes as $node) {
-            if (!$node instanceof DOMElement) continue;
-            $link = $node->getAttribute('href');
-            if ($link && strpos($link, '/poder/2025/') !== false && substr($link, -6) === '.shtml' && !in_array($link, $articleLinks)) {
-                $articleLinks[] = $link;
+            // Link principal
+            $linkNode = $xpath->query(".//div[contains(@class,'c-headline__content')]/a", $node);
+            if (!$linkNode || $linkNode->length === 0) {
+                continue;
             }
-        }
-        
-        foreach ($articleLinks as $articleUrl) {
-            $details = $this->scrapeArticle($articleUrl, $headers);
-            if ($details) {
-                $newsItems[] = $details;
+            $articleUrl = $linkNode->item(0)->getAttribute('href');
+
+            // Título
+            $titleNode = $xpath->query(".//h2[contains(@class,'c-headline__title')]", $node);
+            $title = '';
+            if ($titleNode && $titleNode->length > 0) {
+                $title = trim($titleNode->item(0)->nodeValue);
+            }
+
+            // Descrição
+            $descNode = $xpath->query(".//p[contains(@class,'c-headline__standfirst')]", $node);
+            $description = 'Descrição não disponível.';
+            if ($descNode && $descNode->length > 0) {
+                $description = trim($descNode->item(0)->nodeValue);
+            }
+
+            // Data
+            $timeNode = $xpath->query(".//time[contains(@class,'c-headline__dateline')]", $node);
+            $publishedAt = 'Data não informada.';
+            if ($timeNode && $timeNode->length > 0) {
+                // Primeiro tenta pegar do atributo datetime
+                $publishedAtAttr = trim($timeNode->item(0)->getAttribute('datetime'));
+                if ($publishedAtAttr) {
+                    $publishedAt = $publishedAtAttr;
+                } else {
+                    // Se não existir, pega o texto dentro de <time>
+                    $publishedAtText = trim($timeNode->item(0)->nodeValue);
+                    if ($publishedAtText) {
+                        $publishedAt = $publishedAtText;
+                    }
+                }
+            }
+
+            // Autor (a listagem normalmente não exibe, então padronizamos)
+            $author = 'Não disponível';
+
+            // Só adiciona se tiver título e link
+            if ($title && $articleUrl) {
+                $newsItems[] = [
+                    'title'       => $title,
+                    'url'         => $articleUrl,
+                    'description' => $description,
+                    'author'      => $author,
+                    'publishedAt' => $publishedAt,
+                    'source'      => 'Folha'
+                ];
             }
         }
         
@@ -63,60 +102,4 @@ class FolhaScraper extends AbstractNewsScraper {
         $this->saveToCache($newsItems);
         return $newsItems;
     }
-    
-    private function scrapeArticle(string $articleUrl, array $headers): ?array {
-        $html = $this->getHtml($articleUrl, $headers);
-        if ($html === null) {
-            debug_log("[Folha] | Erro: Falha ao obter HTML do artigo: " . $articleUrl);
-            return null;
-        }
-        
-        $dom = new DOMDocument();
-        libxml_use_internal_errors(true);
-        $dom->loadHTML($html);
-        libxml_clear_errors();
-        $xpath = new DOMXPath($dom);
-        
-        // Título: tenta extrair do h1 com classe "c-content-head__title", ou usa meta og:title como fallback
-        $titleNodes = $xpath->query("//h1[contains(@class, 'c-content-head__title')]");
-        $title = $titleNodes->length > 0 ? trim($titleNodes->item(0)->nodeValue) : '';
-        if (!$title) {
-            $metaNodes = $xpath->query("//meta[@property='og:title']");
-            $title = $metaNodes->length > 0 ? trim($metaNodes->item(0)->getAttribute('content')) : '';
-        }
-        
-        // Descrição: extrai do h2 com classe "c-content-head__subtitle"
-        $descNodes = $xpath->query("//h2[contains(@class, 'c-content-head__subtitle')]");
-        $description = $descNodes->length > 0 ? trim($descNodes->item(0)->nodeValue) : 'Descrição não disponível.';
-        
-        // Data: tenta extrair de <time>; se não, usa meta article:published_time
-        $timeNodes = $xpath->query("//time");
-        $publishedAt = '';
-        if ($timeNodes->length > 0) {
-            $publishedAt = $timeNodes->item(0)->getAttribute('datetime');
-        }
-        if (!$publishedAt) {
-            $metaTime = $xpath->query("//meta[@property='article:published_time']");
-            $publishedAt = $metaTime->length > 0 ? $metaTime->item(0)->getAttribute('content') : 'Data não informada.';
-        }
-        
-        // Autor: atualizamos o seletor para buscar dentro do container "c-news__wrap", "c-signature" e o <strong> com a classe "c-signature__author"
-        $authorNodes = $xpath->query("//div[contains(@class, 'c-news__wrap')]//div[contains(@class, 'c-signature')]//strong[contains(@class, 'c-signature__author')]/a");
-        $author = $authorNodes->length > 0 ? trim($authorNodes->item(0)->nodeValue) : 'Não disponível';
-        
-        if (!$title) {
-            debug_log("[Folha] | Alerta: Título não extraído para artigo: " . $articleUrl);
-            return null;
-        }
-        
-        return [
-            'title'       => $title,
-            'url'         => $articleUrl,
-            'description' => $description,
-            'author'      => $author,
-            'publishedAt' => $publishedAt,
-            'source'      => 'Folha'
-        ];
-    }
 }
-?>

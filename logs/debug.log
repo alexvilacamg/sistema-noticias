@@ -1502,3 +1502,93 @@
 [2025-04-10 23:51:40] [UOL] | Cache: Utilizando dados do cache.
 [2025-04-10 23:51:40] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
 [2025-04-10 23:51:40] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-11 12:22:31] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:22:31] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:22:31] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:22:31] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-11 12:22:31] [G1] | Cache: Utilizando dados do cache.
+[2025-04-11 12:22:31] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-11 12:22:31] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-11 12:22:31] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-11 12:22:31] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-11 12:22:32] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:22:32] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:22:32] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:22:32] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-11 12:22:32] [G1] | Cache: Utilizando dados do cache.
+[2025-04-11 12:22:32] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-11 12:22:32] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-11 12:22:32] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-11 12:22:32] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-11 12:22:38] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:22:38] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:22:38] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:22:38] [G1] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-11 12:22:40] [G1] | Listagem: Nós encontrados = 10
+[2025-04-11 12:22:46] [G1] | Alerta: Título não extraído para artigo: https://g1.globo.com/politica/video/bolsonaro-passou-mal-de-madrugada-e-nao-dormiu-diz-ex-ministro-13508896.ghtml
+[2025-04-11 12:22:47] [G1] | Alerta: Título não extraído para artigo: https://g1.globo.com/politica/video/bolsonaro-embarca-em-helicoptero-para-natal-apos-passar-mal-13508845.ghtml
+[2025-04-11 12:22:53] [G1] | Alerta: Título não extraído para artigo: https://g1.globo.com/politica/video/anistia-projeto-atinge-assinaturas-para-propor-rito-acelerado-na-camara-13508837.ghtml
+[2025-04-11 12:22:55] [G1] | Alerta: Título não extraído para artigo: https://g1.globo.com/politica/video/bolsonaro-e-transferido-de-helicoptero-para-hospital-em-natal-13508746.ghtml
+[2025-04-11 12:22:59] [G1] | Alerta: Título não extraído para artigo: https://g1.globo.com/politica/video/bolsonaro-estava-manifestacao-em-bom-jesus-rn-e-passou-mal-13508649.ghtml
+[2025-04-11 12:22:59] [G1] | Concluído: Scraping finalizado. Artigos encontrados = 5
+[2025-04-11 12:22:59] [UOL] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-11 12:23:00] [UOL] | Listagem: Itens encontrados = 11
+[2025-04-11 12:23:18] [UOL] | Concluído: Scraping finalizado. Artigos encontrados = 11
+[2025-04-11 12:23:18] [Folha] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-11 12:23:22] [Folha] | Listagem: Nós encontrados = 102
+[2025-04-11 12:24:00] [Folha] | Concluído: Scraping finalizado. Artigos encontrados = 48
+[2025-04-11 12:24:02] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:24:02] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:24:02] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:24:02] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-11 12:24:02] [G1] | Cache: Utilizando dados do cache.
+[2025-04-11 12:24:02] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-11 12:24:02] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-11 12:24:02] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-11 12:24:02] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-11 12:24:03] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:24:03] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:24:03] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:24:03] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-11 12:24:03] [G1] | Cache: Utilizando dados do cache.
+[2025-04-11 12:24:03] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-11 12:24:03] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-11 12:24:03] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-11 12:24:03] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-11 12:33:38] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:33:38] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:33:38] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:33:38] [G1] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-11 12:33:44] [G1] | Listagem: Nós encontrados = 10
+[2025-04-11 12:33:54] [HttpClient] | Erro ao obter HTML de https://g1.globo.com/politica/noticia/2025/04/11/entenda-impasse-em-torno-do-convite-a-pedro-lucas-para-chefia-do-ministerio-das-comunicacoes.ghtml: Operation timed out after 10008 milliseconds with 925429 bytes received
+[2025-04-11 12:33:54] [G1] | Erro: Falha ao obter HTML do artigo: https://g1.globo.com/politica/noticia/2025/04/11/entenda-impasse-em-torno-do-convite-a-pedro-lucas-para-chefia-do-ministerio-das-comunicacoes.ghtml
+[2025-04-11 12:33:59] [G1] | Alerta: Título não extraído para artigo: https://g1.globo.com/politica/video/bolsonaro-passou-mal-de-madrugada-e-nao-dormiu-diz-ex-ministro-13508896.ghtml
+[2025-04-11 12:34:00] [G1] | Alerta: Título não extraído para artigo: https://g1.globo.com/politica/video/bolsonaro-embarca-em-helicoptero-para-natal-apos-passar-mal-13508845.ghtml
+[2025-04-11 12:34:08] [G1] | Alerta: Título não extraído para artigo: https://g1.globo.com/politica/video/anistia-projeto-atinge-assinaturas-para-propor-rito-acelerado-na-camara-13508837.ghtml
+[2025-04-11 12:34:09] [G1] | Alerta: Título não extraído para artigo: https://g1.globo.com/politica/video/bolsonaro-e-transferido-de-helicoptero-para-hospital-em-natal-13508746.ghtml
+[2025-04-11 12:34:14] [G1] | Alerta: Título não extraído para artigo: https://g1.globo.com/politica/video/bolsonaro-estava-manifestacao-em-bom-jesus-rn-e-passou-mal-13508649.ghtml
+[2025-04-11 12:34:14] [G1] | Concluído: Scraping finalizado. Artigos encontrados = 4
+[2025-04-11 12:34:14] [UOL] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-11 12:34:16] [UOL] | Listagem: Itens encontrados = 11
+[2025-04-11 12:34:33] [HttpClient] | Erro ao obter HTML de https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/bolsonaro-passa-mal-e-e-atendido-em-hospital-do-rio-grande-do-norte.htm: Operation timed out after 10007 milliseconds with 461618 out of 548374 bytes received
+[2025-04-11 12:34:33] [UOL] | Erro: Falha ao obter HTML do artigo: https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/bolsonaro-passa-mal-e-e-atendido-em-hospital-do-rio-grande-do-norte.htm
+[2025-04-11 12:34:49] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:34:49] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:34:49] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:34:49] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-11 12:34:49] [G1] | Cache: Utilizando dados do cache.
+[2025-04-11 12:34:49] [UOL] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-11 12:34:53] [UOL] | Listagem: Itens encontrados = 11
+[2025-04-11 12:35:26] [UOL] | Concluído: Scraping finalizado. Artigos encontrados = 11
+[2025-04-11 12:35:26] [Folha] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-11 12:35:29] [Folha] | Listagem: Nós encontrados = 100
+[2025-04-11 12:35:29] [Folha] | Concluído: Scraping finalizado. Artigos encontrados = 100
+[2025-04-11 12:35:30] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:35:30] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:35:30] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:35:30] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-11 12:35:30] [G1] | Cache: Utilizando dados do cache.
+[2025-04-11 12:35:30] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-11 12:35:30] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-11 12:35:30] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-11 12:35:30] [Folha] | Cache: Utilizando dados do cache.
