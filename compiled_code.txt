@@ -44,46 +44,91 @@ class NewsController {
 
 
 ================================================================================
-Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models\G1Scraper.php
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models\AbstractNewsScraper.php
 ================================================================================
 
 <?php
 require_once 'NewsScraperInterface.php';
+require_once __DIR__ . '/../utils/HttpClient.php';
 
-class G1Scraper implements NewsScraperInterface {
+abstract class AbstractNewsScraper implements NewsScraperInterface {
+    protected $cacheFile;
+    protected $cacheTime;
 
-    private $cacheFile;
-    private $cacheTime;
-
-    public function __construct() {
-        // Define o caminho e o tempo de cache (600 segundos = 10 minutos)
-        $this->cacheFile = __DIR__ . '/../../cache/g1_news.json';
-        $this->cacheTime = 600;
+    public function __construct($cacheFile, $cacheTime = 600) {
+        $this->cacheFile = $cacheFile;
+        $this->cacheTime = $cacheTime;
     }
 
-    public function fetchNews(): array {
-        // Se o cache existir e for válido, lê os dados
-        if (file_exists($this->cacheFile) && (time() - filemtime($this->cacheFile)) < $this->cacheTime) {
+    /**
+     * Tenta recuperar os dados do cache, se válido.
+     */
+    protected function getFromCache(): ?array {
+        if (file_exists($this->cacheFile) && ((time() - filemtime($this->cacheFile)) < $this->cacheTime)) {
+            debug_log("[Cache] | Utilizando cache do arquivo: " . $this->cacheFile);
             $data = file_get_contents($this->cacheFile);
             $newsItems = json_decode($data, true);
             if (is_array($newsItems)) {
                 return $newsItems;
             }
         }
+        return null;
+    }
+
+    /**
+     * Salva os dados no cache.
+     */
+    protected function saveToCache(array $data): void {
+        if (!is_dir(dirname($this->cacheFile))) {
+            mkdir(dirname($this->cacheFile), 0777, true);
+        }
+        file_put_contents($this->cacheFile, json_encode($data));
+    }
+
+    /**
+     * Obtém o HTML de uma URL usando a camada unificada de requisição.
+     */
+    protected function getHtml(string $url, array $headers = []): ?string {
+        return HttpClient::get($url, $headers);
+    }
+}
+?>
+
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models\G1Scraper.php
+================================================================================
+
+<?php
+require_once 'AbstractNewsScraper.php';
+
+class G1Scraper extends AbstractNewsScraper {
+
+    public function __construct() {
+        $cacheFile = __DIR__ . '/../../cache/g1_news.json';
+        $cacheTime = 600; // 10 minutos
+        parent::__construct($cacheFile, $cacheTime);
+        debug_log("[G1] | Inicializado: Cache definido para 10 minutos.");
+    }
+
+    public function fetchNews(bool $forceUpdate = false): array {
+        if (!$forceUpdate) {
+            $cached = $this->getFromCache();
+            if ($cached !== null) {
+                debug_log("[G1] | Cache: Utilizando dados do cache.");
+                return $cached;
+            }
+        }
         
-        // Caso contrário, realiza o scraping da página de listagem do G1
+        debug_log("[G1] | Scraping: Iniciando scraping da página de listagem.");
         $url = 'https://g1.globo.com/politica/';
-        $opts = [
-            'http' => [
-                'method'  => 'GET',
-                'header'  => "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) " .
-                             "AppleWebKit/537.36 (KHTML, like Gecko) " .
-                             "Chrome/105.0.0.0 Safari/537.36\r\n"
-            ]
+        $headers = [
+            'User-Agent' => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36"
         ];
-        $context = stream_context_create($opts);
-        $html = file_get_contents($url, false, $context);
-        if ($html === false) {
+        
+        $html = $this->getHtml($url, $headers);
+        if ($html === null) {
+            debug_log("[G1] | Erro: Falha ao obter HTML da listagem.");
             return [];
         }
         
@@ -91,58 +136,38 @@ class G1Scraper implements NewsScraperInterface {
         libxml_use_internal_errors(true);
         $dom->loadHTML($html);
         libxml_clear_errors();
-        
         $xpath = new DOMXPath($dom);
         $newsItems = [];
         
         // Seleciona os links dos artigos na página de listagem
         $nodes = $xpath->query("//a[contains(@class, 'feed-post-link')]");
+        debug_log("[G1] | Listagem: Nós encontrados = " . $nodes->length);
+        
         $articleLinks = [];
         foreach ($nodes as $node) {
-            if (!$node instanceof DOMElement) {
-                continue;
-            }
+            if (!$node instanceof DOMElement) continue;
             $link = $node->getAttribute('href');
             if ($link && !in_array($link, $articleLinks)) {
                 $articleLinks[] = $link;
             }
         }
         
-        // Para cada link, obtém os detalhes do artigo
         foreach ($articleLinks as $articleUrl) {
-            $details = $this->scrapeArticle($articleUrl);
+            $details = $this->scrapeArticle($articleUrl, $headers);
             if ($details) {
                 $newsItems[] = $details;
             }
         }
         
-        // Armazena o resultado no cache
-        if (!is_dir(__DIR__ . '/../../cache')) {
-            mkdir(__DIR__ . '/../../cache', 0777, true);
-        }
-        file_put_contents($this->cacheFile, json_encode($newsItems));
-        
+        debug_log("[G1] | Concluído: Scraping finalizado. Artigos encontrados = " . count($newsItems));
+        $this->saveToCache($newsItems);
         return $newsItems;
     }
     
-    /**
-     * Realiza o scraping dos detalhes de um artigo no G1.
-     *
-     * @param string $articleUrl URL do artigo detalhado
-     * @return array|null Dados do artigo ou null se não conseguir extrair o título.
-     */
-    private function scrapeArticle($articleUrl) {
-        $opts = [
-            'http' => [
-                'method'  => 'GET',
-                'header'  => "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) " .
-                             "AppleWebKit/537.36 (KHTML, like Gecko) " .
-                             "Chrome/105.0.0.0 Safari/537.36\r\n"
-            ]
-        ];
-        $context = stream_context_create($opts);
-        $html = file_get_contents($articleUrl, false, $context);
-        if ($html === false) {
+    private function scrapeArticle(string $articleUrl, array $headers): ?array {
+        $html = $this->getHtml($articleUrl, $headers);
+        if ($html === null) {
+            debug_log("[G1] | Erro: Falha ao obter HTML do artigo: " . $articleUrl);
             return null;
         }
         
@@ -150,25 +175,21 @@ class G1Scraper implements NewsScraperInterface {
         libxml_use_internal_errors(true);
         $dom->loadHTML($html);
         libxml_clear_errors();
-        
         $xpath = new DOMXPath($dom);
         
-        // Título: procura dentro do container "mc-article-header" o h1 com itemprop="headline"
+        // Título
         $titleNodes = $xpath->query("//div[contains(@class, 'mc-article-header')]//h1[@itemprop='headline']");
         $title = $titleNodes->length > 0 ? trim($titleNodes->item(0)->nodeValue) : '';
         
-        // Descrição: tenta extrair o h2 com classe "content-head__subtitle" e itemprop "alternativeHeadline"
+        // Descrição
         $descNodes = $xpath->query("//div[contains(@class, 'mc-article-header')]//h2[contains(@class, 'content-head__subtitle') and @itemprop='alternativeHeadline']");
         $description = $descNodes->length > 0 ? trim($descNodes->item(0)->nodeValue) : 'Descrição não disponível.';
         
-        // Data de Publicação: extrai o datetime do elemento <time> com itemprop="datePublished"
+        // Data de publicação
         $timeNodes = $xpath->query("//div[contains(@class, 'mc-article-header')]//time[@itemprop='datePublished']");
-        $publishedAt = '';
-        if ($timeNodes->length > 0) {
-            $publishedAt = $timeNodes->item(0)->getAttribute('datetime');
-        }
+        $publishedAt = $timeNodes->length > 0 ? $timeNodes->item(0)->getAttribute('datetime') : 'Data não informada.';
         
-        // Autor: busca dentro do parágrafo com classe "content-publication-data__from"
+        // Autor
         $authorNodes = $xpath->query("//div[contains(@class, 'mc-article-header')]//p[contains(@class, 'content-publication-data__from')]");
         $author = '';
         if ($authorNodes->length > 0) {
@@ -179,6 +200,7 @@ class G1Scraper implements NewsScraperInterface {
         }
         
         if (!$title) {
+            debug_log("[G1] | Alerta: Título não extraído para artigo: " . $articleUrl);
             return null;
         }
         
@@ -229,23 +251,56 @@ class Scraper {
     private $scrapers = [];
 
     public function __construct() {
-        // Adiciona os scrapers de cada portal
         $this->scrapers[] = new G1Scraper();
         $this->scrapers[] = new UOLScraper();
         // Para incluir novos portais, basta implementar a interface e adicioná-los aqui.
     }
 
     /**
-     * Combina as notícias de todos os portais.
+     * Combina as notícias de todos os portais e normaliza o campo de data.
+     * Se $forceUpdate for true, os scrapers ignorarão o cache.
      *
+     * @param bool $forceUpdate
      * @return array Array unificado de notícias.
      */
-    public function getAllPoliticalNews(): array {
+    public function getAllPoliticalNews(bool $forceUpdate = false): array {
         $news = [];
         foreach ($this->scrapers as $scraper) {
-            $news = array_merge($news, $scraper->fetchNews());
+            $news = array_merge($news, $scraper->fetchNews($forceUpdate));
+        }
+        // Normaliza a data de publicação para o mesmo formato (ISO 8601)
+        foreach ($news as &$item) {
+            if (!empty($item['publishedAt'])) {
+                $item['publishedAt'] = $this->normalizeDate($item['publishedAt']);
+            }
         }
         return $news;
+    }
+
+    /**
+     * Normaliza a data para o formato ISO 8601.
+     * Se a data já tiver "T", reformatamos; caso contrário, assumimos o formato "d/m/Y Hhi".
+     *
+     * @param string $date
+     * @return string
+     */
+    private function normalizeDate(string $date): string {
+        if (strpos($date, "T") !== false) {
+            try {
+                $dt = new DateTime($date);
+                return $dt->format('Y-m-d\TH:i:sP');
+            } catch (Exception $e) {
+                return $date;
+            }
+        } else {
+            $formatted = str_replace("h", ":", $date);
+            $dt = DateTime::createFromFormat('d/m/Y H:i', $formatted, new DateTimeZone('America/Sao_Paulo'));
+            if ($dt !== false) {
+                return $dt->format('Y-m-d\TH:i:sP');
+            } else {
+                return $date;
+            }
+        }
     }
 }
 ?>
@@ -256,37 +311,38 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models\U
 ================================================================================
 
 <?php
-require_once 'NewsScraperInterface.php';
+require_once 'AbstractNewsScraper.php';
 
-class UOLScraper implements NewsScraperInterface {
+class UOLScraper extends AbstractNewsScraper {
 
-    /**
-     * Busca as últimas notícias da editoria de Política do UOL.
-     * Para cada artigo listado, é feita uma requisição adicional para obter
-     * a descrição (primeiro parágrafo) e o autor diretamente da página da matéria.
-     *
-     * @return array Array de notícias.
-     */
-    public function fetchNews(): array {
-        $url = 'https://noticias.uol.com.br/politica/';
+    public function __construct() {
+        $cacheFile = __DIR__ . '/../../cache/uol_news.json';
+        $cacheTime = 600;
+        parent::__construct($cacheFile, $cacheTime);
+        debug_log("[UOL] | Inicializado: Cache definido para 10 minutos.");
+    }
+
+    public function fetchNews(bool $forceUpdate = false): array {
+        if (!$forceUpdate) {
+            $cached = $this->getFromCache();
+            if ($cached !== null) {
+                debug_log("[UOL] | Cache: Utilizando dados do cache.");
+                return $cached;
+            }
+        }
         
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        // Permite redirecionamentos e desabilita verificação SSL para ambiente de desenvolvimento
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36',
-            'Referer: https://www.google.com/'
-        ]);
-        $html = curl_exec($ch);
-        if ($html === false) {
-            debug_log("UOLScraper: Falha ao obter HTML da página de listagem: " . curl_error($ch));
-            curl_close($ch);
+        debug_log("[UOL] | Scraping: Iniciando scraping da página de listagem.");
+        $url = 'https://noticias.uol.com.br/politica/';
+        $headers = [
+            'User-Agent' => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36",
+            'Referer' => "https://www.google.com/"
+        ];
+        
+        $html = $this->getHtml($url, $headers);
+        if ($html === null) {
+            debug_log("[UOL] | Erro: Falha ao obter HTML da listagem.");
             return [];
         }
-        curl_close($ch);
         
         $dom = new DOMDocument();
         libxml_use_internal_errors(true);
@@ -295,39 +351,33 @@ class UOLScraper implements NewsScraperInterface {
         $xpath = new DOMXPath($dom);
         $newsItems = [];
         
-        // Seleciona os itens de notícia dentro do container "flex-wrap", ignorando os anúncios (com classe "itemAds")
+        // Seleciona os itens da listagem
         $nodes = $xpath->query("//div[contains(@class, 'flex-wrap')]//div[contains(@class, 'thumbnails-item') and not(contains(@class, 'itemAds'))]");
-        debug_log("UOLScraper: Nós encontrados na listagem: " . $nodes->length);
+        debug_log("[UOL] | Listagem: Itens encontrados = " . $nodes->length);
         
         foreach ($nodes as $node) {
             if (!$node instanceof DOMElement) continue;
-            
-            // Obter a tag <a> que contém o link do artigo
             $aTag = $node->getElementsByTagName('a')->item(0);
             if (!$aTag) continue;
             $link = $aTag->getAttribute('href');
             
-            // Título a partir do elemento <h3> com classe "thumb-title"
             $titleNodes = $xpath->query(".//h3[contains(@class, 'thumb-title')]", $node);
             $title = ($titleNodes->length > 0) ? trim($titleNodes->item(0)->nodeValue) : 'Sem título';
             
-            // Data de publicação da listagem (texto do <time> com classe "thumb-date")
             $timeNodes = $xpath->query(".//time[contains(@class, 'thumb-date')]", $node);
             $publishedAt = ($timeNodes->length > 0) ? trim($timeNodes->item(0)->nodeValue) : 'Data não informada';
             
-            // Agora, obtém detalhes adicionais a partir da página do artigo
-            $details = $this->scrapeArticle($link);
+            $details = $this->scrapeArticle($link, $headers);
             if ($details) {
                 $newsItems[] = [
                     'title'       => $title,
                     'url'         => $link,
                     'description' => $details['description'] ?? 'Descrição não disponível.',
                     'author'      => $details['author'] ?? 'Não disponível',
-                    'publishedAt' => $publishedAt, // Você pode optar por usar a data extraída do artigo, se preferir.
+                    'publishedAt' => $publishedAt,
                     'source'      => 'UOL'
                 ];
             } else {
-                // Se falhar a obtenção dos detalhes, mantém os dados da listagem
                 $newsItems[] = [
                     'title'       => $title,
                     'url'         => $link,
@@ -339,33 +389,17 @@ class UOLScraper implements NewsScraperInterface {
             }
         }
         
+        debug_log("[UOL] | Concluído: Scraping finalizado. Artigos encontrados = " . count($newsItems));
+        $this->saveToCache($newsItems);
         return $newsItems;
     }
     
-    /**
-     * Realiza o scraping da página do artigo para extrair o primeiro parágrafo (descrição)
-     * e o nome do autor da notícia.
-     *
-     * @param string $articleUrl URL do artigo
-     * @return array|null Array com 'description' e 'author' ou null em caso de falha.
-     */
-    private function scrapeArticle(string $articleUrl): ?array {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $articleUrl);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36',
-            'Referer: https://www.google.com/'
-        ]);
-        $html = curl_exec($ch);
-        if ($html === false) {
-            debug_log("UOLScraper: Falha ao obter HTML do artigo: " . $articleUrl . ". cURL error: " . curl_error($ch));
-            curl_close($ch);
+    private function scrapeArticle(string $articleUrl, array $headers): ?array {
+        $html = $this->getHtml($articleUrl, $headers);
+        if ($html === null) {
+            debug_log("[UOL] | Erro: Falha ao obter HTML do artigo: " . $articleUrl);
             return null;
         }
-        curl_close($ch);
         
         $dom = new DOMDocument();
         libxml_use_internal_errors(true);
@@ -373,28 +407,53 @@ class UOLScraper implements NewsScraperInterface {
         libxml_clear_errors();
         $xpath = new DOMXPath($dom);
         
-        // Descrição: pega o primeiro parágrafo dentro do container da matéria
+        // Extrai o primeiro parágrafo do container "jupiter-paragraph-fragment"
         $paraNodes = $xpath->query("//div[contains(@class, 'jupiter-paragraph-fragment')]//p");
         $description = ($paraNodes->length > 0) ? trim($paraNodes->item(0)->nodeValue) : 'Descrição não disponível.';
         
-        // Autor: extrai o nome do autor da matéria.
-        // Aqui procuramos dentro do container "solar-author". O seletor pode variar conforme o layout.
-        $authorNodes = $xpath->query("//div[contains(@class, 'solar-author')]//div[contains(@class, 'solar-author-names')]");
-        $author = '';
-        if ($authorNodes->length > 0) {
-            // Tenta extrair de "solar-author-origin" se existir
-            $originNodes = $xpath->query(".//div[contains(@class, 'solar-author-origin')]", $authorNodes->item(0));
-            if ($originNodes->length > 0) {
-                $author = trim($originNodes->item(0)->nodeValue);
-            } else {
-                $author = trim($authorNodes->item(0)->nodeValue);
-            }
-        }
+        // Extrai o nome do autor a partir do link com a classe "solar-author-name"
+        $authorNodes = $xpath->query("//div[contains(@class, 'solar-author-names')]//a[contains(@class, 'solar-author-name')]");
+        $author = ($authorNodes->length > 0) ? trim($authorNodes->item(0)->nodeValue) : 'Não disponível';
         
         return [
             'description' => $description,
-            'author'      => $author ?: 'Não disponível'
+            'author'      => $author
         ];
+    }
+}
+?>
+
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\utils\HttpClient.php
+================================================================================
+
+<?php
+class HttpClient {
+    /**
+     * Executa uma requisição GET na URL informada com os headers fornecidos.
+     */
+    public static function get(string $url, array $headers = []): ?string {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        if (!empty($headers)) {
+            $formattedHeaders = [];
+            foreach ($headers as $key => $value) {
+                $formattedHeaders[] = $key . ": " . $value;
+            }
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $formattedHeaders);
+        }
+        $html = curl_exec($ch);
+        if ($html === false) {
+            debug_log("[HttpClient] | Erro ao obter HTML de $url: " . curl_error($ch));
+            curl_close($ch);
+            return null;
+        }
+        curl_close($ch);
+        return $html;
     }
 }
 ?>
@@ -409,7 +468,7 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\views\in
 <head>
     <meta charset="UTF-8">
     <title>Notícias de Política</title>
-    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
     <!-- DataTables CSS -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"/>
     <!-- jQuery (necessário para o DataTables) -->
@@ -433,7 +492,7 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\views\in
         tr:nth-child(even) {
             background-color: #fafafa;
         }
-        /* Área de logs */
+        /* Área para exibir os logs de depuração */
         #debug-log {
             background: #f0f0f0;
             border: 1px solid #ddd;
@@ -444,43 +503,129 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\views\in
             font-family: monospace;
             font-size: 12px;
         }
+        /* Área para exibir informações de atualização */
+        #update-info {
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+        #force-update-btn {
+            margin-bottom: 20px;
+            padding: 8px 16px;
+            background: #1976d2;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #force-update-btn:hover {
+            background: #1565c0;
+        }
     </style>
     <script>
         $(document).ready(function(){
             $('#newsTable').DataTable({
                 language: {
-                    url: "//cdn.datatables.net/plug-ins/1.13.4/i18n/Portuguese.json"
+                    "decimal":        "",
+                    "emptyTable":     "Nenhuma notícia encontrada",
+                    "info":           "Mostrando de _START_ até _END_ de _TOTAL_ entradas",
+                    "infoEmpty":      "Mostrando 0 até 0 de 0 entradas",
+                    "infoFiltered":   "(filtrado de _MAX_ entradas no total)",
+                    "thousands":      ".",
+                    "lengthMenu":     "Mostrar _MENU_ entradas",
+                    "loadingRecords": "Carregando...",
+                    "processing":     "Processando...",
+                    "search":         "Buscar:",
+                    "zeroRecords":    "Nenhum registro encontrado",
+                    "paginate": {
+                        "first":      "Primeiro",
+                        "last":       "Último",
+                        "next":       "Próximo",
+                        "previous":   "Anterior"
+                    },
+                    "aria": {
+                        "sortAscending":  ": ativar para classificar em ordem crescente",
+                        "sortDescending": ": ativar para classificar em ordem decrescente"
+                    }
                 },
+                order: [[0, 'desc']], // Ordena por "Publicado em" (a primeira coluna) de forma descendente
                 pageLength: 10
+            });
+            
+            // Botão para forçar atualização
+            $('#force-update-btn').click(function(){
+                $.ajax({
+                    url: '/api/force_update.php',
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        alert(response.message);
+                        location.reload(); // recarrega a página para mostrar os dados atualizados
+                    },
+                    error: function(error) {
+                        console.error('Erro ao atualizar:', error);
+                        alert('Erro ao forçar atualização.');
+                    }
+                });
             });
         });
     </script>
 </head>
 <body>
     <h1>Notícias de Política</h1>
+    <?php 
+        // Exibe informações de atualização do cache
+        $cacheFile = __DIR__ . '/../cache/all_news.json';
+        $cacheTime = 600; // 10 minutos
+        if (file_exists($cacheFile)) {
+            $lastUpdate = filemtime($cacheFile);
+            $nextUpdate = $lastUpdate + $cacheTime;
+            echo "<div id='update-info'>";
+            echo "<strong>Última atualização:</strong> " . date("d/m/Y H:i:s", $lastUpdate) . "<br>";
+            echo "<strong>Próxima atualização (estimada):</strong> " . date("d/m/Y H:i:s", $nextUpdate);
+            echo "</div>";
+        } else {
+            echo "<div id='update-info'><strong>Nenhuma atualização realizada.</strong></div>";
+        }
+    ?>
+    
+    <!-- Botão para forçar atualização -->
+    <button id="force-update-btn">Forçar Atualização</button>
+    
     <?php if (isset($news) && is_array($news) && count($news) > 0): ?>
         <table id="newsTable">
             <thead>
                 <tr>
+                    <th>Publicado em</th>
+                    <th>Veículo</th>
                     <th>Título</th>
                     <th>Descrição</th>
                     <th>Autor</th>
-                    <th>Publicado em</th>
-                    <th>Fonte</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($news as $item): ?>
                     <tr>
+                        <td data-order="<?php echo $item['publishedAt'] ?: ''; ?>">
+                            <?php 
+                                if (!empty($item['publishedAt'])) {
+                                    echo date("d/m/Y H:i", strtotime($item['publishedAt']));
+                                } else {
+                                    echo 'Data não informada.';
+                                }
+                            ?>
+                        </td>
+                        <td><?php echo $item['source'] ?: 'Fonte não informada.'; ?></td>
                         <td>
                             <a href="<?php echo $item['url']; ?>" target="_blank">
                                 <?php echo $item['title'] ?? 'Sem título'; ?>
                             </a>
                         </td>
                         <td><?php echo $item['description'] ?: 'Descrição não disponível.'; ?></td>
-                        <td><?php echo $item['author'] ?? 'Autor não disponível.'; ?></td>
-                        <td><?php echo $item['publishedAt'] ?: 'Data não informada.'; ?></td>
-                        <td><?php echo $item['source'] ?? 'Fonte não informada.'; ?></td>
+                        <td><?php echo $item['author'] ?: 'Autor não disponível.'; ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -489,13 +634,17 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\views\in
         <p>Nenhuma notícia encontrada.</p>
     <?php endif; ?>
 
-    <!-- Área para exibir os logs de depuração -->
+    <!-- Área para exibir os logs de depuração (ordem invertida: do mais recente para o mais antigo) -->
     <div id="debug-log">
         <h3>Debug Logs</h3>
         <pre>
 <?php 
-if (file_exists(LOG_FILE)) {
-    echo htmlspecialchars(file_get_contents(LOG_FILE));
+if (defined('LOG_FILE') && file_exists(LOG_FILE)) {
+    // Lê o arquivo de log como um array de linhas,
+    // reverte a ordem e exibe
+    $lines = file(LOG_FILE, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    $lines = array_reverse($lines);
+    echo htmlspecialchars(implode("\n", $lines));
 } else {
     echo "Nenhum log encontrado.";
 }
@@ -510,13 +659,19 @@ if (file_exists(LOG_FILE)) {
 Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\cache\all_news.json
 ================================================================================
 
-[{"title":"Gleisi diz confiar que Motta n\u00e3o vai levar projeto da anistia \u00e0 vota\u00e7\u00e3o: 'Crise institucional'","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/gleisi-diz-confiar-que-motta-nao-vai-levar-projeto-da-anistia-a-votacao-crise-institucional.ghtml","description":"Descri\u00e7\u00e3o n\u00e3o dispon\u00edvel.","author":"N\u00e3o dispon\u00edvel","publishedAt":"2025-04-10T19:36:31.923-03:00","source":"G1"},{"title":"Quem \u00e9 Pedro Lucas, l\u00edder do Uni\u00e3o Brasil na C\u00e2mara e novo ministro das Comunica\u00e7\u00f5es","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/quem-e-pedro-lucas-lider-do-uniao-brasil-na-camara-indicado-para-o-ministerio-das-comunicacoes.ghtml","description":"Aliado de Fl\u00e1vio Dino, deputado \u00e9 de fam\u00edlia tradicional na pol\u00edtica maranhense e atua mais nos bastidores. Irm\u00e3os do parlamentar ocupam cargos nos governos federal e estadual.","author":"Luiz Felipe Barbi\u00e9ri","publishedAt":"2025-04-10T19:35:29.218-03:00","source":"G1"},{"title":"Governo confirma deputado Pedro Lucas como novo ministro das Comunica\u00e7\u00f5es","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/lula-confirma-deputado-pedro-lucas-como-novo-ministro-das-comunicacoes.ghtml","description":"Lucas vai ocupar lugar de Juscelino Filho, que pediu demiss\u00e3o ap\u00f3s den\u00fancia da Procuradoria-Geral da Rep\u00fablica (PGR) por desvio de emendas parlamentares. Antes do an\u00fancio, Lula se reuniu com dirigentes do Uni\u00e3o Brasil e com o presidente do Senado, Davi Alcolumbre.","author":"Pedro Henrique Gomes","publishedAt":"2025-04-10T19:33:28.728-03:00","source":"G1"},{"title":"Lula sanciona Or\u00e7amento de 2025 com previs\u00e3o de super\u00e1vit de R$ 14 bilh\u00f5es","url":"https:\/\/g1.globo.com\/economia\/noticia\/2025\/04\/10\/lula-sanciona-orcamento-de-2025-com-previsao-de-superavit-de-r-14-bilhoes.ghtml","description":"Or\u00e7amento tamb\u00e9m prev\u00ea alta do sal\u00e1rio m\u00ednimo para R$ 1.518. Congresso aprovou apenas em mar\u00e7o a proposta de Or\u00e7amento de 2025.","author":"N\u00e3o dispon\u00edvel","publishedAt":"2025-04-10T19:13:27.124-03:00","source":"G1"},{"title":"Na expectativa de escolha de novo ministro das Comunica\u00e7\u00f5es, Lula recebe Alcolumbre no Alvorada","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/na-expectativa-de-escolha-de-novo-ministro-das-comunicacoes-lula-recebe-alcolumbre-no-alvorada.ghtml","description":"Presidente disse que se reuniria com o presidente Senado Federal para discutir poss\u00edvel nomea\u00e7\u00e3o do deputado Pedro Lucas para substituir Juscelino Filho.","author":"Pedro Henrique Gomes","publishedAt":"2025-04-10T19:03:06.251-03:00","source":"G1"},{"title":"STF rejeita proposta que buscou retomar 'revis\u00e3o da vida toda' do INSS; ministros fixam como ser\u00e1 a aplica\u00e7\u00e3o dos efeitos da decis\u00e3o","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/stf-rejeita-proposta-que-buscou-retomar-revisao-da-vida-toda-do-inss-ministros-fixam-como-sera-a-aplicacao-dos-efeitos-da-decisao.ghtml","description":"Possibilidade de escolha de regra mais vantajosa para c\u00e1lculo de aposentadorias do INSS ficou invi\u00e1vel depois de determina\u00e7\u00e3o do STF de mar\u00e7o do ano passado.","author":"N\u00e3o dispon\u00edvel","publishedAt":"2025-04-10T18:51:30.051-03:00","source":"G1"},{"title":"STF marca para o dia 25 julgamento da pichadora da est\u00e1tua da Justi\u00e7a nos atos golpistas","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/fux-libera-para-julgamento-no-dia-25-caso-da-pichadora-da-estatua-da-justica-nos-atos-golpistas.ghtml","description":"D\u00e9bora foi condenada a 14 anos de pris\u00e3o por participa\u00e7\u00e3o nos atos golpistas, incluindo o epis\u00f3dio em que pichou a ic\u00f4nica escultura em frente ao Supremo. O julgamento havia sido interrompido ap\u00f3s um pedido de vista do pr\u00f3prio Fux, que agora devolve o caso para conclus\u00e3o.","author":"Fernanda Vivas","publishedAt":"2025-04-10T18:44:15.317-03:00","source":"G1"},{"title":"Moraes autoriza que parlamentares visitem Braga Netto na pris\u00e3o; veja a lista","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/moraes-autoriza-visita-de-parlamentares-a-braga-netto-na-prisao.ghtml","description":"Ex-ministro do governo de Jair Bolsonaro (PL) est\u00e1 preso desde 14 de dezembro do ano passado, sob suspeita de interfer\u00eancia nas investiga\u00e7\u00f5es da tentativa de golpe de estado.","author":"M\u00e1rcio Falc\u00e3o","publishedAt":"2025-04-10T17:51:41.322-03:00","source":"G1"},{"title":"STF tem maioria contra recursos de deputados do PL que viraram r\u00e9us por venda de emendas","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/stf-tem-maioria-contra-recursos-de-deputados-do-pl-que-viraram-reus-por-venda-de-emendas.ghtml","description":"Caso \u00e9 analisado na Primeira Turma da Suprema Corte. Tr\u00eas dos cinco ministros do colegiado votaram pela rejei\u00e7\u00e3o dos recursos de Josimar Maranh\u00e3ozinho, Pastor Gil e Bosco Costa.","author":"Fernanda Vivas","publishedAt":"2025-04-10T17:43:24.043-03:00","source":"G1"},{"title":"\u00c9 #FAKE que vit\u00f3ria de Trump nos EUA levou Gilmar Mendes a mudar de posi\u00e7\u00e3o sobre ataques do 8 de Janeiro","url":"https:\/\/g1.globo.com\/fato-ou-fake\/noticia\/2025\/04\/10\/e-fake-que-vitoria-de-trump-nos-eua-levou-gilmar-mendes-a-mudar-de-posicao-sobre-ataques-do-8-de-janeiro.ghtml","description":"Post insinua que 'efeito Trump' fez Gilmar falar que 'n\u00e3o houve tentativa de golpe', mas trecho citado est\u00e1 em entrevista de 2023, quase dois anos antes da posse do presidente americano. Ao Fato ou Fake, assessoria do ministro disse: '\u00c0 medida que novos ind\u00edcios foram trazidos \u00e0 tona, ele se posicionou duramente sobre a tentativa de golpe'.","author":"N\u00e3o dispon\u00edvel","publishedAt":"2025-04-10T16:41:23.984-03:00","source":"G1"}]
+[{"title":"L\u00edder do PT reclama de partidos da base que assinaram a urg\u00eancia para o projeto da anistia","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/lider-do-pt-reclama-de-partidos-da-base-que-assinaram-a-urgencia-para-o-projeto-da-anistia.ghtml","description":"Lindbergh Farias (RJ) disse que partidos precisam assumir um lado. Maioria dos apoios at\u00e9 agora v\u00eam de Uni\u00e3o, PSD, MDB, PP e Republicanos, que possuem cargos no governo.","author":"Luiz Felipe Barbi\u00e9ri","publishedAt":"2025-04-10T20:09:22-03:00","source":"G1"},{"title":"Deputada \u00e9 atingida por g\u00e1s de pimenta durante ato de ind\u00edgenas em frente ao Congresso","url":"https:\/\/g1.globo.com\/df\/distrito-federal\/noticia\/2025\/04\/10\/deputada-e-atingida-por-gas-de-pimenta-durante-ato-de-indigenas-em-frente-ao-congresso.ghtml","description":"Pol\u00edcia legislativa usou g\u00e1s lacrimog\u00eanio para conter uma confus\u00e3o, ao final da marcha de ind\u00edgenas, nesta quinta-feira (10), em Bras\u00edlia. V\u00e1rias etnias est\u00e3o reunidas no Acampamento Terra Livre desde o \u00faltimo fim de semana.","author":"Vin\u00edcius Cassela","publishedAt":"2025-04-10T19:46:34-03:00","source":"G1"},{"title":"Gleisi diz confiar que Motta n\u00e3o vai levar projeto da anistia \u00e0 vota\u00e7\u00e3o: 'Crise institucional'","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/gleisi-diz-confiar-que-motta-nao-vai-levar-projeto-da-anistia-a-votacao-crise-institucional.ghtml","description":"Gleisi afirmou que alguns parlamentares est\u00e3o assinando o projeto sem saber do conte\u00fado.","author":"Pedro Henrique Gomes","publishedAt":"2025-04-10T19:36:31-03:00","source":"G1"},{"title":"Quem \u00e9 Pedro Lucas, l\u00edder do Uni\u00e3o Brasil na C\u00e2mara e novo ministro das Comunica\u00e7\u00f5es","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/quem-e-pedro-lucas-lider-do-uniao-brasil-na-camara-indicado-para-o-ministerio-das-comunicacoes.ghtml","description":"Aliado de Fl\u00e1vio Dino, deputado \u00e9 de fam\u00edlia tradicional na pol\u00edtica maranhense e atua mais nos bastidores. Irm\u00e3os do parlamentar ocupam cargos nos governos federal e estadual.","author":"Luiz Felipe Barbi\u00e9ri","publishedAt":"2025-04-10T19:35:29-03:00","source":"G1"},{"title":"Governo confirma deputado Pedro Lucas como novo ministro das Comunica\u00e7\u00f5es","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/lula-confirma-deputado-pedro-lucas-como-novo-ministro-das-comunicacoes.ghtml","description":"Lucas vai ocupar lugar de Juscelino Filho, que pediu demiss\u00e3o ap\u00f3s den\u00fancia da Procuradoria-Geral da Rep\u00fablica (PGR) por desvio de emendas parlamentares. Antes do an\u00fancio, Lula se reuniu com dirigentes do Uni\u00e3o Brasil e com o presidente do Senado, Davi Alcolumbre.","author":"Pedro Henrique Gomes","publishedAt":"2025-04-10T19:33:28-03:00","source":"G1"},{"title":"Lula sanciona Or\u00e7amento de 2025 com previs\u00e3o de super\u00e1vit de R$ 14 bilh\u00f5es","url":"https:\/\/g1.globo.com\/economia\/noticia\/2025\/04\/10\/lula-sanciona-orcamento-de-2025-com-previsao-de-superavit-de-r-14-bilhoes.ghtml","description":"Or\u00e7amento tamb\u00e9m prev\u00ea alta do sal\u00e1rio m\u00ednimo para R$ 1.518. Congresso aprovou apenas em mar\u00e7o a proposta de Or\u00e7amento de 2025.","author":"N\u00e3o dispon\u00edvel","publishedAt":"2025-04-10T19:13:27-03:00","source":"G1"},{"title":"Na expectativa de escolha de novo ministro das Comunica\u00e7\u00f5es, Lula recebe Alcolumbre no Alvorada","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/na-expectativa-de-escolha-de-novo-ministro-das-comunicacoes-lula-recebe-alcolumbre-no-alvorada.ghtml","description":"Presidente disse que se reuniria com o presidente Senado Federal para discutir poss\u00edvel nomea\u00e7\u00e3o do deputado Pedro Lucas para substituir Juscelino Filho.","author":"Pedro Henrique Gomes","publishedAt":"2025-04-10T19:03:06-03:00","source":"G1"},{"title":"STF rejeita proposta que buscou retomar 'revis\u00e3o da vida toda' do INSS; ministros fixam como ser\u00e1 a aplica\u00e7\u00e3o dos efeitos da decis\u00e3o","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/stf-rejeita-proposta-que-buscou-retomar-revisao-da-vida-toda-do-inss-ministros-fixam-como-sera-a-aplicacao-dos-efeitos-da-decisao.ghtml","description":"Possibilidade de escolha de regra mais vantajosa para c\u00e1lculo de aposentadorias do INSS ficou invi\u00e1vel depois de determina\u00e7\u00e3o do STF de mar\u00e7o do ano passado.","author":"N\u00e3o dispon\u00edvel","publishedAt":"2025-04-10T18:51:30-03:00","source":"G1"},{"title":"STF marca para o dia 25 julgamento da pichadora da est\u00e1tua da Justi\u00e7a nos atos golpistas","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/fux-libera-para-julgamento-no-dia-25-caso-da-pichadora-da-estatua-da-justica-nos-atos-golpistas.ghtml","description":"D\u00e9bora foi condenada a 14 anos de pris\u00e3o por participa\u00e7\u00e3o nos atos golpistas, incluindo o epis\u00f3dio em que pichou a ic\u00f4nica escultura em frente ao Supremo. O julgamento havia sido interrompido ap\u00f3s um pedido de vista do pr\u00f3prio Fux, que agora devolve o caso para conclus\u00e3o.","author":"Fernanda Vivas","publishedAt":"2025-04-10T18:44:15-03:00","source":"G1"},{"title":"Moraes autoriza que parlamentares visitem Braga Netto na pris\u00e3o; veja a lista","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/moraes-autoriza-visita-de-parlamentares-a-braga-netto-na-prisao.ghtml","description":"Ex-ministro do governo de Jair Bolsonaro (PL) est\u00e1 preso desde 14 de dezembro do ano passado, sob suspeita de interfer\u00eancia nas investiga\u00e7\u00f5es da tentativa de golpe de estado.","author":"M\u00e1rcio Falc\u00e3o","publishedAt":"2025-04-10T17:51:41-03:00","source":"G1"},{"title":"Real Time Pernambuco: Jo\u00e3o Campos lidera com 67% contra 22% de Raquel Lyra","url":"https:\/\/noticias.uol.com.br\/politica\/ultimas-noticias\/2025\/04\/10\/real-time-pernambuco-joao-campos-lidera-com-67-contra-22-de-raquel-lyra.htm","description":"Pesquisa divulgada hoje pela Real Time Big Data mostra Jo\u00e3o Campos (PSB) com vantagem expressiva na disputa pelo governo de Pernambuco. O levantamento foi contratado pela Record TV.","author":"Laila Nery","publishedAt":"2025-04-10T21:51:00-03:00","source":"UOL"},{"title":"L\u00edder do PT diz que cobrar\u00e1 partidos aliados a desistirem de PL da anistia","url":"https:\/\/noticias.uol.com.br\/politica\/ultimas-noticias\/2025\/04\/10\/governo-lula-vai-cobrar-partidos-aliados-a-desistirem-da-anistia.htm","description":"O l\u00edder do PT na C\u00e2mara, Lindbergh Farias (PT-RJ), afirmou que vai cobrar os ministros e as lideran\u00e7as que fazem parte da base do governo e assinaram o requerimento de urg\u00eancia do projeto que anistia os presos em 8 de Janeiro.","author":"Carolina Nogueira","publishedAt":"2025-04-10T20:30:00-03:00","source":"UOL"},{"title":"Prefeito de Sorocaba sobre a\u00e7\u00e3o da PF: Voc\u00ea se responsabiliza por cunhado?","url":"https:\/\/noticias.uol.com.br\/politica\/ultimas-noticias\/2025\/04\/10\/prefeito-sorocaba-rodrigo-manga-corrupcao-dinheiro-desvio-saude-upa.htm","description":"O prefeito de Sorocaba, Rodrigo Manga (Republicanos), alvo de opera\u00e7\u00e3o policial que investiga desvios de verbas da Sa\u00fade no munic\u00edpio, negou irregularidades e disse, em entrevista ao UOL News, do Canal UOL, que a quantia encontrada em endere\u00e7os de pessoas ligadas a ele est\u00e1 devidamente declarada. A PF (Pol\u00edcia Federal) encontrou hoje quase R$ 1 milh\u00e3o em esp\u00e9cie em um carro que estava em um dos endere\u00e7os ligados ao bispo Josivaldo Souza e sua esposa, a pastora Simone Souza. A l\u00edder religiosa \u00e9 cunhada do prefeito do munic\u00edpio. Os agentes fizeram buscas na igreja e na resid\u00eancia do casal.","author":"N\u00e3o dispon\u00edvel","publishedAt":"2025-04-10T19:44:00-03:00","source":"UOL"},{"title":"Deputado do Uni\u00e3o Brasil vai assumir como ministro das Comunica\u00e7\u00f5es","url":"https:\/\/noticias.uol.com.br\/politica\/ultimas-noticias\/2025\/04\/10\/uniao-brasil-indica-novo-ministro-das-comunicacoes.htm","description":"O governo Lula (PT) confirmou que o deputado Pedro Lucas Fernandes (Uni\u00e3o Brasil-MA) vai assumir o Minist\u00e9rio das Comunica\u00e7\u00f5es no lugar de Juscelino Filho, denunciado sob acusa\u00e7\u00e3o de desvio de emendas parlamentares.","author":"Carolina Nogueira","publishedAt":"2025-04-10T19:38:00-03:00","source":"UOL"},{"title":"Moraes autoriza visitas de 24 pol\u00edticos a Braga Netto; veja lista","url":"https:\/\/noticias.uol.com.br\/politica\/ultimas-noticias\/2025\/04\/10\/stf-autoriza-visitas-a-braga-netto.htm","description":"O ministro do STF (Supremo Tribunal Federal) Alexandre de Moraes liberou 24 visitas ao general Braga Netto, com regras r\u00edgidas e veto a celulares ou imprensa.","author":"Laila Nery","publishedAt":"2025-04-10T18:24:00-03:00","source":"UOL"},{"title":"Ex enquadra Janones na Lei Maria da Penha e consegue medida protetiva","url":"https:\/\/noticias.uol.com.br\/colunas\/leticia-casado\/2025\/04\/10\/janones-ex.htm","description":"A ex-mulher do deputado Andr\u00e9 Janones (Avante-MG) conseguiu uma medida protetiva contra o parlamentar com base na Lei Maria da Penha.","author":"Let\u00edcia Casado","publishedAt":"2025-04-10T18:04:00-03:00","source":"UOL"},{"title":"Rodrigo Manga: por que prefeito de Sorocaba foi alvo de opera\u00e7\u00e3o da PF?","url":"https:\/\/noticias.uol.com.br\/politica\/ultimas-noticias\/2025\/04\/10\/rodrigo-manga-por-que-prefeito-de-sorocaba-foi-alvo-de-operacao-da-pf.htm","description":"O prefeito de Sorocaba, Rodrigo Manga (Republicanos), foi alvo hoje da Pol\u00edcia Federal em uma opera\u00e7\u00e3o que investiga desvios de verbas p\u00fablicas da Sa\u00fade no munic\u00edpio.","author":"N\u00e3o dispon\u00edvel","publishedAt":"2025-04-10T17:57:00-03:00","source":"UOL"},{"title":"Lula se refere \u00e0 diretora-geral do FMI como 'uma mulherzinha' em evento","url":"https:\/\/noticias.uol.com.br\/ultimas-noticias\/agencia-estado\/2025\/04\/10\/lula-se-refere-a-diretora-geral-do-fmi-como-uma-mulherzinha-em-evento.htm","description":"O presidente Luiz In\u00e1cio Lula da Silva (PT) contou na \u00faltima ter\u00e7a-feira, em S\u00e3o Paulo, sobre um epis\u00f3dio em que, durante viagem \u00e0 Hiroshima (Jap\u00e3o), encontrou uma \"mulherzinha\" que falou com ele sobre o crescimento da economia do Brasil. Ele se referia a Kristalina Georgieva, que dirige o FMI (Fundo Monet\u00e1rio Internacional) desde 2019.","author":"N\u00e3o dispon\u00edvel","publishedAt":"2025-04-10T17:55:00-03:00","source":"UOL"},{"title":"Justi\u00e7a suspende elei\u00e7\u00e3o da Rede ap\u00f3s disputa entre Marina e Helo\u00edsa Helena","url":"https:\/\/noticias.uol.com.br\/politica\/ultimas-noticias\/2025\/04\/10\/congresso-da-rede-e-suspenso.htm","description":"O Congresso Nacional do partido Rede Sustentabilidade foi suspenso pela Justi\u00e7a ap\u00f3s den\u00fancias de irregularidades em elei\u00e7\u00f5es estaduais internas e suspeita de irresponsabilidade com dinheiro p\u00fablico. Os grupos da ministra Marina Silva (AC) e da ex-senadora Helo\u00edsa Helena (AL) disputam o comando do partido.","author":"Laila Nery","publishedAt":"2025-04-10T17:37:00-03:00","source":"UOL"},{"title":"Reinaldo: A\u00e7\u00e3o da PF colhe o prefeito fanfarr\u00e3o de Sorocaba, que ataca Lula","url":"https:\/\/noticias.uol.com.br\/colunas\/reinaldo-azevedo\/2025\/04\/10\/reinaldo-acao-da-pf-colhe-o-prefeito-fanfarrao-de-sorocaba-que-ataca-lula.htm","description":"Descri\u00e7\u00e3o n\u00e3o dispon\u00edvel.","author":"Reinaldo Azevedo","publishedAt":"2025-04-10T17:28:00-03:00","source":"UOL"},{"title":"Reinaldo: Recuo de Trump acalma, mas n\u00e3o resolve. E o intelectual Ron Vara","url":"https:\/\/noticias.uol.com.br\/colunas\/reinaldo-azevedo\/2025\/04\/10\/reinaldo-recuo-de-trump-acalma-mas-nao-resolve-e-o-intelectual-ron-vara.htm","description":"Descri\u00e7\u00e3o n\u00e3o dispon\u00edvel.","author":"Reinaldo Azevedo","publishedAt":"2025-04-10T17:26:00-03:00","source":"UOL"}]
 
 ================================================================================
 Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\cache\g1_news.json
 ================================================================================
 
-[{"title":"L\u00edder do PT reclama de partidos da base que assinaram a urg\u00eancia para o projeto da anistia","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/lider-do-pt-reclama-de-partidos-da-base-que-assinaram-a-urgencia-para-o-projeto-da-anistia.ghtml","description":"Lindbergh Farias (RJ) disse que partidos precisam assumir um lado. Maioria dos apoios at\u00e9 agora v\u00eam de Uni\u00e3o, PSD, MDB, PP e Republicanos, que possuem cargos no governo.","author":"Luiz Felipe Barbi\u00e9ri","publishedAt":"2025-04-10T20:09:22.925-03:00","source":"G1"},{"title":"Gleisi diz confiar que Motta n\u00e3o vai levar projeto da anistia \u00e0 vota\u00e7\u00e3o: 'Crise institucional'","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/gleisi-diz-confiar-que-motta-nao-vai-levar-projeto-da-anistia-a-votacao-crise-institucional.ghtml","description":"Gleisi afirmou que alguns parlamentares est\u00e3o assinando o projeto sem saber do conte\u00fado.","author":"Pedro Henrique Gomes","publishedAt":"2025-04-10T19:36:31.923-03:00","source":"G1"},{"title":"Quem \u00e9 Pedro Lucas, l\u00edder do Uni\u00e3o Brasil na C\u00e2mara e novo ministro das Comunica\u00e7\u00f5es","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/quem-e-pedro-lucas-lider-do-uniao-brasil-na-camara-indicado-para-o-ministerio-das-comunicacoes.ghtml","description":"Aliado de Fl\u00e1vio Dino, deputado \u00e9 de fam\u00edlia tradicional na pol\u00edtica maranhense e atua mais nos bastidores. Irm\u00e3os do parlamentar ocupam cargos nos governos federal e estadual.","author":"Luiz Felipe Barbi\u00e9ri","publishedAt":"2025-04-10T19:35:29.218-03:00","source":"G1"},{"title":"Governo confirma deputado Pedro Lucas como novo ministro das Comunica\u00e7\u00f5es","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/lula-confirma-deputado-pedro-lucas-como-novo-ministro-das-comunicacoes.ghtml","description":"Lucas vai ocupar lugar de Juscelino Filho, que pediu demiss\u00e3o ap\u00f3s den\u00fancia da Procuradoria-Geral da Rep\u00fablica (PGR) por desvio de emendas parlamentares. Antes do an\u00fancio, Lula se reuniu com dirigentes do Uni\u00e3o Brasil e com o presidente do Senado, Davi Alcolumbre.","author":"Pedro Henrique Gomes","publishedAt":"2025-04-10T19:33:28.728-03:00","source":"G1"},{"title":"Lula sanciona Or\u00e7amento de 2025 com previs\u00e3o de super\u00e1vit de R$ 14 bilh\u00f5es","url":"https:\/\/g1.globo.com\/economia\/noticia\/2025\/04\/10\/lula-sanciona-orcamento-de-2025-com-previsao-de-superavit-de-r-14-bilhoes.ghtml","description":"Or\u00e7amento tamb\u00e9m prev\u00ea alta do sal\u00e1rio m\u00ednimo para R$ 1.518. Congresso aprovou apenas em mar\u00e7o a proposta de Or\u00e7amento de 2025.","author":"N\u00e3o dispon\u00edvel","publishedAt":"2025-04-10T19:13:27.124-03:00","source":"G1"},{"title":"Na expectativa de escolha de novo ministro das Comunica\u00e7\u00f5es, Lula recebe Alcolumbre no Alvorada","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/na-expectativa-de-escolha-de-novo-ministro-das-comunicacoes-lula-recebe-alcolumbre-no-alvorada.ghtml","description":"Presidente disse que se reuniria com o presidente Senado Federal para discutir poss\u00edvel nomea\u00e7\u00e3o do deputado Pedro Lucas para substituir Juscelino Filho.","author":"Pedro Henrique Gomes","publishedAt":"2025-04-10T19:03:06.251-03:00","source":"G1"},{"title":"STF rejeita proposta que buscou retomar 'revis\u00e3o da vida toda' do INSS; ministros fixam como ser\u00e1 a aplica\u00e7\u00e3o dos efeitos da decis\u00e3o","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/stf-rejeita-proposta-que-buscou-retomar-revisao-da-vida-toda-do-inss-ministros-fixam-como-sera-a-aplicacao-dos-efeitos-da-decisao.ghtml","description":"Possibilidade de escolha de regra mais vantajosa para c\u00e1lculo de aposentadorias do INSS ficou invi\u00e1vel depois de determina\u00e7\u00e3o do STF de mar\u00e7o do ano passado.","author":"N\u00e3o dispon\u00edvel","publishedAt":"2025-04-10T18:51:30.051-03:00","source":"G1"},{"title":"STF marca para o dia 25 julgamento da pichadora da est\u00e1tua da Justi\u00e7a nos atos golpistas","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/fux-libera-para-julgamento-no-dia-25-caso-da-pichadora-da-estatua-da-justica-nos-atos-golpistas.ghtml","description":"D\u00e9bora foi condenada a 14 anos de pris\u00e3o por participa\u00e7\u00e3o nos atos golpistas, incluindo o epis\u00f3dio em que pichou a ic\u00f4nica escultura em frente ao Supremo. O julgamento havia sido interrompido ap\u00f3s um pedido de vista do pr\u00f3prio Fux, que agora devolve o caso para conclus\u00e3o.","author":"Fernanda Vivas","publishedAt":"2025-04-10T18:44:15.317-03:00","source":"G1"},{"title":"Moraes autoriza que parlamentares visitem Braga Netto na pris\u00e3o; veja a lista","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/moraes-autoriza-visita-de-parlamentares-a-braga-netto-na-prisao.ghtml","description":"Ex-ministro do governo de Jair Bolsonaro (PL) est\u00e1 preso desde 14 de dezembro do ano passado, sob suspeita de interfer\u00eancia nas investiga\u00e7\u00f5es da tentativa de golpe de estado.","author":"M\u00e1rcio Falc\u00e3o","publishedAt":"2025-04-10T17:51:41.322-03:00","source":"G1"},{"title":"STF tem maioria contra recursos de deputados do PL que viraram r\u00e9us por venda de emendas","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/stf-tem-maioria-contra-recursos-de-deputados-do-pl-que-viraram-reus-por-venda-de-emendas.ghtml","description":"Caso \u00e9 analisado na Primeira Turma da Suprema Corte. Tr\u00eas dos cinco ministros do colegiado votaram pela rejei\u00e7\u00e3o dos recursos de Josimar Maranh\u00e3ozinho, Pastor Gil e Bosco Costa.","author":"Fernanda Vivas","publishedAt":"2025-04-10T17:43:24.043-03:00","source":"G1"}]
+[{"title":"L\u00edder do PT reclama de partidos da base que assinaram a urg\u00eancia para o projeto da anistia","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/lider-do-pt-reclama-de-partidos-da-base-que-assinaram-a-urgencia-para-o-projeto-da-anistia.ghtml","description":"Lindbergh Farias (RJ) disse que partidos precisam assumir um lado. Maioria dos apoios at\u00e9 agora v\u00eam de Uni\u00e3o, PSD, MDB, PP e Republicanos, que possuem cargos no governo.","author":"Luiz Felipe Barbi\u00e9ri","publishedAt":"2025-04-10T20:09:22.925-03:00","source":"G1"},{"title":"Deputada \u00e9 atingida por g\u00e1s de pimenta durante ato de ind\u00edgenas em frente ao Congresso","url":"https:\/\/g1.globo.com\/df\/distrito-federal\/noticia\/2025\/04\/10\/deputada-e-atingida-por-gas-de-pimenta-durante-ato-de-indigenas-em-frente-ao-congresso.ghtml","description":"Pol\u00edcia legislativa usou g\u00e1s lacrimog\u00eanio para conter uma confus\u00e3o, ao final da marcha de ind\u00edgenas, nesta quinta-feira (10), em Bras\u00edlia. V\u00e1rias etnias est\u00e3o reunidas no Acampamento Terra Livre desde o \u00faltimo fim de semana.","author":"Vin\u00edcius Cassela","publishedAt":"2025-04-10T19:46:34.699-03:00","source":"G1"},{"title":"Gleisi diz confiar que Motta n\u00e3o vai levar projeto da anistia \u00e0 vota\u00e7\u00e3o: 'Crise institucional'","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/gleisi-diz-confiar-que-motta-nao-vai-levar-projeto-da-anistia-a-votacao-crise-institucional.ghtml","description":"Gleisi afirmou que alguns parlamentares est\u00e3o assinando o projeto sem saber do conte\u00fado.","author":"Pedro Henrique Gomes","publishedAt":"2025-04-10T19:36:31.923-03:00","source":"G1"},{"title":"Quem \u00e9 Pedro Lucas, l\u00edder do Uni\u00e3o Brasil na C\u00e2mara e novo ministro das Comunica\u00e7\u00f5es","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/quem-e-pedro-lucas-lider-do-uniao-brasil-na-camara-indicado-para-o-ministerio-das-comunicacoes.ghtml","description":"Aliado de Fl\u00e1vio Dino, deputado \u00e9 de fam\u00edlia tradicional na pol\u00edtica maranhense e atua mais nos bastidores. Irm\u00e3os do parlamentar ocupam cargos nos governos federal e estadual.","author":"Luiz Felipe Barbi\u00e9ri","publishedAt":"2025-04-10T19:35:29.218-03:00","source":"G1"},{"title":"Governo confirma deputado Pedro Lucas como novo ministro das Comunica\u00e7\u00f5es","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/lula-confirma-deputado-pedro-lucas-como-novo-ministro-das-comunicacoes.ghtml","description":"Lucas vai ocupar lugar de Juscelino Filho, que pediu demiss\u00e3o ap\u00f3s den\u00fancia da Procuradoria-Geral da Rep\u00fablica (PGR) por desvio de emendas parlamentares. Antes do an\u00fancio, Lula se reuniu com dirigentes do Uni\u00e3o Brasil e com o presidente do Senado, Davi Alcolumbre.","author":"Pedro Henrique Gomes","publishedAt":"2025-04-10T19:33:28.728-03:00","source":"G1"},{"title":"Lula sanciona Or\u00e7amento de 2025 com previs\u00e3o de super\u00e1vit de R$ 14 bilh\u00f5es","url":"https:\/\/g1.globo.com\/economia\/noticia\/2025\/04\/10\/lula-sanciona-orcamento-de-2025-com-previsao-de-superavit-de-r-14-bilhoes.ghtml","description":"Or\u00e7amento tamb\u00e9m prev\u00ea alta do sal\u00e1rio m\u00ednimo para R$ 1.518. Congresso aprovou apenas em mar\u00e7o a proposta de Or\u00e7amento de 2025.","author":"N\u00e3o dispon\u00edvel","publishedAt":"2025-04-10T19:13:27.124-03:00","source":"G1"},{"title":"Na expectativa de escolha de novo ministro das Comunica\u00e7\u00f5es, Lula recebe Alcolumbre no Alvorada","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/na-expectativa-de-escolha-de-novo-ministro-das-comunicacoes-lula-recebe-alcolumbre-no-alvorada.ghtml","description":"Presidente disse que se reuniria com o presidente Senado Federal para discutir poss\u00edvel nomea\u00e7\u00e3o do deputado Pedro Lucas para substituir Juscelino Filho.","author":"Pedro Henrique Gomes","publishedAt":"2025-04-10T19:03:06.251-03:00","source":"G1"},{"title":"STF rejeita proposta que buscou retomar 'revis\u00e3o da vida toda' do INSS; ministros fixam como ser\u00e1 a aplica\u00e7\u00e3o dos efeitos da decis\u00e3o","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/stf-rejeita-proposta-que-buscou-retomar-revisao-da-vida-toda-do-inss-ministros-fixam-como-sera-a-aplicacao-dos-efeitos-da-decisao.ghtml","description":"Possibilidade de escolha de regra mais vantajosa para c\u00e1lculo de aposentadorias do INSS ficou invi\u00e1vel depois de determina\u00e7\u00e3o do STF de mar\u00e7o do ano passado.","author":"N\u00e3o dispon\u00edvel","publishedAt":"2025-04-10T18:51:30.051-03:00","source":"G1"},{"title":"STF marca para o dia 25 julgamento da pichadora da est\u00e1tua da Justi\u00e7a nos atos golpistas","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/fux-libera-para-julgamento-no-dia-25-caso-da-pichadora-da-estatua-da-justica-nos-atos-golpistas.ghtml","description":"D\u00e9bora foi condenada a 14 anos de pris\u00e3o por participa\u00e7\u00e3o nos atos golpistas, incluindo o epis\u00f3dio em que pichou a ic\u00f4nica escultura em frente ao Supremo. O julgamento havia sido interrompido ap\u00f3s um pedido de vista do pr\u00f3prio Fux, que agora devolve o caso para conclus\u00e3o.","author":"Fernanda Vivas","publishedAt":"2025-04-10T18:44:15.317-03:00","source":"G1"},{"title":"Moraes autoriza que parlamentares visitem Braga Netto na pris\u00e3o; veja a lista","url":"https:\/\/g1.globo.com\/politica\/noticia\/2025\/04\/10\/moraes-autoriza-visita-de-parlamentares-a-braga-netto-na-prisao.ghtml","description":"Ex-ministro do governo de Jair Bolsonaro (PL) est\u00e1 preso desde 14 de dezembro do ano passado, sob suspeita de interfer\u00eancia nas investiga\u00e7\u00f5es da tentativa de golpe de estado.","author":"M\u00e1rcio Falc\u00e3o","publishedAt":"2025-04-10T17:51:41.322-03:00","source":"G1"}]
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\cache\uol_news.json
+================================================================================
+
+[{"title":"Real Time Pernambuco: Jo\u00e3o Campos lidera com 67% contra 22% de Raquel Lyra","url":"https:\/\/noticias.uol.com.br\/politica\/ultimas-noticias\/2025\/04\/10\/real-time-pernambuco-joao-campos-lidera-com-67-contra-22-de-raquel-lyra.htm","description":"Pesquisa divulgada hoje pela Real Time Big Data mostra Jo\u00e3o Campos (PSB) com vantagem expressiva na disputa pelo governo de Pernambuco. O levantamento foi contratado pela Record TV.","author":"Laila Nery","publishedAt":"10\/04\/2025 21h51","source":"UOL"},{"title":"L\u00edder do PT diz que cobrar\u00e1 partidos aliados a desistirem de PL da anistia","url":"https:\/\/noticias.uol.com.br\/politica\/ultimas-noticias\/2025\/04\/10\/governo-lula-vai-cobrar-partidos-aliados-a-desistirem-da-anistia.htm","description":"O l\u00edder do PT na C\u00e2mara, Lindbergh Farias (PT-RJ), afirmou que vai cobrar os ministros e as lideran\u00e7as que fazem parte da base do governo e assinaram o requerimento de urg\u00eancia do projeto que anistia os presos em 8 de Janeiro.","author":"Carolina Nogueira","publishedAt":"10\/04\/2025 20h30","source":"UOL"},{"title":"Prefeito de Sorocaba sobre a\u00e7\u00e3o da PF: Voc\u00ea se responsabiliza por cunhado?","url":"https:\/\/noticias.uol.com.br\/politica\/ultimas-noticias\/2025\/04\/10\/prefeito-sorocaba-rodrigo-manga-corrupcao-dinheiro-desvio-saude-upa.htm","description":"O prefeito de Sorocaba, Rodrigo Manga (Republicanos), alvo de opera\u00e7\u00e3o policial que investiga desvios de verbas da Sa\u00fade no munic\u00edpio, negou irregularidades e disse, em entrevista ao UOL News, do Canal UOL, que a quantia encontrada em endere\u00e7os de pessoas ligadas a ele est\u00e1 devidamente declarada. A PF (Pol\u00edcia Federal) encontrou hoje quase R$ 1 milh\u00e3o em esp\u00e9cie em um carro que estava em um dos endere\u00e7os ligados ao bispo Josivaldo Souza e sua esposa, a pastora Simone Souza. A l\u00edder religiosa \u00e9 cunhada do prefeito do munic\u00edpio. Os agentes fizeram buscas na igreja e na resid\u00eancia do casal.","author":"N\u00e3o dispon\u00edvel","publishedAt":"10\/04\/2025 19h44","source":"UOL"},{"title":"Deputado do Uni\u00e3o Brasil vai assumir como ministro das Comunica\u00e7\u00f5es","url":"https:\/\/noticias.uol.com.br\/politica\/ultimas-noticias\/2025\/04\/10\/uniao-brasil-indica-novo-ministro-das-comunicacoes.htm","description":"O governo Lula (PT) confirmou que o deputado Pedro Lucas Fernandes (Uni\u00e3o Brasil-MA) vai assumir o Minist\u00e9rio das Comunica\u00e7\u00f5es no lugar de Juscelino Filho, denunciado sob acusa\u00e7\u00e3o de desvio de emendas parlamentares.","author":"Carolina Nogueira","publishedAt":"10\/04\/2025 19h38","source":"UOL"},{"title":"Moraes autoriza visitas de 24 pol\u00edticos a Braga Netto; veja lista","url":"https:\/\/noticias.uol.com.br\/politica\/ultimas-noticias\/2025\/04\/10\/stf-autoriza-visitas-a-braga-netto.htm","description":"O ministro do STF (Supremo Tribunal Federal) Alexandre de Moraes liberou 24 visitas ao general Braga Netto, com regras r\u00edgidas e veto a celulares ou imprensa.","author":"Laila Nery","publishedAt":"10\/04\/2025 18h24","source":"UOL"},{"title":"Ex enquadra Janones na Lei Maria da Penha e consegue medida protetiva","url":"https:\/\/noticias.uol.com.br\/colunas\/leticia-casado\/2025\/04\/10\/janones-ex.htm","description":"A ex-mulher do deputado Andr\u00e9 Janones (Avante-MG) conseguiu uma medida protetiva contra o parlamentar com base na Lei Maria da Penha.","author":"Let\u00edcia Casado","publishedAt":"10\/04\/2025 18h04","source":"UOL"},{"title":"Rodrigo Manga: por que prefeito de Sorocaba foi alvo de opera\u00e7\u00e3o da PF?","url":"https:\/\/noticias.uol.com.br\/politica\/ultimas-noticias\/2025\/04\/10\/rodrigo-manga-por-que-prefeito-de-sorocaba-foi-alvo-de-operacao-da-pf.htm","description":"O prefeito de Sorocaba, Rodrigo Manga (Republicanos), foi alvo hoje da Pol\u00edcia Federal em uma opera\u00e7\u00e3o que investiga desvios de verbas p\u00fablicas da Sa\u00fade no munic\u00edpio.","author":"N\u00e3o dispon\u00edvel","publishedAt":"10\/04\/2025 17h57","source":"UOL"},{"title":"Lula se refere \u00e0 diretora-geral do FMI como 'uma mulherzinha' em evento","url":"https:\/\/noticias.uol.com.br\/ultimas-noticias\/agencia-estado\/2025\/04\/10\/lula-se-refere-a-diretora-geral-do-fmi-como-uma-mulherzinha-em-evento.htm","description":"O presidente Luiz In\u00e1cio Lula da Silva (PT) contou na \u00faltima ter\u00e7a-feira, em S\u00e3o Paulo, sobre um epis\u00f3dio em que, durante viagem \u00e0 Hiroshima (Jap\u00e3o), encontrou uma \"mulherzinha\" que falou com ele sobre o crescimento da economia do Brasil. Ele se referia a Kristalina Georgieva, que dirige o FMI (Fundo Monet\u00e1rio Internacional) desde 2019.","author":"N\u00e3o dispon\u00edvel","publishedAt":"10\/04\/2025 17h55","source":"UOL"},{"title":"Justi\u00e7a suspende elei\u00e7\u00e3o da Rede ap\u00f3s disputa entre Marina e Helo\u00edsa Helena","url":"https:\/\/noticias.uol.com.br\/politica\/ultimas-noticias\/2025\/04\/10\/congresso-da-rede-e-suspenso.htm","description":"O Congresso Nacional do partido Rede Sustentabilidade foi suspenso pela Justi\u00e7a ap\u00f3s den\u00fancias de irregularidades em elei\u00e7\u00f5es estaduais internas e suspeita de irresponsabilidade com dinheiro p\u00fablico. Os grupos da ministra Marina Silva (AC) e da ex-senadora Helo\u00edsa Helena (AL) disputam o comando do partido.","author":"Laila Nery","publishedAt":"10\/04\/2025 17h37","source":"UOL"},{"title":"Reinaldo: A\u00e7\u00e3o da PF colhe o prefeito fanfarr\u00e3o de Sorocaba, que ataca Lula","url":"https:\/\/noticias.uol.com.br\/colunas\/reinaldo-azevedo\/2025\/04\/10\/reinaldo-acao-da-pf-colhe-o-prefeito-fanfarrao-de-sorocaba-que-ataca-lula.htm","description":"Descri\u00e7\u00e3o n\u00e3o dispon\u00edvel.","author":"Reinaldo Azevedo","publishedAt":"10\/04\/2025 17h28","source":"UOL"},{"title":"Reinaldo: Recuo de Trump acalma, mas n\u00e3o resolve. E o intelectual Ron Vara","url":"https:\/\/noticias.uol.com.br\/colunas\/reinaldo-azevedo\/2025\/04\/10\/reinaldo-recuo-de-trump-acalma-mas-nao-resolve-e-o-intelectual-ron-vara.htm","description":"Descri\u00e7\u00e3o n\u00e3o dispon\u00edvel.","author":"Reinaldo Azevedo","publishedAt":"10\/04\/2025 17h26","source":"UOL"}]
 
 ================================================================================
 Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\config\config.php
@@ -549,6 +704,44 @@ require_once __DIR__ . '/../app/controllers/NewsController.php';
 
 $controller = new NewsController();
 $controller->index();
+?>
+
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\public\api\force_update.php
+================================================================================
+
+<?php
+// Inicia o buffer e ativa exibição de erros (para depuração - remova display_errors depois)
+// ini_set('display_errors', 1);
+// error_reporting(E_ALL);
+
+ob_start();
+header('Content-Type: application/json');
+
+// Inclua as configurações globais (certifique-se de que o config/config.php NÃO tenha saída extra)
+require_once __DIR__ . '/../../config/config.php';
+require_once __DIR__ . '/../../app/models/Scraper.php';
+
+$scraper = new Scraper();
+$articles = $scraper->getAllPoliticalNews(true); // Força atualização
+
+$cacheDir = __DIR__ . '/../../cache';
+if (!is_dir($cacheDir)) {
+    mkdir($cacheDir, 0777, true);
+}
+$cacheFile = $cacheDir . '/all_news.json';
+file_put_contents($cacheFile, json_encode($articles));
+
+$response = [
+    'status' => 'success',
+    'message' => 'Atualização forçada realizada com sucesso!',
+    'articles_count' => count($articles)
+];
+
+// Limpa qualquer saída que possa ter sido gerada antes do JSON
+ob_end_clean();
+echo json_encode($response);
 ?>
 
 
