@@ -264,3 +264,1241 @@
 [2025-04-10 22:39:10] [G1] | Cache: Utilizando dados do cache.
 [2025-04-10 22:39:10] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
 [2025-04-10 22:39:10] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 22:48:51] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 22:48:51] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 22:48:51] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 22:48:51] [G1] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 22:48:51] [G1] | Listagem: Nós encontrados = 10
+[2025-04-10 22:48:55] [G1] | Concluído: Scraping finalizado. Artigos encontrados = 10
+[2025-04-10 22:48:55] [UOL] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 22:48:55] [UOL] | Listagem: Itens encontrados = 0
+[2025-04-10 22:48:55] [UOL] | Concluído: Scraping finalizado. Artigos encontrados = 0
+[2025-04-10 22:48:55] [Folha] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 22:48:55] [Folha] | Listagem: Nós encontrados = 497
+[2025-04-10 22:48:56] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/governo-empresta-avioes-da-fab-ao-stf-e-poe-lista-de-passageiros-em-sigilo-por-5-anos.shtml
+[2025-04-10 22:48:56] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/deltafolha/
+[2025-04-10 22:48:56] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/motta-fala-em-pautar-cassacao-de-chiquinho-brazao-como-equilibrio-de-caso-glauber-braga.shtml
+[2025-04-10 22:48:56] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/congresso-nacional/
+[2025-04-10 22:48:56] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/governo-anuncia-pedro-lucas-como-novo-ministro-das-comunicacoes.shtml
+[2025-04-10 22:48:57] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/lula/
+[2025-04-10 22:48:57] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/stf/
+[2025-04-10 22:48:57] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/folhajus/
+[2025-04-10 22:48:57] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/60-anos-do-golpe/
+[2025-04-10 22:48:58] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/lava-jato-10-anos/
+[2025-04-10 22:48:58] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/exto/2025/04/todos-os-caminhos-levam-ao-brooklin.shtml?utm_source=exto&utm_medium=caminhos-levam-ao-brooklin
+[2025-04-10 22:48:58] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/governo-de-sao-paulo/2025/04/governo-do-estado-de-sao-paulo-amplia-acoes-de-combate-a-violencia-contra-a-mulher.shtml?utm_source=governo-de-saopaulo&utm_medium=acoes-de-combate-a-violencia
+[2025-04-10 22:48:58] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/exto/2025/04/conectado-e-produtivo.shtml?utm_source=exto&utm_medium=conectado-e-produtivo
+[2025-04-10 22:48:58] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/sesi-sp/2025/03/sesi-sp-cria-programa-juventudes-antimisoginia.shtml?utm_source=sesi-sp&utm_medium=programa-juventudes-antimisoginia
+[2025-04-10 22:48:58] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/previdencia-e-futuro/2025/03/avalie-suas-expectativas-e-escolha-a-previdencia-privada-ideal.shtml?utm_source=previdencia-e-futuro&utm_medium=escolha-a-previdencia-privada-ideal
+[2025-04-10 22:48:58] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/pepsico/2025/03/setor-privado-governos-e-sociedade-precisam-trabalhar-juntos-para-beneficiar-as-pessoas-e-o-planeta-diz-chief-sustainability-officer-global-da-pepsico.shtml?utm_source=pepsico&utm_medium=chief-sustainability-officer-global-da-pepsico
+[2025-04-10 22:48:59] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/prefeitura-de-saopaulo/2025/03/prefeitura-inaugura-11-parques-e-amplia-area-verde-de-preservacao-e-de-lazer.shtml?utm_source=prefeitura-de-saopaulo&utm_medium=inaugura-11-parques-e-amplia-area-verde
+[2025-04-10 22:48:59] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/casas-bahia/2025/03/casas-bahia-leva-inovacao-lazer-e-espacos-de-convivencia-para-berrini.shtml?utm_source=casas-bahia&utm_medium=inovacao-lazer-e-espacos-de-convivencia
+[2025-04-10 22:48:59] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/bndes/2025/03/em-2024-bndes-aprova-r-2765-bi-e-alcanca-lucro-de-r-264-bi.shtml?utm_source=BNDES&utm_medium=alcanca-lucro-de-r-264-bi
+[2025-04-10 22:48:59] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/mastercard/2025/02/como-a-biometria-vai-revolucionar-a-seguranca-e-a-facilidade-das-compras-online.shtml?utm_source=mastercard&utm_medium=biometria-vai-revolucionar-a-seguranca
+[2025-04-10 22:48:59] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/vice-governador-da-bahia-constrange-geddel-ao-citar-bunker-com-r-51-milhoes-em-entrevista.shtml
+[2025-04-10 22:48:59] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/bahia-estado/
+[2025-04-10 22:49:00] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/gleisi-critica-deputados-da-base-de-lula-que-assinam-urgencia-de-anistia-a-81.shtml
+[2025-04-10 22:49:00] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/pt-e-prerrogativas-querem-campanha-para-expor-deputados-pro-anistia.shtml
+[2025-04-10 22:49:00] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/
+[2025-04-10 22:49:00] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/quem-e-pedro-lucas-novo-ministro-das-comunicacoes-de-lula.shtml
+[2025-04-10 22:49:00] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/toffoli-adia-leitura-de-voto-em-acao-sobre-confisco-de-bens-de-delatores-da-lava-jato.shtml
+[2025-04-10 22:49:01] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/
+[2025-04-10 22:49:01] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/cfm-proibe-bloqueio-hormonal-para-criancas-e-adolescentes-trans.shtml
+[2025-04-10 22:49:01] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/stf-forma-maioria-para-manter-indenizacao-de-eduardo-bolsonaro-a-jornalista-da-folha.shtml
+[2025-04-10 22:49:01] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/fux-libera-caso-debora-para-julgamento-na-primeira-turma-do-stf.shtml
+[2025-04-10 22:49:01] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/desembargador-aposentado-condenado-por-venda-de-decisoes-e-preso-em-fortaleza.shtml
+[2025-04-10 22:49:02] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/corrupcao/
+[2025-04-10 22:49:02] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/moraes-autoriza-24-parlamentares-a-visitarem-braga-netto-na-prisao.shtml
+[2025-04-10 22:49:02] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/marcosaugustogoncalves/2025/04/recuo-de-trump-e-alivio-mas-crise-com-china-segue-azeda.shtml
+[2025-04-10 22:49:02] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/marcosaugustogoncalves/
+[2025-04-10 22:49:02] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-alckmin-e-marcal-lideram-cenarios-em-eventual-disputa-ao-governo-de-sp-sem-tarcisio.shtml
+[2025-04-10 22:49:02] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/datafolha/
+[2025-04-10 22:49:03] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-tarcisio-venceria-disputa-para-governo-de-sp-se-eleicao-fosse-hoje.shtml
+[2025-04-10 22:49:03] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/leonardo-avalanche-diz-que-operacao-da-pf-na-casa-de-manga-e-perseguicao-politica.shtml
+[2025-04-10 22:49:03] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-suspende-congresso-da-rede-apos-questionamento-sobre-legalidade-de-processo-eleitoral.shtml
+[2025-04-10 22:49:03] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/maioria-dos-parlamentares-defende-regulamentacao-dos-supersalarios-diz-pesquisa.shtml
+[2025-04-10 22:49:03] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/gleisi-mescla-articulacao-no-congresso-e-embate-com-governadores-no-1o-mes-no-ministerio.shtml
+[2025-04-10 22:49:04] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-governo-tarcisio-mantem-patamar-de-aprovacao-mas-reprovacao-dobra-em-2-anos.shtml
+[2025-04-10 22:49:04] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/novo-em-folha/2025/04/petrobras-abre-inscricoes-para-bolsas-de-reportagens.shtml
+[2025-04-10 22:49:04] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/novo-em-folha/
+[2025-04-10 22:49:04] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/itaipu-apresenta-superavit-em-2024-e-promete-manter-tarifa-para-o-consumidor.shtml
+[2025-04-10 22:49:04] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/lider-da-maioria-na-camara-defende-contraponto-a-pressao-de-bolsonaristas-por-anistia.shtml
+[2025-04-10 22:49:05] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/aline-wolff-psicologa-da-rebeca-andrade-estreia-na-casafolha-curso-sobre-equilibrio-emocional.shtml
+[2025-04-10 22:49:05] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/casafolha/
+[2025-04-10 22:49:05] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/racha-no-pt-se-acirra-com-acusacoes-sobre-jatinho-e-candidatura-contra-vontade-de-lula.shtml
+[2025-04-10 22:49:05] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/pt/
+[2025-04-10 22:49:05] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/cotado-para-comunicacoes-deve-elevar-pressao-sobre-ibama-por-exploracao-da-margem-equatorial.shtml
+[2025-04-10 22:49:06] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/bolsonaro-e-motta-se-encontram-para-falar-de-pl-da-anistia.shtml
+[2025-04-10 22:49:06] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/cerca-de-320-empresarios-se-inscreveram-para-forum-do-lide-em-ny.shtml
+[2025-04-10 22:49:06] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/monicabergamo/2025/04/entidades-enviam-carta-a-lula-pedindo-permanencia-de-cida-goncalves-no-ministerio-das-mulheres.shtml
+[2025-04-10 22:49:06] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/monicabergamo/
+[2025-04-10 22:49:06] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/lula-diz-que-uniao-brasil-tem-o-direito-de-indicar-substituto-de-juscelino.shtml
+[2025-04-10 22:49:07] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/lider-do-psol-liga-para-motta-para-tentar-interromper-cassacao-de-glauber-e-nao-e-atendida.shtml
+[2025-04-10 22:49:07] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/ministerio-publico-questiona-indicacao-para-tribunal-de-contas-de-filha-de-chefe-da-assembleia-da-paraiba.shtml
+[2025-04-10 22:49:07] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/paraiba-estado/
+[2025-04-10 22:49:07] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-pode-suspender-eleicao-para-direcao-da-rede-apos-questionamento-sobre-lista-de-delegados.shtml
+[2025-04-10 22:49:07] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/candidatos-em-eleicao-interna-do-pt-terao-direito-a-passagens-aereas-hotel-e-jornalzinho.shtml
+[2025-04-10 22:49:08] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/glauber-braga-anuncia-greve-de-fome-em-protesto-contra-processo-de-cassacao-de-mandato.shtml
+[2025-04-10 22:49:08] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-do-trabalho-condena-havan-por-assedio-eleitoral.shtml
+[2025-04-10 22:49:08] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/maria-herminia-tavares/2025/04/volta-da-ultradireita-e-tragedia-contratada.shtml
+[2025-04-10 22:49:08] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/maria-herminia-tavares/
+[2025-04-10 22:49:08] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/marcosaugustogoncalves/2025/04/sem-aliados-trump-recua-diante-de-retaliacao-da-china.shtml
+[2025-04-10 22:49:08] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-suspende-resolucao-que-permite-prescricao-de-anticoncepcional-por-farmaceuticos.shtml
+[2025-04-10 22:49:09] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/monicabergamo/2025/04/vereadores-do-pl-apresentam-projeto-que-torna-obrigatorio-sepultamento-de-fetos.shtml
+[2025-04-10 22:49:09] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/rui-falcao-lanca-candidatura-a-presidencia-do-pt-em-oposicao-ao-preferido-de-lula.shtml
+[2025-04-10 22:49:09] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/agu-pede-investigacao-contra-deputado-que-pediu-morte-de-lula.shtml
+[2025-04-10 22:49:09] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/prefeitura-de-sp-preve-economia-de-r-45-mi-com-ppp-para-construir-5-ceus.shtml
+[2025-04-10 22:49:09] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/pl-de-bolsonaro-recua-de-emparedar-deputados-por-anistia-e-mira-proxima-semana.shtml
+[2025-04-10 22:49:10] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/lula-vai-receber-uniao-brasil-para-oficializar-troca-em-ministerio-e-pedro-lucas-deve-assumir.shtml
+[2025-04-10 22:49:10] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/policia-arquiva-processo-contra-ex-vereador-bolsonarista-acusado-de-ameacar-reporter.shtml
+[2025-04-10 22:49:10] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/medico-condenado-por-estupro-recebe-homenagem-na-assembleia-legislativa-de-sp.shtml
+[2025-04-10 22:49:10] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/queda-de-juscelino-destrava-conversas-de-lula-sobre-reforma-ministerial.shtml
+[2025-04-10 22:49:10] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/eliogaspari/2025/04/a-anistia-virou-guerrilha.shtml
+[2025-04-10 22:49:10] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/eliogaspari/
+[2025-04-10 22:49:11] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/marinha-deve-ter-1a-expulsao-de-militar-por-participacao-nos-ataques-de-81.shtml
+[2025-04-10 22:49:11] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/forcas-armadas/
+[2025-04-10 22:49:11] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/monicabergamo/2025/04/haddad-diz-que-falta-honestidade-intelectual-a-criticos-e-que-lula-sera-candidato-competitivo.shtml
+[2025-04-10 22:49:11] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/ministerio-publico-pede-r-14-milhoes-para-indenizar-indigenas-vitimas-da-ditadura.shtml
+[2025-04-10 22:49:11] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/ditadura-militar/
+[2025-04-10 22:49:12] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/entenda-o-que-pesa-sobre-juscelino-filho-e-proximos-passos-da-denuncia-da-pgr.shtml
+[2025-04-10 22:49:12] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/ratinho-jr-defende-igualdade-de-regras-para-radio-e-tv-e-big-techs-no-uso-do-fundo-eleitoral.shtml
+[2025-04-10 22:49:12] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/planalto-diz-que-lula-pediu-para-juscelino-se-demitir-ministro-diz-que-decisao-foi-dele.shtml
+[2025-04-10 22:49:12] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/defensoria-da-uniao-recomenda-retirada-de-invasores-de-terras-indigenas-no-mt.shtml
+[2025-04-10 22:49:12] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/tre-g0-decide-reverter-decisao-de-1a-instancia-e-mantem-caiado-elegivel.shtml
+[2025-04-10 22:49:13] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/goias-estado/
+[2025-04-10 22:49:13] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/lider-do-pt-na-camara-quer-investigar-campos-neto-por-norma-usada-por-master.shtml
+[2025-04-10 22:49:13] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/folha-nao-publicou-que-usp-nao-divulgaria-publico-de-ato-de-bolsonaro-na-paulista.shtml
+[2025-04-10 22:49:13] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/especial/2018/folha-informacoes/
+[2025-04-10 22:49:13] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/mst-ja-fez-20-invasoes-de-terra-em-10-estados-no-abril-vermelho.shtml
+[2025-04-10 22:49:14] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/tarcisio-diz-que-tarifaco-de-trump-cria-oportunidade-para-sp-e-elogia-postura-de-lula.shtml
+[2025-04-10 22:49:14] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/
+[2025-04-10 22:49:14] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/juscelino-filho-ministro-de-lula-decide-pedir-demissao-apos-denuncia-da-pgr.shtml
+[2025-04-10 22:49:14] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/governo-lula-volta-a-exigir-vistos-de-americanos-para-entrada-no-brasil.shtml
+[2025-04-10 22:49:14] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/gleisi-se-reune-com-juscelino-e-cupula-do-uniao-brasil-apos-denuncia-contra-ministro.shtml
+[2025-04-10 22:49:15] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-rejeita-pedido-de-mamae-falei-para-anular-cassacao-por-falas-machistas.shtml
+[2025-04-10 22:49:15] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/bndes-ja-aprovou-r-196-bilhoes-para-nova-industria-brasil-diz-mercadante.shtml
+[2025-04-10 22:49:15] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/gilmar-rechaca-anistia-a-81-mas-diz-que-pode-haver-abertura-para-revisao.shtml
+[2025-04-10 22:49:15] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/lider-do-pl-vai-a-aeroporto-colher-assinaturas-para-anistia-e-bate-boca-com-manifestantes-veja-video.shtml
+[2025-04-10 22:49:15] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-diz-que-delegados-eleitos-no-rj-nao-podem-votar-em-conferencia-nacional-da-rede.shtml
+[2025-04-10 22:49:15] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/planalto-avalia-que-juscelino-filho-deveria-pedir-demissao-apos-denuncia-da-pgr.shtml
+[2025-04-10 22:49:16] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/defesa-de-juscelino-filho-ministro-de-lula-critica-ministerio-publico-e-diz-confiar-no-stf.shtml
+[2025-04-10 22:49:16] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/secretaria-da-pasta-de-anielle-pede-demissao-e-diz-que-comunicacao-do-governo-lula-e-problema.shtml
+[2025-04-10 22:49:16] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/juscelino-filho-ministro-de-lula-e-denunciado-pela-pgr-em-caso-de-desvio-de-emendas.shtml
+[2025-04-10 22:49:16] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/pgr/
+[2025-04-10 22:49:17] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/mercado/2025/04/quando-voce-faz-o-ajuste-fiscal-o-resultado-vem-rapido-diz-tarcisio.shtml
+[2025-04-10 22:49:17] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/tarcisio-de-freitas/
+[2025-04-10 22:49:17] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/defesa-de-ex-assessor-diz-que-moraes-mira-advogado-ao-aplicar-punicao-por-live.shtml
+[2025-04-10 22:49:18] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/nova-presidencia-da-camara-de-sp-cria-novo-grupo-de-whatsapp-e-exclui-milton-leite.shtml
+[2025-04-10 22:49:18] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/podcasts/2025/04/podcast-discute-pressao-de-bolsonaristas-sobre-hugo-motta-por-anistia-a-reus-do-81.shtml
+[2025-04-10 22:49:18] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/especial/2019/cafe-da-manha/
+[2025-04-10 22:49:18] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-52-acham-que-bolsonaro-deveria-ser-preso-por-tentativa-de-golpe.shtml
+[2025-04-10 22:49:18] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/tarcisio-faz-parceria-com-governo-lula-e-exalta-feito-de-obama-apos-protagonismo-em-ato-de-bolsonaro.shtml
+[2025-04-10 22:49:19] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/governo-lula-reclama-de-estados-que-se-apropriam-do-minha-casa-minha-vida.shtml
+[2025-04-10 22:49:19] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/levantamento-mapeia-perfil-de-vitimas-da-ditadura-militar-no-brasil.shtml
+[2025-04-10 22:49:19] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/historia-do-brasil/
+[2025-04-10 22:49:19] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/stf-institui-indenizacao-de-r-10-mil-mensais-a-juizes-auxiliares-de-ministros.shtml
+[2025-04-10 22:49:19] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/bolsonaro-diz-concordar-com-fala-de-malafaia-sobre-generais-frouxos.shtml
+[2025-04-10 22:49:20] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/tarcisio-promete-acao-politica-com-deputados-por-anistia-apos-protagonismo-em-ato-de-bolsonaro.shtml
+[2025-04-10 22:49:20] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-56-sao-contra-anistia-pelo-81-mas-tamanho-de-penas-gera-divisao.shtml
+[2025-04-10 22:49:20] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/vereadora-zoe-se-irrita-por-nao-subir-em-caminhao-de-som-e-vai-embora-de-ato-de-bolsonaro.shtml
+[2025-04-10 22:49:20] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/lula-aparece-com-curativo-na-testa-apos-procedimento-para-retirar-pinta.shtml
+[2025-04-10 22:49:20] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/moraes-diz-que-presos-do-81-podem-receber-visita-de-autoridade-religiosa.shtml
+[2025-04-10 22:49:21] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/hugo-motta-critica-ataques-ao-stf-mas-defende-corrigir-exagero-em-penas-do-8-de-janeiro.shtml
+[2025-04-10 22:49:21] [Folha] | Alerta: Título não extraído para artigo: https://datafolha.folha.uol.com.br/avaliacao-de-governo/congresso-nacional/
+[2025-04-10 22:49:21] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/bolsonaro-e-pl-recalibram-pressao-por-anistia-e-preparam-forca-tarefa-por-assinaturas.shtml
+[2025-04-10 22:49:22] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 22:49:22] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 22:49:22] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 22:49:22] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 22:49:22] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 22:49:22] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 22:49:22] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 22:49:22] [Folha] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 22:49:22] [Folha] | Listagem: Nós encontrados = 497
+[2025-04-10 22:49:22] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/governo-empresta-avioes-da-fab-ao-stf-e-poe-lista-de-passageiros-em-sigilo-por-5-anos.shtml
+[2025-04-10 22:49:22] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/deltafolha/
+[2025-04-10 22:49:22] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/motta-fala-em-pautar-cassacao-de-chiquinho-brazao-como-equilibrio-de-caso-glauber-braga.shtml
+[2025-04-10 22:49:23] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/congresso-nacional/
+[2025-04-10 22:49:23] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/governo-anuncia-pedro-lucas-como-novo-ministro-das-comunicacoes.shtml
+[2025-04-10 22:49:23] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/lula/
+[2025-04-10 22:49:23] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/stf/
+[2025-04-10 22:49:23] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/folhajus/
+[2025-04-10 22:49:23] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/60-anos-do-golpe/
+[2025-04-10 22:49:24] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/lava-jato-10-anos/
+[2025-04-10 22:49:24] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/exto/2025/04/todos-os-caminhos-levam-ao-brooklin.shtml?utm_source=exto&utm_medium=caminhos-levam-ao-brooklin
+[2025-04-10 22:49:24] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/governo-de-sao-paulo/2025/04/governo-do-estado-de-sao-paulo-amplia-acoes-de-combate-a-violencia-contra-a-mulher.shtml?utm_source=governo-de-saopaulo&utm_medium=acoes-de-combate-a-violencia
+[2025-04-10 22:49:24] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/exto/2025/04/conectado-e-produtivo.shtml?utm_source=exto&utm_medium=conectado-e-produtivo
+[2025-04-10 22:49:24] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/sesi-sp/2025/03/sesi-sp-cria-programa-juventudes-antimisoginia.shtml?utm_source=sesi-sp&utm_medium=programa-juventudes-antimisoginia
+[2025-04-10 22:49:24] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/previdencia-e-futuro/2025/03/avalie-suas-expectativas-e-escolha-a-previdencia-privada-ideal.shtml?utm_source=previdencia-e-futuro&utm_medium=escolha-a-previdencia-privada-ideal
+[2025-04-10 22:49:25] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/pepsico/2025/03/setor-privado-governos-e-sociedade-precisam-trabalhar-juntos-para-beneficiar-as-pessoas-e-o-planeta-diz-chief-sustainability-officer-global-da-pepsico.shtml?utm_source=pepsico&utm_medium=chief-sustainability-officer-global-da-pepsico
+[2025-04-10 22:49:25] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/prefeitura-de-saopaulo/2025/03/prefeitura-inaugura-11-parques-e-amplia-area-verde-de-preservacao-e-de-lazer.shtml?utm_source=prefeitura-de-saopaulo&utm_medium=inaugura-11-parques-e-amplia-area-verde
+[2025-04-10 22:49:25] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/casas-bahia/2025/03/casas-bahia-leva-inovacao-lazer-e-espacos-de-convivencia-para-berrini.shtml?utm_source=casas-bahia&utm_medium=inovacao-lazer-e-espacos-de-convivencia
+[2025-04-10 22:49:25] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/bndes/2025/03/em-2024-bndes-aprova-r-2765-bi-e-alcanca-lucro-de-r-264-bi.shtml?utm_source=BNDES&utm_medium=alcanca-lucro-de-r-264-bi
+[2025-04-10 22:49:25] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/mastercard/2025/02/como-a-biometria-vai-revolucionar-a-seguranca-e-a-facilidade-das-compras-online.shtml?utm_source=mastercard&utm_medium=biometria-vai-revolucionar-a-seguranca
+[2025-04-10 22:49:25] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/vice-governador-da-bahia-constrange-geddel-ao-citar-bunker-com-r-51-milhoes-em-entrevista.shtml
+[2025-04-10 22:49:25] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/bahia-estado/
+[2025-04-10 22:49:26] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/gleisi-critica-deputados-da-base-de-lula-que-assinam-urgencia-de-anistia-a-81.shtml
+[2025-04-10 22:49:26] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/pt-e-prerrogativas-querem-campanha-para-expor-deputados-pro-anistia.shtml
+[2025-04-10 22:49:26] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/
+[2025-04-10 22:49:26] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/quem-e-pedro-lucas-novo-ministro-das-comunicacoes-de-lula.shtml
+[2025-04-10 22:49:26] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/toffoli-adia-leitura-de-voto-em-acao-sobre-confisco-de-bens-de-delatores-da-lava-jato.shtml
+[2025-04-10 22:49:26] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/
+[2025-04-10 22:49:27] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/cfm-proibe-bloqueio-hormonal-para-criancas-e-adolescentes-trans.shtml
+[2025-04-10 22:49:27] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/stf-forma-maioria-para-manter-indenizacao-de-eduardo-bolsonaro-a-jornalista-da-folha.shtml
+[2025-04-10 22:49:27] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/fux-libera-caso-debora-para-julgamento-na-primeira-turma-do-stf.shtml
+[2025-04-10 22:49:27] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/desembargador-aposentado-condenado-por-venda-de-decisoes-e-preso-em-fortaleza.shtml
+[2025-04-10 22:49:27] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/corrupcao/
+[2025-04-10 22:49:27] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/moraes-autoriza-24-parlamentares-a-visitarem-braga-netto-na-prisao.shtml
+[2025-04-10 22:49:28] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/marcosaugustogoncalves/2025/04/recuo-de-trump-e-alivio-mas-crise-com-china-segue-azeda.shtml
+[2025-04-10 22:49:28] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/marcosaugustogoncalves/
+[2025-04-10 22:49:28] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-alckmin-e-marcal-lideram-cenarios-em-eventual-disputa-ao-governo-de-sp-sem-tarcisio.shtml
+[2025-04-10 22:49:28] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/datafolha/
+[2025-04-10 22:49:28] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-tarcisio-venceria-disputa-para-governo-de-sp-se-eleicao-fosse-hoje.shtml
+[2025-04-10 22:49:28] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/leonardo-avalanche-diz-que-operacao-da-pf-na-casa-de-manga-e-perseguicao-politica.shtml
+[2025-04-10 22:49:29] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-suspende-congresso-da-rede-apos-questionamento-sobre-legalidade-de-processo-eleitoral.shtml
+[2025-04-10 22:49:29] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/maioria-dos-parlamentares-defende-regulamentacao-dos-supersalarios-diz-pesquisa.shtml
+[2025-04-10 22:49:29] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/gleisi-mescla-articulacao-no-congresso-e-embate-com-governadores-no-1o-mes-no-ministerio.shtml
+[2025-04-10 22:49:29] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-governo-tarcisio-mantem-patamar-de-aprovacao-mas-reprovacao-dobra-em-2-anos.shtml
+[2025-04-10 22:49:29] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/novo-em-folha/2025/04/petrobras-abre-inscricoes-para-bolsas-de-reportagens.shtml
+[2025-04-10 22:49:29] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/novo-em-folha/
+[2025-04-10 22:49:30] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/itaipu-apresenta-superavit-em-2024-e-promete-manter-tarifa-para-o-consumidor.shtml
+[2025-04-10 22:49:30] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/lider-da-maioria-na-camara-defende-contraponto-a-pressao-de-bolsonaristas-por-anistia.shtml
+[2025-04-10 22:49:30] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/aline-wolff-psicologa-da-rebeca-andrade-estreia-na-casafolha-curso-sobre-equilibrio-emocional.shtml
+[2025-04-10 22:49:30] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/casafolha/
+[2025-04-10 22:49:30] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/racha-no-pt-se-acirra-com-acusacoes-sobre-jatinho-e-candidatura-contra-vontade-de-lula.shtml
+[2025-04-10 22:49:31] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/pt/
+[2025-04-10 22:49:31] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/cotado-para-comunicacoes-deve-elevar-pressao-sobre-ibama-por-exploracao-da-margem-equatorial.shtml
+[2025-04-10 22:49:31] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/bolsonaro-e-motta-se-encontram-para-falar-de-pl-da-anistia.shtml
+[2025-04-10 22:49:31] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/cerca-de-320-empresarios-se-inscreveram-para-forum-do-lide-em-ny.shtml
+[2025-04-10 22:49:32] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/monicabergamo/2025/04/entidades-enviam-carta-a-lula-pedindo-permanencia-de-cida-goncalves-no-ministerio-das-mulheres.shtml
+[2025-04-10 22:49:32] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/monicabergamo/
+[2025-04-10 22:49:32] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/lula-diz-que-uniao-brasil-tem-o-direito-de-indicar-substituto-de-juscelino.shtml
+[2025-04-10 22:49:32] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/lider-do-psol-liga-para-motta-para-tentar-interromper-cassacao-de-glauber-e-nao-e-atendida.shtml
+[2025-04-10 22:49:32] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/ministerio-publico-questiona-indicacao-para-tribunal-de-contas-de-filha-de-chefe-da-assembleia-da-paraiba.shtml
+[2025-04-10 22:49:32] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/paraiba-estado/
+[2025-04-10 22:49:33] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-pode-suspender-eleicao-para-direcao-da-rede-apos-questionamento-sobre-lista-de-delegados.shtml
+[2025-04-10 22:49:33] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/candidatos-em-eleicao-interna-do-pt-terao-direito-a-passagens-aereas-hotel-e-jornalzinho.shtml
+[2025-04-10 22:49:33] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/glauber-braga-anuncia-greve-de-fome-em-protesto-contra-processo-de-cassacao-de-mandato.shtml
+[2025-04-10 22:49:33] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-do-trabalho-condena-havan-por-assedio-eleitoral.shtml
+[2025-04-10 22:49:33] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/maria-herminia-tavares/2025/04/volta-da-ultradireita-e-tragedia-contratada.shtml
+[2025-04-10 22:49:33] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/maria-herminia-tavares/
+[2025-04-10 22:49:34] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/marcosaugustogoncalves/2025/04/sem-aliados-trump-recua-diante-de-retaliacao-da-china.shtml
+[2025-04-10 22:49:34] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-suspende-resolucao-que-permite-prescricao-de-anticoncepcional-por-farmaceuticos.shtml
+[2025-04-10 22:49:34] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/monicabergamo/2025/04/vereadores-do-pl-apresentam-projeto-que-torna-obrigatorio-sepultamento-de-fetos.shtml
+[2025-04-10 22:49:34] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/rui-falcao-lanca-candidatura-a-presidencia-do-pt-em-oposicao-ao-preferido-de-lula.shtml
+[2025-04-10 22:49:34] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/agu-pede-investigacao-contra-deputado-que-pediu-morte-de-lula.shtml
+[2025-04-10 22:49:34] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/prefeitura-de-sp-preve-economia-de-r-45-mi-com-ppp-para-construir-5-ceus.shtml
+[2025-04-10 22:49:34] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/pl-de-bolsonaro-recua-de-emparedar-deputados-por-anistia-e-mira-proxima-semana.shtml
+[2025-04-10 22:49:35] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/lula-vai-receber-uniao-brasil-para-oficializar-troca-em-ministerio-e-pedro-lucas-deve-assumir.shtml
+[2025-04-10 22:49:35] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/policia-arquiva-processo-contra-ex-vereador-bolsonarista-acusado-de-ameacar-reporter.shtml
+[2025-04-10 22:49:35] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/medico-condenado-por-estupro-recebe-homenagem-na-assembleia-legislativa-de-sp.shtml
+[2025-04-10 22:49:35] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/queda-de-juscelino-destrava-conversas-de-lula-sobre-reforma-ministerial.shtml
+[2025-04-10 22:49:35] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/eliogaspari/2025/04/a-anistia-virou-guerrilha.shtml
+[2025-04-10 22:49:35] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/eliogaspari/
+[2025-04-10 22:49:36] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/marinha-deve-ter-1a-expulsao-de-militar-por-participacao-nos-ataques-de-81.shtml
+[2025-04-10 22:49:36] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/forcas-armadas/
+[2025-04-10 22:49:36] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/monicabergamo/2025/04/haddad-diz-que-falta-honestidade-intelectual-a-criticos-e-que-lula-sera-candidato-competitivo.shtml
+[2025-04-10 22:49:36] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/ministerio-publico-pede-r-14-milhoes-para-indenizar-indigenas-vitimas-da-ditadura.shtml
+[2025-04-10 22:49:36] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/ditadura-militar/
+[2025-04-10 22:49:36] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/entenda-o-que-pesa-sobre-juscelino-filho-e-proximos-passos-da-denuncia-da-pgr.shtml
+[2025-04-10 22:49:37] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/ratinho-jr-defende-igualdade-de-regras-para-radio-e-tv-e-big-techs-no-uso-do-fundo-eleitoral.shtml
+[2025-04-10 22:49:37] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/planalto-diz-que-lula-pediu-para-juscelino-se-demitir-ministro-diz-que-decisao-foi-dele.shtml
+[2025-04-10 22:49:37] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/defensoria-da-uniao-recomenda-retirada-de-invasores-de-terras-indigenas-no-mt.shtml
+[2025-04-10 22:49:37] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/tre-g0-decide-reverter-decisao-de-1a-instancia-e-mantem-caiado-elegivel.shtml
+[2025-04-10 22:49:37] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/goias-estado/
+[2025-04-10 22:49:37] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/lider-do-pt-na-camara-quer-investigar-campos-neto-por-norma-usada-por-master.shtml
+[2025-04-10 22:49:37] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/folha-nao-publicou-que-usp-nao-divulgaria-publico-de-ato-de-bolsonaro-na-paulista.shtml
+[2025-04-10 22:49:38] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/especial/2018/folha-informacoes/
+[2025-04-10 22:49:38] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/mst-ja-fez-20-invasoes-de-terra-em-10-estados-no-abril-vermelho.shtml
+[2025-04-10 22:49:38] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/tarcisio-diz-que-tarifaco-de-trump-cria-oportunidade-para-sp-e-elogia-postura-de-lula.shtml
+[2025-04-10 22:49:38] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/
+[2025-04-10 22:49:38] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/juscelino-filho-ministro-de-lula-decide-pedir-demissao-apos-denuncia-da-pgr.shtml
+[2025-04-10 22:49:38] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/governo-lula-volta-a-exigir-vistos-de-americanos-para-entrada-no-brasil.shtml
+[2025-04-10 22:49:38] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/gleisi-se-reune-com-juscelino-e-cupula-do-uniao-brasil-apos-denuncia-contra-ministro.shtml
+[2025-04-10 22:49:39] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-rejeita-pedido-de-mamae-falei-para-anular-cassacao-por-falas-machistas.shtml
+[2025-04-10 22:49:39] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/bndes-ja-aprovou-r-196-bilhoes-para-nova-industria-brasil-diz-mercadante.shtml
+[2025-04-10 22:49:39] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/gilmar-rechaca-anistia-a-81-mas-diz-que-pode-haver-abertura-para-revisao.shtml
+[2025-04-10 22:49:39] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/lider-do-pl-vai-a-aeroporto-colher-assinaturas-para-anistia-e-bate-boca-com-manifestantes-veja-video.shtml
+[2025-04-10 22:49:39] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-diz-que-delegados-eleitos-no-rj-nao-podem-votar-em-conferencia-nacional-da-rede.shtml
+[2025-04-10 22:49:39] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/planalto-avalia-que-juscelino-filho-deveria-pedir-demissao-apos-denuncia-da-pgr.shtml
+[2025-04-10 22:49:40] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/defesa-de-juscelino-filho-ministro-de-lula-critica-ministerio-publico-e-diz-confiar-no-stf.shtml
+[2025-04-10 22:49:40] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/secretaria-da-pasta-de-anielle-pede-demissao-e-diz-que-comunicacao-do-governo-lula-e-problema.shtml
+[2025-04-10 22:49:40] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/juscelino-filho-ministro-de-lula-e-denunciado-pela-pgr-em-caso-de-desvio-de-emendas.shtml
+[2025-04-10 22:49:40] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/pgr/
+[2025-04-10 22:49:40] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/mercado/2025/04/quando-voce-faz-o-ajuste-fiscal-o-resultado-vem-rapido-diz-tarcisio.shtml
+[2025-04-10 22:49:40] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/tarcisio-de-freitas/
+[2025-04-10 22:49:41] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/defesa-de-ex-assessor-diz-que-moraes-mira-advogado-ao-aplicar-punicao-por-live.shtml
+[2025-04-10 22:49:41] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/nova-presidencia-da-camara-de-sp-cria-novo-grupo-de-whatsapp-e-exclui-milton-leite.shtml
+[2025-04-10 22:49:41] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/podcasts/2025/04/podcast-discute-pressao-de-bolsonaristas-sobre-hugo-motta-por-anistia-a-reus-do-81.shtml
+[2025-04-10 22:49:41] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/especial/2019/cafe-da-manha/
+[2025-04-10 22:49:41] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-52-acham-que-bolsonaro-deveria-ser-preso-por-tentativa-de-golpe.shtml
+[2025-04-10 22:49:41] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/tarcisio-faz-parceria-com-governo-lula-e-exalta-feito-de-obama-apos-protagonismo-em-ato-de-bolsonaro.shtml
+[2025-04-10 22:49:42] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/governo-lula-reclama-de-estados-que-se-apropriam-do-minha-casa-minha-vida.shtml
+[2025-04-10 22:49:42] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/levantamento-mapeia-perfil-de-vitimas-da-ditadura-militar-no-brasil.shtml
+[2025-04-10 22:49:42] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/historia-do-brasil/
+[2025-04-10 22:49:42] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/stf-institui-indenizacao-de-r-10-mil-mensais-a-juizes-auxiliares-de-ministros.shtml
+[2025-04-10 22:49:42] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/bolsonaro-diz-concordar-com-fala-de-malafaia-sobre-generais-frouxos.shtml
+[2025-04-10 22:49:42] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/tarcisio-promete-acao-politica-com-deputados-por-anistia-apos-protagonismo-em-ato-de-bolsonaro.shtml
+[2025-04-10 22:49:43] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-56-sao-contra-anistia-pelo-81-mas-tamanho-de-penas-gera-divisao.shtml
+[2025-04-10 22:49:43] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/vereadora-zoe-se-irrita-por-nao-subir-em-caminhao-de-som-e-vai-embora-de-ato-de-bolsonaro.shtml
+[2025-04-10 22:49:43] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/lula-aparece-com-curativo-na-testa-apos-procedimento-para-retirar-pinta.shtml
+[2025-04-10 22:49:43] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/moraes-diz-que-presos-do-81-podem-receber-visita-de-autoridade-religiosa.shtml
+[2025-04-10 22:49:43] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/hugo-motta-critica-ataques-ao-stf-mas-defende-corrigir-exagero-em-penas-do-8-de-janeiro.shtml
+[2025-04-10 22:49:43] [Folha] | Alerta: Título não extraído para artigo: https://datafolha.folha.uol.com.br/avaliacao-de-governo/congresso-nacional/
+[2025-04-10 22:49:44] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/bolsonaro-e-pl-recalibram-pressao-por-anistia-e-preparam-forca-tarefa-por-assinaturas.shtml
+[2025-04-10 22:49:44] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/investigacoes-e-processos-sobre-venda-de-decisoes-judiciais-atingem-14-tribunais.shtml
+[2025-04-10 22:49:44] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/raquel-lyra-abriga-secretario-reu-e-ex-aliado-de-joao-campos-para-consolidar-base-politica.shtml
+[2025-04-10 22:49:44] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/eleicoes-2026/
+[2025-04-10 22:49:44] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/rui-falcao-tem-apoio-de-19-deputados-federais-para-presidir-pt.shtml
+[2025-04-10 22:49:45] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/senador-do-pa-e-cotado-para-substituir-paulo-teixeira-em-reforma-ministerial.shtml
+[2025-04-10 22:49:45] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/fundacao-ligada-ao-pt-lanca-livro-sobre-chacinas-rurais.shtml
+[2025-04-10 22:49:45] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/encaminhado-com-frequencia/2025/04/direita-usa-redes-para-inflamar-base-e-impulsionar-ato-pro-anistia.shtml
+[2025-04-10 22:49:45] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/encaminhado-com-frequencia/
+[2025-04-10 22:49:45] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/encontro-na-assembleia-de-sp-vai-criar-rede-de-defesa-das-mulheres.shtml
+[2025-04-10 22:49:46] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/lideres-na-camara-nao-veem-clima-para-anistia-mesmo-com-pressao-sobre-motta-em-ato-de-bolsonaro.shtml
+[2025-04-10 22:49:46] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-aponta-varios-copos-meio-vazios-para-governo-e-oposicao.shtml
+[2025-04-10 22:49:46] [Folha] | Alerta: Título não extraído para artigo: https://secure.folha.com.br/folha?gid=FOL
+[2025-04-10 22:49:46] [Folha] | Concluído: Scraping finalizado. Artigos encontrados = 0
+[2025-04-10 23:10:36] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:10:36] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:10:36] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:10:36] [G1] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:10:37] [G1] | Listagem: Nós encontrados = 10
+[2025-04-10 23:10:40] [G1] | Concluído: Scraping finalizado. Artigos encontrados = 10
+[2025-04-10 23:10:40] [UOL] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:10:41] [UOL] | Listagem: Itens encontrados = 11
+[2025-04-10 23:10:43] [UOL] | Concluído: Scraping finalizado. Artigos encontrados = 11
+[2025-04-10 23:10:43] [Folha] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:10:43] [Folha] | Listagem: Nós encontrados = 497
+[2025-04-10 23:10:43] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/governo-empresta-avioes-da-fab-ao-stf-e-poe-lista-de-passageiros-em-sigilo-por-5-anos.shtml
+[2025-04-10 23:10:44] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/deltafolha/
+[2025-04-10 23:10:44] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/motta-fala-em-pautar-cassacao-de-chiquinho-brazao-como-equilibrio-de-caso-glauber-braga.shtml
+[2025-04-10 23:10:44] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/congresso-nacional/
+[2025-04-10 23:10:44] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/governo-anuncia-pedro-lucas-como-novo-ministro-das-comunicacoes.shtml
+[2025-04-10 23:10:45] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/lula/
+[2025-04-10 23:10:45] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/stf/
+[2025-04-10 23:10:46] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/folhajus/
+[2025-04-10 23:10:46] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/60-anos-do-golpe/
+[2025-04-10 23:10:46] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/lava-jato-10-anos/
+[2025-04-10 23:10:46] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/exto/2025/04/todos-os-caminhos-levam-ao-brooklin.shtml?utm_source=exto&utm_medium=caminhos-levam-ao-brooklin
+[2025-04-10 23:10:46] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/governo-de-sao-paulo/2025/04/governo-do-estado-de-sao-paulo-amplia-acoes-de-combate-a-violencia-contra-a-mulher.shtml?utm_source=governo-de-saopaulo&utm_medium=acoes-de-combate-a-violencia
+[2025-04-10 23:10:46] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/exto/2025/04/conectado-e-produtivo.shtml?utm_source=exto&utm_medium=conectado-e-produtivo
+[2025-04-10 23:10:47] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/sesi-sp/2025/03/sesi-sp-cria-programa-juventudes-antimisoginia.shtml?utm_source=sesi-sp&utm_medium=programa-juventudes-antimisoginia
+[2025-04-10 23:10:47] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/previdencia-e-futuro/2025/03/avalie-suas-expectativas-e-escolha-a-previdencia-privada-ideal.shtml?utm_source=previdencia-e-futuro&utm_medium=escolha-a-previdencia-privada-ideal
+[2025-04-10 23:10:47] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/pepsico/2025/03/setor-privado-governos-e-sociedade-precisam-trabalhar-juntos-para-beneficiar-as-pessoas-e-o-planeta-diz-chief-sustainability-officer-global-da-pepsico.shtml?utm_source=pepsico&utm_medium=chief-sustainability-officer-global-da-pepsico
+[2025-04-10 23:10:47] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/prefeitura-de-saopaulo/2025/03/prefeitura-inaugura-11-parques-e-amplia-area-verde-de-preservacao-e-de-lazer.shtml?utm_source=prefeitura-de-saopaulo&utm_medium=inaugura-11-parques-e-amplia-area-verde
+[2025-04-10 23:10:47] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/casas-bahia/2025/03/casas-bahia-leva-inovacao-lazer-e-espacos-de-convivencia-para-berrini.shtml?utm_source=casas-bahia&utm_medium=inovacao-lazer-e-espacos-de-convivencia
+[2025-04-10 23:10:47] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/bndes/2025/03/em-2024-bndes-aprova-r-2765-bi-e-alcanca-lucro-de-r-264-bi.shtml?utm_source=BNDES&utm_medium=alcanca-lucro-de-r-264-bi
+[2025-04-10 23:10:47] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/mastercard/2025/02/como-a-biometria-vai-revolucionar-a-seguranca-e-a-facilidade-das-compras-online.shtml?utm_source=mastercard&utm_medium=biometria-vai-revolucionar-a-seguranca
+[2025-04-10 23:10:48] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-58-acham-que-tarcisio-deveria-disputar-reeleicao-em-sp-e-30-presidencia.shtml
+[2025-04-10 23:10:48] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/datafolha/
+[2025-04-10 23:10:48] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/bolsonaro-manda-pl-estudar-ajuste-na-proposta-de-anistia-apos-conversa-com-motta.shtml
+[2025-04-10 23:10:48] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/psol-ve-situacao-de-glauber-braga-delicada-apos-briga-com-rivais-e-isolamento-no-partido.shtml
+[2025-04-10 23:10:49] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/psol/
+[2025-04-10 23:10:49] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/vice-governador-da-bahia-constrange-geddel-ao-citar-bunker-com-r-51-milhoes-em-entrevista.shtml
+[2025-04-10 23:10:49] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/bahia-estado/
+[2025-04-10 23:10:49] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/gleisi-critica-deputados-da-base-de-lula-que-assinam-urgencia-de-anistia-a-81.shtml
+[2025-04-10 23:10:49] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/pt-e-prerrogativas-querem-campanha-para-expor-deputados-pro-anistia.shtml
+[2025-04-10 23:10:50] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/
+[2025-04-10 23:10:50] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/quem-e-pedro-lucas-novo-ministro-das-comunicacoes-de-lula.shtml
+[2025-04-10 23:10:50] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/toffoli-adia-leitura-de-voto-em-acao-sobre-confisco-de-bens-de-delatores-da-lava-jato.shtml
+[2025-04-10 23:10:51] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/
+[2025-04-10 23:10:51] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/cfm-proibe-bloqueio-hormonal-para-criancas-e-adolescentes-trans.shtml
+[2025-04-10 23:10:51] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/stf-forma-maioria-para-manter-indenizacao-de-eduardo-bolsonaro-a-jornalista-da-folha.shtml
+[2025-04-10 23:10:51] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/fux-libera-caso-debora-para-julgamento-na-primeira-turma-do-stf.shtml
+[2025-04-10 23:10:52] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/desembargador-aposentado-condenado-por-venda-de-decisoes-e-preso-em-fortaleza.shtml
+[2025-04-10 23:10:52] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/corrupcao/
+[2025-04-10 23:10:52] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/moraes-autoriza-24-parlamentares-a-visitarem-braga-netto-na-prisao.shtml
+[2025-04-10 23:10:52] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/marcosaugustogoncalves/2025/04/recuo-de-trump-e-alivio-mas-crise-com-china-segue-azeda.shtml
+[2025-04-10 23:10:52] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/marcosaugustogoncalves/
+[2025-04-10 23:10:53] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-alckmin-e-marcal-lideram-cenarios-em-eventual-disputa-ao-governo-de-sp-sem-tarcisio.shtml
+[2025-04-10 23:10:53] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-tarcisio-venceria-disputa-para-governo-de-sp-se-eleicao-fosse-hoje.shtml
+[2025-04-10 23:10:53] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/leonardo-avalanche-diz-que-operacao-da-pf-na-casa-de-manga-e-perseguicao-politica.shtml
+[2025-04-10 23:10:53] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-suspende-congresso-da-rede-apos-questionamento-sobre-legalidade-de-processo-eleitoral.shtml
+[2025-04-10 23:10:53] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/maioria-dos-parlamentares-defende-regulamentacao-dos-supersalarios-diz-pesquisa.shtml
+[2025-04-10 23:10:54] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/gleisi-mescla-articulacao-no-congresso-e-embate-com-governadores-no-1o-mes-no-ministerio.shtml
+[2025-04-10 23:10:54] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-governo-tarcisio-mantem-patamar-de-aprovacao-mas-reprovacao-dobra-em-2-anos.shtml
+[2025-04-10 23:10:54] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/novo-em-folha/2025/04/petrobras-abre-inscricoes-para-bolsas-de-reportagens.shtml
+[2025-04-10 23:10:54] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/novo-em-folha/
+[2025-04-10 23:10:54] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/itaipu-apresenta-superavit-em-2024-e-promete-manter-tarifa-para-o-consumidor.shtml
+[2025-04-10 23:10:55] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/lider-da-maioria-na-camara-defende-contraponto-a-pressao-de-bolsonaristas-por-anistia.shtml
+[2025-04-10 23:10:55] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/aline-wolff-psicologa-da-rebeca-andrade-estreia-na-casafolha-curso-sobre-equilibrio-emocional.shtml
+[2025-04-10 23:10:55] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/casafolha/
+[2025-04-10 23:10:55] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/racha-no-pt-se-acirra-com-acusacoes-sobre-jatinho-e-candidatura-contra-vontade-de-lula.shtml
+[2025-04-10 23:10:56] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/pt/
+[2025-04-10 23:10:56] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/cotado-para-comunicacoes-deve-elevar-pressao-sobre-ibama-por-exploracao-da-margem-equatorial.shtml
+[2025-04-10 23:10:57] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/bolsonaro-e-motta-se-encontram-para-falar-de-pl-da-anistia.shtml
+[2025-04-10 23:10:57] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/cerca-de-320-empresarios-se-inscreveram-para-forum-do-lide-em-ny.shtml
+[2025-04-10 23:10:58] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/monicabergamo/2025/04/entidades-enviam-carta-a-lula-pedindo-permanencia-de-cida-goncalves-no-ministerio-das-mulheres.shtml
+[2025-04-10 23:10:58] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/monicabergamo/
+[2025-04-10 23:10:58] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/lula-diz-que-uniao-brasil-tem-o-direito-de-indicar-substituto-de-juscelino.shtml
+[2025-04-10 23:10:58] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/lider-do-psol-liga-para-motta-para-tentar-interromper-cassacao-de-glauber-e-nao-e-atendida.shtml
+[2025-04-10 23:10:58] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/ministerio-publico-questiona-indicacao-para-tribunal-de-contas-de-filha-de-chefe-da-assembleia-da-paraiba.shtml
+[2025-04-10 23:10:59] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/paraiba-estado/
+[2025-04-10 23:10:59] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-pode-suspender-eleicao-para-direcao-da-rede-apos-questionamento-sobre-lista-de-delegados.shtml
+[2025-04-10 23:10:59] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/candidatos-em-eleicao-interna-do-pt-terao-direito-a-passagens-aereas-hotel-e-jornalzinho.shtml
+[2025-04-10 23:10:59] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/glauber-braga-anuncia-greve-de-fome-em-protesto-contra-processo-de-cassacao-de-mandato.shtml
+[2025-04-10 23:11:00] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-do-trabalho-condena-havan-por-assedio-eleitoral.shtml
+[2025-04-10 23:11:00] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/maria-herminia-tavares/2025/04/volta-da-ultradireita-e-tragedia-contratada.shtml
+[2025-04-10 23:11:00] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/maria-herminia-tavares/
+[2025-04-10 23:11:00] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/marcosaugustogoncalves/2025/04/sem-aliados-trump-recua-diante-de-retaliacao-da-china.shtml
+[2025-04-10 23:11:01] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-suspende-resolucao-que-permite-prescricao-de-anticoncepcional-por-farmaceuticos.shtml
+[2025-04-10 23:11:01] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/monicabergamo/2025/04/vereadores-do-pl-apresentam-projeto-que-torna-obrigatorio-sepultamento-de-fetos.shtml
+[2025-04-10 23:11:01] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/rui-falcao-lanca-candidatura-a-presidencia-do-pt-em-oposicao-ao-preferido-de-lula.shtml
+[2025-04-10 23:11:01] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/agu-pede-investigacao-contra-deputado-que-pediu-morte-de-lula.shtml
+[2025-04-10 23:11:02] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/prefeitura-de-sp-preve-economia-de-r-45-mi-com-ppp-para-construir-5-ceus.shtml
+[2025-04-10 23:11:02] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/pl-de-bolsonaro-recua-de-emparedar-deputados-por-anistia-e-mira-proxima-semana.shtml
+[2025-04-10 23:11:02] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/lula-vai-receber-uniao-brasil-para-oficializar-troca-em-ministerio-e-pedro-lucas-deve-assumir.shtml
+[2025-04-10 23:11:02] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/policia-arquiva-processo-contra-ex-vereador-bolsonarista-acusado-de-ameacar-reporter.shtml
+[2025-04-10 23:11:02] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/medico-condenado-por-estupro-recebe-homenagem-na-assembleia-legislativa-de-sp.shtml
+[2025-04-10 23:11:03] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/queda-de-juscelino-destrava-conversas-de-lula-sobre-reforma-ministerial.shtml
+[2025-04-10 23:11:03] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/eliogaspari/2025/04/a-anistia-virou-guerrilha.shtml
+[2025-04-10 23:11:03] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/eliogaspari/
+[2025-04-10 23:11:03] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/marinha-deve-ter-1a-expulsao-de-militar-por-participacao-nos-ataques-de-81.shtml
+[2025-04-10 23:11:04] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/forcas-armadas/
+[2025-04-10 23:11:04] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/monicabergamo/2025/04/haddad-diz-que-falta-honestidade-intelectual-a-criticos-e-que-lula-sera-candidato-competitivo.shtml
+[2025-04-10 23:11:04] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/ministerio-publico-pede-r-14-milhoes-para-indenizar-indigenas-vitimas-da-ditadura.shtml
+[2025-04-10 23:11:04] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/ditadura-militar/
+[2025-04-10 23:11:05] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/entenda-o-que-pesa-sobre-juscelino-filho-e-proximos-passos-da-denuncia-da-pgr.shtml
+[2025-04-10 23:11:05] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/ratinho-jr-defende-igualdade-de-regras-para-radio-e-tv-e-big-techs-no-uso-do-fundo-eleitoral.shtml
+[2025-04-10 23:11:05] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/planalto-diz-que-lula-pediu-para-juscelino-se-demitir-ministro-diz-que-decisao-foi-dele.shtml
+[2025-04-10 23:11:05] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/defensoria-da-uniao-recomenda-retirada-de-invasores-de-terras-indigenas-no-mt.shtml
+[2025-04-10 23:11:05] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/tre-g0-decide-reverter-decisao-de-1a-instancia-e-mantem-caiado-elegivel.shtml
+[2025-04-10 23:11:06] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/goias-estado/
+[2025-04-10 23:11:06] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/lider-do-pt-na-camara-quer-investigar-campos-neto-por-norma-usada-por-master.shtml
+[2025-04-10 23:11:06] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/folha-nao-publicou-que-usp-nao-divulgaria-publico-de-ato-de-bolsonaro-na-paulista.shtml
+[2025-04-10 23:11:07] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:11:07] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:11:07] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:11:07] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:11:07] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:11:07] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:11:07] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:11:07] [Folha] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:11:07] [Folha] | Listagem: Nós encontrados = 497
+[2025-04-10 23:11:07] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/governo-empresta-avioes-da-fab-ao-stf-e-poe-lista-de-passageiros-em-sigilo-por-5-anos.shtml
+[2025-04-10 23:11:07] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/deltafolha/
+[2025-04-10 23:11:08] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/motta-fala-em-pautar-cassacao-de-chiquinho-brazao-como-equilibrio-de-caso-glauber-braga.shtml
+[2025-04-10 23:11:08] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/congresso-nacional/
+[2025-04-10 23:11:08] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/governo-anuncia-pedro-lucas-como-novo-ministro-das-comunicacoes.shtml
+[2025-04-10 23:11:08] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/lula/
+[2025-04-10 23:11:09] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/stf/
+[2025-04-10 23:11:09] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/folhajus/
+[2025-04-10 23:11:09] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/60-anos-do-golpe/
+[2025-04-10 23:11:09] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/lava-jato-10-anos/
+[2025-04-10 23:11:09] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/exto/2025/04/todos-os-caminhos-levam-ao-brooklin.shtml?utm_source=exto&utm_medium=caminhos-levam-ao-brooklin
+[2025-04-10 23:11:10] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/governo-de-sao-paulo/2025/04/governo-do-estado-de-sao-paulo-amplia-acoes-de-combate-a-violencia-contra-a-mulher.shtml?utm_source=governo-de-saopaulo&utm_medium=acoes-de-combate-a-violencia
+[2025-04-10 23:11:10] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/exto/2025/04/conectado-e-produtivo.shtml?utm_source=exto&utm_medium=conectado-e-produtivo
+[2025-04-10 23:11:10] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/sesi-sp/2025/03/sesi-sp-cria-programa-juventudes-antimisoginia.shtml?utm_source=sesi-sp&utm_medium=programa-juventudes-antimisoginia
+[2025-04-10 23:11:10] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/previdencia-e-futuro/2025/03/avalie-suas-expectativas-e-escolha-a-previdencia-privada-ideal.shtml?utm_source=previdencia-e-futuro&utm_medium=escolha-a-previdencia-privada-ideal
+[2025-04-10 23:11:10] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/pepsico/2025/03/setor-privado-governos-e-sociedade-precisam-trabalhar-juntos-para-beneficiar-as-pessoas-e-o-planeta-diz-chief-sustainability-officer-global-da-pepsico.shtml?utm_source=pepsico&utm_medium=chief-sustainability-officer-global-da-pepsico
+[2025-04-10 23:11:11] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/prefeitura-de-saopaulo/2025/03/prefeitura-inaugura-11-parques-e-amplia-area-verde-de-preservacao-e-de-lazer.shtml?utm_source=prefeitura-de-saopaulo&utm_medium=inaugura-11-parques-e-amplia-area-verde
+[2025-04-10 23:11:11] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/casas-bahia/2025/03/casas-bahia-leva-inovacao-lazer-e-espacos-de-convivencia-para-berrini.shtml?utm_source=casas-bahia&utm_medium=inovacao-lazer-e-espacos-de-convivencia
+[2025-04-10 23:11:11] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/bndes/2025/03/em-2024-bndes-aprova-r-2765-bi-e-alcanca-lucro-de-r-264-bi.shtml?utm_source=BNDES&utm_medium=alcanca-lucro-de-r-264-bi
+[2025-04-10 23:11:11] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/mastercard/2025/02/como-a-biometria-vai-revolucionar-a-seguranca-e-a-facilidade-das-compras-online.shtml?utm_source=mastercard&utm_medium=biometria-vai-revolucionar-a-seguranca
+[2025-04-10 23:11:11] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-58-acham-que-tarcisio-deveria-disputar-reeleicao-em-sp-e-30-presidencia.shtml
+[2025-04-10 23:11:11] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/datafolha/
+[2025-04-10 23:11:12] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/bolsonaro-manda-pl-estudar-ajuste-na-proposta-de-anistia-apos-conversa-com-motta.shtml
+[2025-04-10 23:11:12] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/psol-ve-situacao-de-glauber-braga-delicada-apos-briga-com-rivais-e-isolamento-no-partido.shtml
+[2025-04-10 23:11:12] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/psol/
+[2025-04-10 23:11:12] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/vice-governador-da-bahia-constrange-geddel-ao-citar-bunker-com-r-51-milhoes-em-entrevista.shtml
+[2025-04-10 23:11:12] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/bahia-estado/
+[2025-04-10 23:11:13] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/gleisi-critica-deputados-da-base-de-lula-que-assinam-urgencia-de-anistia-a-81.shtml
+[2025-04-10 23:11:13] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/pt-e-prerrogativas-querem-campanha-para-expor-deputados-pro-anistia.shtml
+[2025-04-10 23:11:13] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/
+[2025-04-10 23:11:13] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/quem-e-pedro-lucas-novo-ministro-das-comunicacoes-de-lula.shtml
+[2025-04-10 23:11:13] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/toffoli-adia-leitura-de-voto-em-acao-sobre-confisco-de-bens-de-delatores-da-lava-jato.shtml
+[2025-04-10 23:11:14] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/
+[2025-04-10 23:11:14] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/cfm-proibe-bloqueio-hormonal-para-criancas-e-adolescentes-trans.shtml
+[2025-04-10 23:11:14] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/stf-forma-maioria-para-manter-indenizacao-de-eduardo-bolsonaro-a-jornalista-da-folha.shtml
+[2025-04-10 23:11:14] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/fux-libera-caso-debora-para-julgamento-na-primeira-turma-do-stf.shtml
+[2025-04-10 23:11:14] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/desembargador-aposentado-condenado-por-venda-de-decisoes-e-preso-em-fortaleza.shtml
+[2025-04-10 23:11:15] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/corrupcao/
+[2025-04-10 23:11:15] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/moraes-autoriza-24-parlamentares-a-visitarem-braga-netto-na-prisao.shtml
+[2025-04-10 23:11:15] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/marcosaugustogoncalves/2025/04/recuo-de-trump-e-alivio-mas-crise-com-china-segue-azeda.shtml
+[2025-04-10 23:11:15] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/marcosaugustogoncalves/
+[2025-04-10 23:11:15] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-alckmin-e-marcal-lideram-cenarios-em-eventual-disputa-ao-governo-de-sp-sem-tarcisio.shtml
+[2025-04-10 23:11:15] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-tarcisio-venceria-disputa-para-governo-de-sp-se-eleicao-fosse-hoje.shtml
+[2025-04-10 23:11:16] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/leonardo-avalanche-diz-que-operacao-da-pf-na-casa-de-manga-e-perseguicao-politica.shtml
+[2025-04-10 23:11:16] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-suspende-congresso-da-rede-apos-questionamento-sobre-legalidade-de-processo-eleitoral.shtml
+[2025-04-10 23:11:16] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/maioria-dos-parlamentares-defende-regulamentacao-dos-supersalarios-diz-pesquisa.shtml
+[2025-04-10 23:11:16] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/gleisi-mescla-articulacao-no-congresso-e-embate-com-governadores-no-1o-mes-no-ministerio.shtml
+[2025-04-10 23:11:16] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-governo-tarcisio-mantem-patamar-de-aprovacao-mas-reprovacao-dobra-em-2-anos.shtml
+[2025-04-10 23:11:16] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/novo-em-folha/2025/04/petrobras-abre-inscricoes-para-bolsas-de-reportagens.shtml
+[2025-04-10 23:11:17] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/novo-em-folha/
+[2025-04-10 23:11:17] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/itaipu-apresenta-superavit-em-2024-e-promete-manter-tarifa-para-o-consumidor.shtml
+[2025-04-10 23:11:17] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/lider-da-maioria-na-camara-defende-contraponto-a-pressao-de-bolsonaristas-por-anistia.shtml
+[2025-04-10 23:11:17] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/aline-wolff-psicologa-da-rebeca-andrade-estreia-na-casafolha-curso-sobre-equilibrio-emocional.shtml
+[2025-04-10 23:11:17] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/casafolha/
+[2025-04-10 23:11:18] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/racha-no-pt-se-acirra-com-acusacoes-sobre-jatinho-e-candidatura-contra-vontade-de-lula.shtml
+[2025-04-10 23:11:18] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/pt/
+[2025-04-10 23:11:18] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/cotado-para-comunicacoes-deve-elevar-pressao-sobre-ibama-por-exploracao-da-margem-equatorial.shtml
+[2025-04-10 23:11:18] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/bolsonaro-e-motta-se-encontram-para-falar-de-pl-da-anistia.shtml
+[2025-04-10 23:11:18] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/cerca-de-320-empresarios-se-inscreveram-para-forum-do-lide-em-ny.shtml
+[2025-04-10 23:11:18] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/monicabergamo/2025/04/entidades-enviam-carta-a-lula-pedindo-permanencia-de-cida-goncalves-no-ministerio-das-mulheres.shtml
+[2025-04-10 23:11:19] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/monicabergamo/
+[2025-04-10 23:11:19] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/lula-diz-que-uniao-brasil-tem-o-direito-de-indicar-substituto-de-juscelino.shtml
+[2025-04-10 23:11:19] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/lider-do-psol-liga-para-motta-para-tentar-interromper-cassacao-de-glauber-e-nao-e-atendida.shtml
+[2025-04-10 23:11:19] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/ministerio-publico-questiona-indicacao-para-tribunal-de-contas-de-filha-de-chefe-da-assembleia-da-paraiba.shtml
+[2025-04-10 23:11:19] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/paraiba-estado/
+[2025-04-10 23:11:19] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-pode-suspender-eleicao-para-direcao-da-rede-apos-questionamento-sobre-lista-de-delegados.shtml
+[2025-04-10 23:11:20] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/candidatos-em-eleicao-interna-do-pt-terao-direito-a-passagens-aereas-hotel-e-jornalzinho.shtml
+[2025-04-10 23:11:20] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/glauber-braga-anuncia-greve-de-fome-em-protesto-contra-processo-de-cassacao-de-mandato.shtml
+[2025-04-10 23:11:20] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-do-trabalho-condena-havan-por-assedio-eleitoral.shtml
+[2025-04-10 23:11:20] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/maria-herminia-tavares/2025/04/volta-da-ultradireita-e-tragedia-contratada.shtml
+[2025-04-10 23:11:20] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/maria-herminia-tavares/
+[2025-04-10 23:11:20] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/marcosaugustogoncalves/2025/04/sem-aliados-trump-recua-diante-de-retaliacao-da-china.shtml
+[2025-04-10 23:11:21] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-suspende-resolucao-que-permite-prescricao-de-anticoncepcional-por-farmaceuticos.shtml
+[2025-04-10 23:11:21] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/monicabergamo/2025/04/vereadores-do-pl-apresentam-projeto-que-torna-obrigatorio-sepultamento-de-fetos.shtml
+[2025-04-10 23:11:23] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/rui-falcao-lanca-candidatura-a-presidencia-do-pt-em-oposicao-ao-preferido-de-lula.shtml
+[2025-04-10 23:11:23] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/agu-pede-investigacao-contra-deputado-que-pediu-morte-de-lula.shtml
+[2025-04-10 23:11:24] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/prefeitura-de-sp-preve-economia-de-r-45-mi-com-ppp-para-construir-5-ceus.shtml
+[2025-04-10 23:11:24] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/pl-de-bolsonaro-recua-de-emparedar-deputados-por-anistia-e-mira-proxima-semana.shtml
+[2025-04-10 23:11:24] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/lula-vai-receber-uniao-brasil-para-oficializar-troca-em-ministerio-e-pedro-lucas-deve-assumir.shtml
+[2025-04-10 23:11:24] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/policia-arquiva-processo-contra-ex-vereador-bolsonarista-acusado-de-ameacar-reporter.shtml
+[2025-04-10 23:11:24] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/medico-condenado-por-estupro-recebe-homenagem-na-assembleia-legislativa-de-sp.shtml
+[2025-04-10 23:11:24] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/queda-de-juscelino-destrava-conversas-de-lula-sobre-reforma-ministerial.shtml
+[2025-04-10 23:11:25] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/eliogaspari/2025/04/a-anistia-virou-guerrilha.shtml
+[2025-04-10 23:11:25] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/eliogaspari/
+[2025-04-10 23:11:25] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/marinha-deve-ter-1a-expulsao-de-militar-por-participacao-nos-ataques-de-81.shtml
+[2025-04-10 23:11:25] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/forcas-armadas/
+[2025-04-10 23:11:25] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/monicabergamo/2025/04/haddad-diz-que-falta-honestidade-intelectual-a-criticos-e-que-lula-sera-candidato-competitivo.shtml
+[2025-04-10 23:11:26] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/ministerio-publico-pede-r-14-milhoes-para-indenizar-indigenas-vitimas-da-ditadura.shtml
+[2025-04-10 23:11:26] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/ditadura-militar/
+[2025-04-10 23:11:26] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/entenda-o-que-pesa-sobre-juscelino-filho-e-proximos-passos-da-denuncia-da-pgr.shtml
+[2025-04-10 23:11:26] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/ratinho-jr-defende-igualdade-de-regras-para-radio-e-tv-e-big-techs-no-uso-do-fundo-eleitoral.shtml
+[2025-04-10 23:11:26] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/planalto-diz-que-lula-pediu-para-juscelino-se-demitir-ministro-diz-que-decisao-foi-dele.shtml
+[2025-04-10 23:11:27] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/defensoria-da-uniao-recomenda-retirada-de-invasores-de-terras-indigenas-no-mt.shtml
+[2025-04-10 23:11:27] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/tre-g0-decide-reverter-decisao-de-1a-instancia-e-mantem-caiado-elegivel.shtml
+[2025-04-10 23:11:27] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/goias-estado/
+[2025-04-10 23:11:27] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/lider-do-pt-na-camara-quer-investigar-campos-neto-por-norma-usada-por-master.shtml
+[2025-04-10 23:11:27] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/folha-nao-publicou-que-usp-nao-divulgaria-publico-de-ato-de-bolsonaro-na-paulista.shtml
+[2025-04-10 23:11:27] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/especial/2018/folha-informacoes/
+[2025-04-10 23:11:28] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/mst-ja-fez-20-invasoes-de-terra-em-10-estados-no-abril-vermelho.shtml
+[2025-04-10 23:11:28] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/tarcisio-diz-que-tarifaco-de-trump-cria-oportunidade-para-sp-e-elogia-postura-de-lula.shtml
+[2025-04-10 23:11:28] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/
+[2025-04-10 23:11:28] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/juscelino-filho-ministro-de-lula-decide-pedir-demissao-apos-denuncia-da-pgr.shtml
+[2025-04-10 23:11:29] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/governo-lula-volta-a-exigir-vistos-de-americanos-para-entrada-no-brasil.shtml
+[2025-04-10 23:11:29] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/gleisi-se-reune-com-juscelino-e-cupula-do-uniao-brasil-apos-denuncia-contra-ministro.shtml
+[2025-04-10 23:11:29] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-rejeita-pedido-de-mamae-falei-para-anular-cassacao-por-falas-machistas.shtml
+[2025-04-10 23:11:29] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/bndes-ja-aprovou-r-196-bilhoes-para-nova-industria-brasil-diz-mercadante.shtml
+[2025-04-10 23:11:29] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/gilmar-rechaca-anistia-a-81-mas-diz-que-pode-haver-abertura-para-revisao.shtml
+[2025-04-10 23:11:30] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/lider-do-pl-vai-a-aeroporto-colher-assinaturas-para-anistia-e-bate-boca-com-manifestantes-veja-video.shtml
+[2025-04-10 23:11:30] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-diz-que-delegados-eleitos-no-rj-nao-podem-votar-em-conferencia-nacional-da-rede.shtml
+[2025-04-10 23:11:30] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/planalto-avalia-que-juscelino-filho-deveria-pedir-demissao-apos-denuncia-da-pgr.shtml
+[2025-04-10 23:11:30] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/defesa-de-juscelino-filho-ministro-de-lula-critica-ministerio-publico-e-diz-confiar-no-stf.shtml
+[2025-04-10 23:11:30] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/secretaria-da-pasta-de-anielle-pede-demissao-e-diz-que-comunicacao-do-governo-lula-e-problema.shtml
+[2025-04-10 23:11:31] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/juscelino-filho-ministro-de-lula-e-denunciado-pela-pgr-em-caso-de-desvio-de-emendas.shtml
+[2025-04-10 23:11:31] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/pgr/
+[2025-04-10 23:11:31] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/mercado/2025/04/quando-voce-faz-o-ajuste-fiscal-o-resultado-vem-rapido-diz-tarcisio.shtml
+[2025-04-10 23:11:31] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/tarcisio-de-freitas/
+[2025-04-10 23:11:32] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/defesa-de-ex-assessor-diz-que-moraes-mira-advogado-ao-aplicar-punicao-por-live.shtml
+[2025-04-10 23:11:32] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/nova-presidencia-da-camara-de-sp-cria-novo-grupo-de-whatsapp-e-exclui-milton-leite.shtml
+[2025-04-10 23:11:32] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/podcasts/2025/04/podcast-discute-pressao-de-bolsonaristas-sobre-hugo-motta-por-anistia-a-reus-do-81.shtml
+[2025-04-10 23:11:32] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/especial/2019/cafe-da-manha/
+[2025-04-10 23:11:33] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-52-acham-que-bolsonaro-deveria-ser-preso-por-tentativa-de-golpe.shtml
+[2025-04-10 23:11:33] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/tarcisio-faz-parceria-com-governo-lula-e-exalta-feito-de-obama-apos-protagonismo-em-ato-de-bolsonaro.shtml
+[2025-04-10 23:11:33] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/governo-lula-reclama-de-estados-que-se-apropriam-do-minha-casa-minha-vida.shtml
+[2025-04-10 23:11:33] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/levantamento-mapeia-perfil-de-vitimas-da-ditadura-militar-no-brasil.shtml
+[2025-04-10 23:11:34] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/historia-do-brasil/
+[2025-04-10 23:11:34] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/stf-institui-indenizacao-de-r-10-mil-mensais-a-juizes-auxiliares-de-ministros.shtml
+[2025-04-10 23:11:34] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/bolsonaro-diz-concordar-com-fala-de-malafaia-sobre-generais-frouxos.shtml
+[2025-04-10 23:11:34] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/tarcisio-promete-acao-politica-com-deputados-por-anistia-apos-protagonismo-em-ato-de-bolsonaro.shtml
+[2025-04-10 23:11:34] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-56-sao-contra-anistia-pelo-81-mas-tamanho-de-penas-gera-divisao.shtml
+[2025-04-10 23:11:34] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/vereadora-zoe-se-irrita-por-nao-subir-em-caminhao-de-som-e-vai-embora-de-ato-de-bolsonaro.shtml
+[2025-04-10 23:11:35] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/lula-aparece-com-curativo-na-testa-apos-procedimento-para-retirar-pinta.shtml
+[2025-04-10 23:11:35] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/moraes-diz-que-presos-do-81-podem-receber-visita-de-autoridade-religiosa.shtml
+[2025-04-10 23:11:35] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/hugo-motta-critica-ataques-ao-stf-mas-defende-corrigir-exagero-em-penas-do-8-de-janeiro.shtml
+[2025-04-10 23:11:35] [Folha] | Alerta: Título não extraído para artigo: https://datafolha.folha.uol.com.br/avaliacao-de-governo/congresso-nacional/
+[2025-04-10 23:11:36] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/bolsonaro-e-pl-recalibram-pressao-por-anistia-e-preparam-forca-tarefa-por-assinaturas.shtml
+[2025-04-10 23:11:36] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/investigacoes-e-processos-sobre-venda-de-decisoes-judiciais-atingem-14-tribunais.shtml
+[2025-04-10 23:11:36] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/raquel-lyra-abriga-secretario-reu-e-ex-aliado-de-joao-campos-para-consolidar-base-politica.shtml
+[2025-04-10 23:11:36] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/eleicoes-2026/
+[2025-04-10 23:11:36] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/rui-falcao-tem-apoio-de-19-deputados-federais-para-presidir-pt.shtml
+[2025-04-10 23:12:01] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:12:01] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:12:01] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:12:01] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:12:01] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:12:01] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:12:01] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:12:01] [Folha] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:12:02] [Folha] | Listagem: Nós encontrados = 497
+[2025-04-10 23:12:02] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/governo-empresta-avioes-da-fab-ao-stf-e-poe-lista-de-passageiros-em-sigilo-por-5-anos.shtml
+[2025-04-10 23:12:02] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/deltafolha/
+[2025-04-10 23:12:02] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/motta-fala-em-pautar-cassacao-de-chiquinho-brazao-como-equilibrio-de-caso-glauber-braga.shtml
+[2025-04-10 23:12:03] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/congresso-nacional/
+[2025-04-10 23:12:03] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/governo-anuncia-pedro-lucas-como-novo-ministro-das-comunicacoes.shtml
+[2025-04-10 23:12:03] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/lula/
+[2025-04-10 23:12:04] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/stf/
+[2025-04-10 23:12:04] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/folhajus/
+[2025-04-10 23:12:04] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/60-anos-do-golpe/
+[2025-04-10 23:12:04] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/lava-jato-10-anos/
+[2025-04-10 23:12:05] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/exto/2025/04/todos-os-caminhos-levam-ao-brooklin.shtml?utm_source=exto&utm_medium=caminhos-levam-ao-brooklin
+[2025-04-10 23:12:05] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/governo-de-sao-paulo/2025/04/governo-do-estado-de-sao-paulo-amplia-acoes-de-combate-a-violencia-contra-a-mulher.shtml?utm_source=governo-de-saopaulo&utm_medium=acoes-de-combate-a-violencia
+[2025-04-10 23:12:05] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/exto/2025/04/conectado-e-produtivo.shtml?utm_source=exto&utm_medium=conectado-e-produtivo
+[2025-04-10 23:12:05] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/sesi-sp/2025/03/sesi-sp-cria-programa-juventudes-antimisoginia.shtml?utm_source=sesi-sp&utm_medium=programa-juventudes-antimisoginia
+[2025-04-10 23:12:05] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/previdencia-e-futuro/2025/03/avalie-suas-expectativas-e-escolha-a-previdencia-privada-ideal.shtml?utm_source=previdencia-e-futuro&utm_medium=escolha-a-previdencia-privada-ideal
+[2025-04-10 23:12:05] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/pepsico/2025/03/setor-privado-governos-e-sociedade-precisam-trabalhar-juntos-para-beneficiar-as-pessoas-e-o-planeta-diz-chief-sustainability-officer-global-da-pepsico.shtml?utm_source=pepsico&utm_medium=chief-sustainability-officer-global-da-pepsico
+[2025-04-10 23:12:06] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/prefeitura-de-saopaulo/2025/03/prefeitura-inaugura-11-parques-e-amplia-area-verde-de-preservacao-e-de-lazer.shtml?utm_source=prefeitura-de-saopaulo&utm_medium=inaugura-11-parques-e-amplia-area-verde
+[2025-04-10 23:12:06] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/casas-bahia/2025/03/casas-bahia-leva-inovacao-lazer-e-espacos-de-convivencia-para-berrini.shtml?utm_source=casas-bahia&utm_medium=inovacao-lazer-e-espacos-de-convivencia
+[2025-04-10 23:12:06] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/bndes/2025/03/em-2024-bndes-aprova-r-2765-bi-e-alcanca-lucro-de-r-264-bi.shtml?utm_source=BNDES&utm_medium=alcanca-lucro-de-r-264-bi
+[2025-04-10 23:12:06] [Folha] | Alerta: Título não extraído para artigo: https://estudio.folha.uol.com.br/mastercard/2025/02/como-a-biometria-vai-revolucionar-a-seguranca-e-a-facilidade-das-compras-online.shtml?utm_source=mastercard&utm_medium=biometria-vai-revolucionar-a-seguranca
+[2025-04-10 23:12:06] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-58-acham-que-tarcisio-deveria-disputar-reeleicao-em-sp-e-30-presidencia.shtml
+[2025-04-10 23:12:06] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/datafolha/
+[2025-04-10 23:12:07] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/bolsonaro-manda-pl-estudar-ajuste-na-proposta-de-anistia-apos-conversa-com-motta.shtml
+[2025-04-10 23:12:07] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/psol-ve-situacao-de-glauber-braga-delicada-apos-briga-com-rivais-e-isolamento-no-partido.shtml
+[2025-04-10 23:12:07] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/psol/
+[2025-04-10 23:12:07] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/vice-governador-da-bahia-constrange-geddel-ao-citar-bunker-com-r-51-milhoes-em-entrevista.shtml
+[2025-04-10 23:12:08] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/bahia-estado/
+[2025-04-10 23:12:08] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/gleisi-critica-deputados-da-base-de-lula-que-assinam-urgencia-de-anistia-a-81.shtml
+[2025-04-10 23:12:08] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/pt-e-prerrogativas-querem-campanha-para-expor-deputados-pro-anistia.shtml
+[2025-04-10 23:12:08] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/
+[2025-04-10 23:12:09] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/quem-e-pedro-lucas-novo-ministro-das-comunicacoes-de-lula.shtml
+[2025-04-10 23:12:09] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/toffoli-adia-leitura-de-voto-em-acao-sobre-confisco-de-bens-de-delatores-da-lava-jato.shtml
+[2025-04-10 23:12:09] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/
+[2025-04-10 23:12:09] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/cfm-proibe-bloqueio-hormonal-para-criancas-e-adolescentes-trans.shtml
+[2025-04-10 23:12:09] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/stf-forma-maioria-para-manter-indenizacao-de-eduardo-bolsonaro-a-jornalista-da-folha.shtml
+[2025-04-10 23:12:10] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/fux-libera-caso-debora-para-julgamento-na-primeira-turma-do-stf.shtml
+[2025-04-10 23:12:10] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/desembargador-aposentado-condenado-por-venda-de-decisoes-e-preso-em-fortaleza.shtml
+[2025-04-10 23:12:10] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/corrupcao/
+[2025-04-10 23:12:10] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/moraes-autoriza-24-parlamentares-a-visitarem-braga-netto-na-prisao.shtml
+[2025-04-10 23:12:11] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/marcosaugustogoncalves/2025/04/recuo-de-trump-e-alivio-mas-crise-com-china-segue-azeda.shtml
+[2025-04-10 23:12:11] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/marcosaugustogoncalves/
+[2025-04-10 23:12:11] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-alckmin-e-marcal-lideram-cenarios-em-eventual-disputa-ao-governo-de-sp-sem-tarcisio.shtml
+[2025-04-10 23:12:11] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-tarcisio-venceria-disputa-para-governo-de-sp-se-eleicao-fosse-hoje.shtml
+[2025-04-10 23:12:11] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/leonardo-avalanche-diz-que-operacao-da-pf-na-casa-de-manga-e-perseguicao-politica.shtml
+[2025-04-10 23:12:12] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-suspende-congresso-da-rede-apos-questionamento-sobre-legalidade-de-processo-eleitoral.shtml
+[2025-04-10 23:12:12] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/maioria-dos-parlamentares-defende-regulamentacao-dos-supersalarios-diz-pesquisa.shtml
+[2025-04-10 23:12:12] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/gleisi-mescla-articulacao-no-congresso-e-embate-com-governadores-no-1o-mes-no-ministerio.shtml
+[2025-04-10 23:12:12] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-governo-tarcisio-mantem-patamar-de-aprovacao-mas-reprovacao-dobra-em-2-anos.shtml
+[2025-04-10 23:12:12] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/novo-em-folha/2025/04/petrobras-abre-inscricoes-para-bolsas-de-reportagens.shtml
+[2025-04-10 23:12:13] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/novo-em-folha/
+[2025-04-10 23:12:13] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/itaipu-apresenta-superavit-em-2024-e-promete-manter-tarifa-para-o-consumidor.shtml
+[2025-04-10 23:12:13] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/lider-da-maioria-na-camara-defende-contraponto-a-pressao-de-bolsonaristas-por-anistia.shtml
+[2025-04-10 23:12:13] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/aline-wolff-psicologa-da-rebeca-andrade-estreia-na-casafolha-curso-sobre-equilibrio-emocional.shtml
+[2025-04-10 23:12:13] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/casafolha/
+[2025-04-10 23:12:14] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/racha-no-pt-se-acirra-com-acusacoes-sobre-jatinho-e-candidatura-contra-vontade-de-lula.shtml
+[2025-04-10 23:12:14] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/pt/
+[2025-04-10 23:12:14] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/cotado-para-comunicacoes-deve-elevar-pressao-sobre-ibama-por-exploracao-da-margem-equatorial.shtml
+[2025-04-10 23:12:14] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/bolsonaro-e-motta-se-encontram-para-falar-de-pl-da-anistia.shtml
+[2025-04-10 23:12:14] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/cerca-de-320-empresarios-se-inscreveram-para-forum-do-lide-em-ny.shtml
+[2025-04-10 23:12:14] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/monicabergamo/2025/04/entidades-enviam-carta-a-lula-pedindo-permanencia-de-cida-goncalves-no-ministerio-das-mulheres.shtml
+[2025-04-10 23:12:15] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/monicabergamo/
+[2025-04-10 23:12:15] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/lula-diz-que-uniao-brasil-tem-o-direito-de-indicar-substituto-de-juscelino.shtml
+[2025-04-10 23:12:15] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/lider-do-psol-liga-para-motta-para-tentar-interromper-cassacao-de-glauber-e-nao-e-atendida.shtml
+[2025-04-10 23:12:15] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/ministerio-publico-questiona-indicacao-para-tribunal-de-contas-de-filha-de-chefe-da-assembleia-da-paraiba.shtml
+[2025-04-10 23:12:16] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/paraiba-estado/
+[2025-04-10 23:12:16] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-pode-suspender-eleicao-para-direcao-da-rede-apos-questionamento-sobre-lista-de-delegados.shtml
+[2025-04-10 23:12:16] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/candidatos-em-eleicao-interna-do-pt-terao-direito-a-passagens-aereas-hotel-e-jornalzinho.shtml
+[2025-04-10 23:12:16] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/glauber-braga-anuncia-greve-de-fome-em-protesto-contra-processo-de-cassacao-de-mandato.shtml
+[2025-04-10 23:12:16] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-do-trabalho-condena-havan-por-assedio-eleitoral.shtml
+[2025-04-10 23:12:17] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/maria-herminia-tavares/2025/04/volta-da-ultradireita-e-tragedia-contratada.shtml
+[2025-04-10 23:12:17] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/maria-herminia-tavares/
+[2025-04-10 23:12:17] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/marcosaugustogoncalves/2025/04/sem-aliados-trump-recua-diante-de-retaliacao-da-china.shtml
+[2025-04-10 23:12:17] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-suspende-resolucao-que-permite-prescricao-de-anticoncepcional-por-farmaceuticos.shtml
+[2025-04-10 23:12:17] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/monicabergamo/2025/04/vereadores-do-pl-apresentam-projeto-que-torna-obrigatorio-sepultamento-de-fetos.shtml
+[2025-04-10 23:12:17] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/rui-falcao-lanca-candidatura-a-presidencia-do-pt-em-oposicao-ao-preferido-de-lula.shtml
+[2025-04-10 23:12:18] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/agu-pede-investigacao-contra-deputado-que-pediu-morte-de-lula.shtml
+[2025-04-10 23:12:18] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/prefeitura-de-sp-preve-economia-de-r-45-mi-com-ppp-para-construir-5-ceus.shtml
+[2025-04-10 23:12:18] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/pl-de-bolsonaro-recua-de-emparedar-deputados-por-anistia-e-mira-proxima-semana.shtml
+[2025-04-10 23:12:18] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/lula-vai-receber-uniao-brasil-para-oficializar-troca-em-ministerio-e-pedro-lucas-deve-assumir.shtml
+[2025-04-10 23:12:18] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/policia-arquiva-processo-contra-ex-vereador-bolsonarista-acusado-de-ameacar-reporter.shtml
+[2025-04-10 23:12:19] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/medico-condenado-por-estupro-recebe-homenagem-na-assembleia-legislativa-de-sp.shtml
+[2025-04-10 23:12:19] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/queda-de-juscelino-destrava-conversas-de-lula-sobre-reforma-ministerial.shtml
+[2025-04-10 23:12:19] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/eliogaspari/2025/04/a-anistia-virou-guerrilha.shtml
+[2025-04-10 23:12:19] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/eliogaspari/
+[2025-04-10 23:12:19] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/marinha-deve-ter-1a-expulsao-de-militar-por-participacao-nos-ataques-de-81.shtml
+[2025-04-10 23:12:20] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/forcas-armadas/
+[2025-04-10 23:12:20] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/monicabergamo/2025/04/haddad-diz-que-falta-honestidade-intelectual-a-criticos-e-que-lula-sera-candidato-competitivo.shtml
+[2025-04-10 23:12:20] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/ministerio-publico-pede-r-14-milhoes-para-indenizar-indigenas-vitimas-da-ditadura.shtml
+[2025-04-10 23:12:20] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/ditadura-militar/
+[2025-04-10 23:12:20] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/entenda-o-que-pesa-sobre-juscelino-filho-e-proximos-passos-da-denuncia-da-pgr.shtml
+[2025-04-10 23:12:21] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/ratinho-jr-defende-igualdade-de-regras-para-radio-e-tv-e-big-techs-no-uso-do-fundo-eleitoral.shtml
+[2025-04-10 23:12:21] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/planalto-diz-que-lula-pediu-para-juscelino-se-demitir-ministro-diz-que-decisao-foi-dele.shtml
+[2025-04-10 23:12:21] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/defensoria-da-uniao-recomenda-retirada-de-invasores-de-terras-indigenas-no-mt.shtml
+[2025-04-10 23:12:21] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/tre-g0-decide-reverter-decisao-de-1a-instancia-e-mantem-caiado-elegivel.shtml
+[2025-04-10 23:12:21] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/goias-estado/
+[2025-04-10 23:12:22] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/lider-do-pt-na-camara-quer-investigar-campos-neto-por-norma-usada-por-master.shtml
+[2025-04-10 23:12:22] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/folha-nao-publicou-que-usp-nao-divulgaria-publico-de-ato-de-bolsonaro-na-paulista.shtml
+[2025-04-10 23:12:22] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/especial/2018/folha-informacoes/
+[2025-04-10 23:12:22] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/mst-ja-fez-20-invasoes-de-terra-em-10-estados-no-abril-vermelho.shtml
+[2025-04-10 23:12:22] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/tarcisio-diz-que-tarifaco-de-trump-cria-oportunidade-para-sp-e-elogia-postura-de-lula.shtml
+[2025-04-10 23:12:23] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/
+[2025-04-10 23:12:23] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/juscelino-filho-ministro-de-lula-decide-pedir-demissao-apos-denuncia-da-pgr.shtml
+[2025-04-10 23:12:23] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/governo-lula-volta-a-exigir-vistos-de-americanos-para-entrada-no-brasil.shtml
+[2025-04-10 23:12:23] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/gleisi-se-reune-com-juscelino-e-cupula-do-uniao-brasil-apos-denuncia-contra-ministro.shtml
+[2025-04-10 23:12:23] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-rejeita-pedido-de-mamae-falei-para-anular-cassacao-por-falas-machistas.shtml
+[2025-04-10 23:12:23] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/bndes-ja-aprovou-r-196-bilhoes-para-nova-industria-brasil-diz-mercadante.shtml
+[2025-04-10 23:12:23] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/gilmar-rechaca-anistia-a-81-mas-diz-que-pode-haver-abertura-para-revisao.shtml
+[2025-04-10 23:12:23] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/lider-do-pl-vai-a-aeroporto-colher-assinaturas-para-anistia-e-bate-boca-com-manifestantes-veja-video.shtml
+[2025-04-10 23:12:24] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-diz-que-delegados-eleitos-no-rj-nao-podem-votar-em-conferencia-nacional-da-rede.shtml
+[2025-04-10 23:12:24] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/planalto-avalia-que-juscelino-filho-deveria-pedir-demissao-apos-denuncia-da-pgr.shtml
+[2025-04-10 23:12:24] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/defesa-de-juscelino-filho-ministro-de-lula-critica-ministerio-publico-e-diz-confiar-no-stf.shtml
+[2025-04-10 23:12:24] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/secretaria-da-pasta-de-anielle-pede-demissao-e-diz-que-comunicacao-do-governo-lula-e-problema.shtml
+[2025-04-10 23:12:24] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/juscelino-filho-ministro-de-lula-e-denunciado-pela-pgr-em-caso-de-desvio-de-emendas.shtml
+[2025-04-10 23:12:24] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/pgr/
+[2025-04-10 23:12:24] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/mercado/2025/04/quando-voce-faz-o-ajuste-fiscal-o-resultado-vem-rapido-diz-tarcisio.shtml
+[2025-04-10 23:12:25] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/tarcisio-de-freitas/
+[2025-04-10 23:12:25] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/defesa-de-ex-assessor-diz-que-moraes-mira-advogado-ao-aplicar-punicao-por-live.shtml
+[2025-04-10 23:12:25] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/nova-presidencia-da-camara-de-sp-cria-novo-grupo-de-whatsapp-e-exclui-milton-leite.shtml
+[2025-04-10 23:12:25] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/podcasts/2025/04/podcast-discute-pressao-de-bolsonaristas-sobre-hugo-motta-por-anistia-a-reus-do-81.shtml
+[2025-04-10 23:12:25] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/especial/2019/cafe-da-manha/
+[2025-04-10 23:12:25] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-52-acham-que-bolsonaro-deveria-ser-preso-por-tentativa-de-golpe.shtml
+[2025-04-10 23:12:26] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/tarcisio-faz-parceria-com-governo-lula-e-exalta-feito-de-obama-apos-protagonismo-em-ato-de-bolsonaro.shtml
+[2025-04-10 23:12:26] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/governo-lula-reclama-de-estados-que-se-apropriam-do-minha-casa-minha-vida.shtml
+[2025-04-10 23:12:26] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/levantamento-mapeia-perfil-de-vitimas-da-ditadura-militar-no-brasil.shtml
+[2025-04-10 23:12:26] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/historia-do-brasil/
+[2025-04-10 23:12:26] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/stf-institui-indenizacao-de-r-10-mil-mensais-a-juizes-auxiliares-de-ministros.shtml
+[2025-04-10 23:12:26] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/bolsonaro-diz-concordar-com-fala-de-malafaia-sobre-generais-frouxos.shtml
+[2025-04-10 23:12:27] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/tarcisio-promete-acao-politica-com-deputados-por-anistia-apos-protagonismo-em-ato-de-bolsonaro.shtml
+[2025-04-10 23:12:27] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-56-sao-contra-anistia-pelo-81-mas-tamanho-de-penas-gera-divisao.shtml
+[2025-04-10 23:12:27] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/vereadora-zoe-se-irrita-por-nao-subir-em-caminhao-de-som-e-vai-embora-de-ato-de-bolsonaro.shtml
+[2025-04-10 23:12:27] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/lula-aparece-com-curativo-na-testa-apos-procedimento-para-retirar-pinta.shtml
+[2025-04-10 23:12:27] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/moraes-diz-que-presos-do-81-podem-receber-visita-de-autoridade-religiosa.shtml
+[2025-04-10 23:12:27] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/hugo-motta-critica-ataques-ao-stf-mas-defende-corrigir-exagero-em-penas-do-8-de-janeiro.shtml
+[2025-04-10 23:12:28] [Folha] | Alerta: Título não extraído para artigo: https://datafolha.folha.uol.com.br/avaliacao-de-governo/congresso-nacional/
+[2025-04-10 23:12:28] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/bolsonaro-e-pl-recalibram-pressao-por-anistia-e-preparam-forca-tarefa-por-assinaturas.shtml
+[2025-04-10 23:12:28] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/investigacoes-e-processos-sobre-venda-de-decisoes-judiciais-atingem-14-tribunais.shtml
+[2025-04-10 23:12:28] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/poder/2025/04/raquel-lyra-abriga-secretario-reu-e-ex-aliado-de-joao-campos-para-consolidar-base-politica.shtml
+[2025-04-10 23:12:28] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/folha-topicos/eleicoes-2026/
+[2025-04-10 23:12:28] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/rui-falcao-tem-apoio-de-19-deputados-federais-para-presidir-pt.shtml
+[2025-04-10 23:12:28] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/senador-do-pa-e-cotado-para-substituir-paulo-teixeira-em-reforma-ministerial.shtml
+[2025-04-10 23:12:29] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/fundacao-ligada-ao-pt-lanca-livro-sobre-chacinas-rurais.shtml
+[2025-04-10 23:12:29] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/encaminhado-com-frequencia/2025/04/direita-usa-redes-para-inflamar-base-e-impulsionar-ato-pro-anistia.shtml
+[2025-04-10 23:12:29] [Folha] | Alerta: Título não extraído para artigo: https://www1.folha.uol.com.br/colunas/encaminhado-com-frequencia/
+[2025-04-10 23:12:29] [Folha] | Concluído: Scraping finalizado. Artigos encontrados = 0
+[2025-04-10 23:12:29] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:12:29] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:12:29] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:12:29] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:12:29] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:12:29] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:12:29] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:12:29] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:12:29] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:15:17] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:15:17] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:15:17] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:15:17] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:15:17] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:15:17] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:15:17] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:15:17] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:15:17] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:15:18] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:15:18] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:15:18] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:15:18] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:15:18] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:15:18] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:15:18] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:15:18] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:15:18] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:15:20] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:15:20] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:15:20] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:15:20] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:15:20] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:15:20] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:15:20] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:15:20] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:15:20] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:15:20] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:15:20] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:15:20] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:15:20] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:15:20] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:15:20] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:15:20] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:15:20] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:15:20] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:15:38] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:15:38] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:15:38] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:15:38] [G1] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:15:39] [G1] | Listagem: Nós encontrados = 10
+[2025-04-10 23:15:43] [G1] | Concluído: Scraping finalizado. Artigos encontrados = 10
+[2025-04-10 23:15:43] [UOL] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:15:43] [UOL] | Listagem: Itens encontrados = 11
+[2025-04-10 23:15:45] [UOL] | Concluído: Scraping finalizado. Artigos encontrados = 11
+[2025-04-10 23:15:45] [Folha] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:15:46] [Folha] | Listagem: Nós encontrados = 104
+[2025-04-10 23:15:56] [Folha] | Concluído: Scraping finalizado. Artigos encontrados = 48
+[2025-04-10 23:15:56] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:15:56] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:15:56] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:15:56] [G1] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:15:56] [G1] | Listagem: Nós encontrados = 10
+[2025-04-10 23:15:59] [G1] | Concluído: Scraping finalizado. Artigos encontrados = 10
+[2025-04-10 23:15:59] [UOL] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:16:00] [UOL] | Listagem: Itens encontrados = 11
+[2025-04-10 23:16:02] [UOL] | Concluído: Scraping finalizado. Artigos encontrados = 11
+[2025-04-10 23:16:02] [Folha] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:16:03] [Folha] | Listagem: Nós encontrados = 104
+[2025-04-10 23:16:10] [Folha] | Concluído: Scraping finalizado. Artigos encontrados = 48
+[2025-04-10 23:16:10] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:16:10] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:16:10] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:16:10] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:16:10] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:16:10] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:16:10] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:16:10] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:16:10] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:16:10] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:16:10] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:16:10] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:16:10] [G1] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:16:11] [G1] | Listagem: Nós encontrados = 10
+[2025-04-10 23:16:14] [G1] | Concluído: Scraping finalizado. Artigos encontrados = 10
+[2025-04-10 23:16:14] [UOL] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:16:14] [UOL] | Listagem: Itens encontrados = 0
+[2025-04-10 23:16:14] [UOL] | Concluído: Scraping finalizado. Artigos encontrados = 0
+[2025-04-10 23:16:14] [Folha] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:16:15] [Folha] | Listagem: Nós encontrados = 104
+[2025-04-10 23:16:23] [Folha] | Concluído: Scraping finalizado. Artigos encontrados = 48
+[2025-04-10 23:16:23] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:16:23] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:16:23] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:16:23] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:16:23] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:16:23] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:16:23] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:16:23] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:16:23] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:16:25] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:16:25] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:16:25] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:16:25] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:16:25] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:16:25] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:16:25] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:16:25] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:16:25] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:16:25] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:16:25] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:16:25] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:16:25] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:16:25] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:16:25] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:16:25] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:16:25] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:16:25] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:16:27] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:16:27] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:16:27] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:16:27] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:16:27] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:16:27] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:16:27] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:16:27] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:16:27] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:16:27] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:16:27] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:16:27] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:16:27] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:16:27] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:16:27] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:16:27] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:16:27] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:16:27] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:17:14] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:17:14] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:17:14] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:17:14] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:17:14] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:17:14] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:17:14] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:17:14] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:17:14] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:17:14] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:17:14] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:17:14] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:17:14] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:17:14] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:17:14] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:17:14] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:17:14] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:17:14] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:21:19] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:21:19] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:21:19] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:21:19] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:21:19] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:21:19] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:21:19] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:21:19] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:21:19] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:21:19] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:21:19] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:21:19] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:21:19] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:21:19] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:21:19] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:21:19] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:21:19] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:21:19] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:23:33] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:23:33] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:23:33] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:23:33] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:23:33] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:23:33] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:23:33] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:23:33] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:23:33] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:23:33] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:23:33] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:23:33] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:23:33] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:23:33] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:23:33] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:23:33] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:23:33] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:23:33] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:27:40] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:27:40] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:27:40] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:27:40] [G1] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:27:41] [G1] | Listagem: Nós encontrados = 10
+[2025-04-10 23:27:44] [G1] | Concluído: Scraping finalizado. Artigos encontrados = 10
+[2025-04-10 23:27:44] [UOL] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:27:45] [UOL] | Listagem: Itens encontrados = 11
+[2025-04-10 23:27:47] [UOL] | Concluído: Scraping finalizado. Artigos encontrados = 11
+[2025-04-10 23:27:47] [Folha] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:27:48] [Folha] | Listagem: Nós encontrados = 103
+[2025-04-10 23:27:58] [Folha] | Concluído: Scraping finalizado. Artigos encontrados = 48
+[2025-04-10 23:27:58] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:27:58] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:27:58] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:27:58] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:27:58] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:27:58] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:27:58] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:27:58] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:27:58] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:32:49] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:32:49] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:32:49] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:32:49] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:32:49] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:32:49] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:32:49] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:32:49] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:32:49] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:32:49] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:32:49] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:32:49] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:32:49] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:32:49] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:32:49] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:32:49] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:32:49] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:32:49] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:33:06] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:33:06] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:33:06] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:33:06] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:33:06] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:33:06] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:33:06] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:33:06] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:33:06] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:33:06] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:33:06] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:33:06] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:33:06] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:33:06] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:33:06] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:33:06] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:33:06] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:33:06] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:33:10] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:33:10] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:33:10] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:33:10] [G1] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:33:10] [G1] | Listagem: Nós encontrados = 10
+[2025-04-10 23:33:14] [G1] | Concluído: Scraping finalizado. Artigos encontrados = 10
+[2025-04-10 23:33:14] [UOL] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:33:14] [UOL] | Listagem: Itens encontrados = 11
+[2025-04-10 23:33:16] [UOL] | Concluído: Scraping finalizado. Artigos encontrados = 11
+[2025-04-10 23:33:16] [Folha] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:33:17] [Folha] | Listagem: Nós encontrados = 103
+[2025-04-10 23:33:26] [Folha] | Concluído: Scraping finalizado. Artigos encontrados = 48
+[2025-04-10 23:33:28] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:33:28] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:33:28] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:33:28] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:33:28] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:33:28] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:33:28] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:33:28] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:33:28] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:33:29] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:33:29] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:33:29] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:33:29] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:33:29] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:33:29] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:33:29] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:33:29] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:33:29] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:36:26] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:36:26] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:36:26] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:36:26] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:36:26] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:36:26] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:36:26] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:36:26] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:36:26] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:36:26] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:36:26] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:36:26] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:36:26] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:36:26] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:36:26] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:36:26] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:36:26] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:36:26] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:36:29] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:36:29] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:36:29] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:36:29] [G1] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:36:30] [G1] | Listagem: Nós encontrados = 10
+[2025-04-10 23:36:34] [G1] | Concluído: Scraping finalizado. Artigos encontrados = 10
+[2025-04-10 23:36:34] [UOL] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:36:34] [UOL] | Listagem: Itens encontrados = 11
+[2025-04-10 23:36:36] [UOL] | Concluído: Scraping finalizado. Artigos encontrados = 11
+[2025-04-10 23:36:36] [Folha] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:36:37] [Folha] | Listagem: Nós encontrados = 103
+[2025-04-10 23:36:47] [Folha] | Concluído: Scraping finalizado. Artigos encontrados = 48
+[2025-04-10 23:36:51] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:36:51] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:36:51] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:36:51] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:36:51] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:36:51] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:36:51] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:36:51] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:36:51] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:36:51] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:36:51] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:36:51] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:36:51] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:36:51] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:36:51] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:36:51] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:36:51] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:36:51] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:39:34] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:39:34] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:39:34] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:39:34] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:39:34] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:39:34] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:39:34] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:39:34] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:39:34] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:39:34] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:39:34] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:39:34] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:39:34] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:39:34] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:39:34] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:39:34] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:39:34] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:39:34] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:39:37] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:39:37] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:39:37] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:39:37] [G1] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:39:37] [G1] | Listagem: Nós encontrados = 10
+[2025-04-10 23:39:41] [G1] | Concluído: Scraping finalizado. Artigos encontrados = 10
+[2025-04-10 23:39:41] [UOL] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:39:41] [UOL] | Listagem: Itens encontrados = 11
+[2025-04-10 23:39:43] [UOL] | Concluído: Scraping finalizado. Artigos encontrados = 11
+[2025-04-10 23:39:43] [Folha] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:39:45] [Folha] | Listagem: Nós encontrados = 103
+[2025-04-10 23:39:55] [Folha] | Concluído: Scraping finalizado. Artigos encontrados = 48
+[2025-04-10 23:39:57] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:39:57] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:39:57] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:39:57] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:39:57] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:39:57] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:39:57] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:39:57] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:39:57] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:39:57] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:39:57] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:39:57] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:39:57] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:39:57] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:39:57] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:39:57] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:39:57] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:39:57] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:42:34] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:42:34] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:42:34] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:42:34] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:42:34] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:42:34] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:42:34] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:42:34] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:42:34] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:42:34] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:42:34] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:42:34] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:42:34] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:42:34] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:42:34] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:42:34] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:42:34] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:42:34] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:45:21] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:45:21] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:45:21] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:45:21] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:45:21] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:45:21] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:45:21] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:45:21] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:45:21] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:45:22] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:45:22] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:45:22] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:45:22] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:45:22] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:45:22] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:45:22] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:45:22] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:45:22] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:45:25] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:45:25] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:45:25] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:45:25] [G1] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:45:25] [G1] | Listagem: Nós encontrados = 10
+[2025-04-10 23:45:29] [G1] | Concluído: Scraping finalizado. Artigos encontrados = 10
+[2025-04-10 23:45:29] [UOL] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:45:29] [UOL] | Listagem: Itens encontrados = 11
+[2025-04-10 23:45:31] [UOL] | Concluído: Scraping finalizado. Artigos encontrados = 11
+[2025-04-10 23:45:31] [Folha] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:45:32] [Folha] | Listagem: Nós encontrados = 103
+[2025-04-10 23:45:42] [Folha] | Concluído: Scraping finalizado. Artigos encontrados = 48
+[2025-04-10 23:45:42] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:45:42] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:45:42] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:45:42] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:45:42] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:45:42] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:45:42] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:45:42] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:45:42] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:45:42] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:45:42] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:45:42] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:45:42] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:45:42] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:45:42] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:45:42] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:45:42] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:45:42] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:48:54] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:48:54] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:48:54] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:48:54] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:48:54] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:48:54] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:48:54] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:48:54] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:48:54] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:48:54] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:48:54] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:48:54] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:48:54] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:48:54] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:48:54] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:48:54] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:48:54] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:48:54] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:48:59] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:48:59] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:48:59] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:48:59] [G1] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:48:59] [G1] | Listagem: Nós encontrados = 10
+[2025-04-10 23:49:03] [G1] | Concluído: Scraping finalizado. Artigos encontrados = 10
+[2025-04-10 23:49:03] [UOL] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:49:03] [UOL] | Listagem: Itens encontrados = 11
+[2025-04-10 23:49:05] [UOL] | Concluído: Scraping finalizado. Artigos encontrados = 11
+[2025-04-10 23:49:05] [Folha] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:49:06] [Folha] | Listagem: Nós encontrados = 105
+[2025-04-10 23:49:16] [Folha] | Concluído: Scraping finalizado. Artigos encontrados = 49
+[2025-04-10 23:49:19] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:49:19] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:49:19] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:49:19] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:49:19] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:49:19] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:49:19] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:49:19] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:49:19] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:49:19] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:49:19] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:49:19] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:49:19] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:49:19] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:49:19] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:49:19] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:49:19] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:49:19] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:51:16] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:51:16] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:51:16] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:51:16] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:51:16] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:51:16] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:51:16] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:51:16] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:51:16] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:51:17] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:51:17] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:51:17] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:51:17] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:51:17] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:51:17] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:51:17] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:51:17] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:51:17] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:51:20] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:51:20] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:51:20] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:51:20] [G1] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:51:20] [G1] | Listagem: Nós encontrados = 10
+[2025-04-10 23:51:24] [G1] | Concluído: Scraping finalizado. Artigos encontrados = 10
+[2025-04-10 23:51:24] [UOL] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:51:24] [UOL] | Listagem: Itens encontrados = 11
+[2025-04-10 23:51:27] [UOL] | Concluído: Scraping finalizado. Artigos encontrados = 11
+[2025-04-10 23:51:27] [Folha] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-10 23:51:28] [Folha] | Listagem: Nós encontrados = 105
+[2025-04-10 23:51:38] [Folha] | Concluído: Scraping finalizado. Artigos encontrados = 49
+[2025-04-10 23:51:40] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:51:40] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:51:40] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:51:40] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:51:40] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:51:40] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:51:40] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:51:40] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:51:40] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-10 23:51:40] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:51:40] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:51:40] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-10 23:51:40] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-10 23:51:40] [G1] | Cache: Utilizando dados do cache.
+[2025-04-10 23:51:40] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-10 23:51:40] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-10 23:51:40] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-10 23:51:40] [Folha] | Cache: Utilizando dados do cache.

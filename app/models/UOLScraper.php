@@ -39,8 +39,8 @@ class UOLScraper extends AbstractNewsScraper {
         $xpath = new DOMXPath($dom);
         $newsItems = [];
         
-        // Seleciona os itens da listagem
-        $nodes = $xpath->query("//div[contains(@class, 'flex-wrap')]//div[contains(@class, 'thumbnails-item') and not(contains(@class, 'itemAds'))]");
+        // Atualiza a busca para os itens da listagem, procurando por nós com a classe "thumbnails-item" excluindo ads
+        $nodes = $xpath->query("//div[contains(@class, 'thumbnails-item') and not(contains(@class, 'itemAds'))]");
         debug_log("[UOL] | Listagem: Itens encontrados = " . $nodes->length);
         
         foreach ($nodes as $node) {
@@ -52,11 +52,16 @@ class UOLScraper extends AbstractNewsScraper {
             $titleNodes = $xpath->query(".//h3[contains(@class, 'thumb-title')]", $node);
             $title = ($titleNodes->length > 0) ? trim($titleNodes->item(0)->nodeValue) : 'Sem título';
             
-            $timeNodes = $xpath->query(".//time[contains(@class, 'thumb-date')]", $node);
+            // Usa um seletor genérico para a data no listing (caso não seja capturada no artigo)
+            $timeNodes = $xpath->query(".//*[contains(@class, 'thumb-date')]", $node);
             $publishedAt = ($timeNodes->length > 0) ? trim($timeNodes->item(0)->nodeValue) : 'Data não informada';
             
             $details = $this->scrapeArticle($link, $headers);
             if ($details) {
+                // Se o artigo individual retornar uma data válida, usamos ela; caso contrário, mantemos a do listing.
+                if (!empty($details['publishedAt']) && $details['publishedAt'] !== 'Data não informada.') {
+                    $publishedAt = $details['publishedAt'];
+                }
                 $newsItems[] = [
                     'title'       => $title,
                     'url'         => $link,
@@ -95,17 +100,22 @@ class UOLScraper extends AbstractNewsScraper {
         libxml_clear_errors();
         $xpath = new DOMXPath($dom);
         
-        // Extrai o primeiro parágrafo do container "jupiter-paragraph-fragment"
+        // Descrição: extrai o primeiro parágrafo do container "jupiter-paragraph-fragment"
         $paraNodes = $xpath->query("//div[contains(@class, 'jupiter-paragraph-fragment')]//p");
         $description = ($paraNodes->length > 0) ? trim($paraNodes->item(0)->nodeValue) : 'Descrição não disponível.';
         
-        // Extrai o nome do autor a partir do link com a classe "solar-author-name"
+        // Autor: extrai o autor a partir do link com classe "solar-author-name"
         $authorNodes = $xpath->query("//div[contains(@class, 'solar-author-names')]//a[contains(@class, 'solar-author-name')]");
         $author = ($authorNodes->length > 0) ? trim($authorNodes->item(0)->nodeValue) : 'Não disponível';
         
+        // **Novo Seletor de Data:** Busca o elemento <time> com classe "date" dentro do container "solar-date"
+        $timeNodes = $xpath->query("//div[contains(@class, 'solar-date')]//time[@class='date']");
+        $publishedAt = ($timeNodes->length > 0) ? trim($timeNodes->item(0)->getAttribute('datetime')) : 'Data não informada.';
+        
         return [
             'description' => $description,
-            'author'      => $author
+            'author'      => $author,
+            'publishedAt' => $publishedAt
         ];
     }
 }

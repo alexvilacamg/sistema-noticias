@@ -1,3 +1,6 @@
+<?php
+// app/views/index.php
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -59,6 +62,14 @@
         #force-update-btn:hover {
             background: #1565c0;
         }
+        /* Indicador de carregamento discreto */
+        #loading-indicator {
+            display: inline-block;
+            margin-left: 10px;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            color: #555;
+        }
     </style>
     <script>
         $(document).ready(function(){
@@ -86,23 +97,32 @@
                         "sortDescending": ": ativar para classificar em ordem decrescente"
                     }
                 },
-                order: [[0, 'desc']], // Ordena por "Publicado em" (a primeira coluna) de forma descendente
+                order: [[0, 'desc']], // Ordena pela coluna de data usando o valor ISO no atributo data-order.
                 pageLength: 10
             });
             
-            // Botão para forçar atualização
+            // Ao clicar no botão "Forçar Atualização"
             $('#force-update-btn').click(function(){
+                // Exibe indicador de carregamento
+                $('#loading-indicator').text("Atualizando...");
                 $.ajax({
                     url: '/api/force_update.php',
                     method: 'GET',
                     dataType: 'json',
-                    success: function(response) {
-                        alert(response.message);
-                        location.reload(); // recarrega a página para mostrar os dados atualizados
+                    complete: function() {
+                        // Atualiza indicador para sucesso por 2 segundos antes de recarregar
+                        $('#loading-indicator').text("Atualização concluída");
+                        setTimeout(function(){
+                            $('#loading-indicator').text("");
+                            location.reload();
+                        }, 2000);
                     },
                     error: function(error) {
                         console.error('Erro ao atualizar:', error);
-                        alert('Erro ao forçar atualização.');
+                        $('#loading-indicator').text("Erro na atualização");
+                        setTimeout(function(){
+                            $('#loading-indicator').text("");
+                        }, 2000);
                     }
                 });
             });
@@ -112,8 +132,8 @@
 <body>
     <h1>Notícias de Política</h1>
     <?php 
-        // Exibe informações de atualização do cache
-        $cacheFile = __DIR__ . '/../cache/all_news.json';
+        require_once __DIR__ . '/../../config/config.php';
+        $cacheFile = CACHE_DIR . '/all_news.json';
         $cacheTime = 600; // 10 minutos
         if (file_exists($cacheFile)) {
             $lastUpdate = filemtime($cacheFile);
@@ -127,8 +147,9 @@
         }
     ?>
     
-    <!-- Botão para forçar atualização -->
+    <!-- Botão para forçar atualização com indicador discreto -->
     <button id="force-update-btn">Forçar Atualização</button>
+    <span id="loading-indicator"></span>
     
     <?php if (isset($news) && is_array($news) && count($news) > 0): ?>
         <table id="newsTable">
@@ -146,7 +167,7 @@
                     <tr>
                         <td data-order="<?php echo $item['publishedAt'] ?: ''; ?>">
                             <?php 
-                                if (!empty($item['publishedAt'])) {
+                                if (!empty($item['publishedAt']) && $item['publishedAt'] !== "1970-01-01T00:00:00+00:00" && strtotime($item['publishedAt']) !== false) {
                                     echo date("d/m/Y H:i", strtotime($item['publishedAt']));
                                 } else {
                                     echo 'Data não informada.';
@@ -169,14 +190,12 @@
         <p>Nenhuma notícia encontrada.</p>
     <?php endif; ?>
 
-    <!-- Área para exibir os logs de depuração (ordem invertida: do mais recente para o mais antigo) -->
+    <!-- Área para exibir os logs de depuração -->
     <div id="debug-log">
         <h3>Debug Logs</h3>
         <pre>
 <?php 
 if (defined('LOG_FILE') && file_exists(LOG_FILE)) {
-    // Lê o arquivo de log como um array de linhas,
-    // reverte a ordem e exibe
     $lines = file(LOG_FILE, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     $lines = array_reverse($lines);
     echo htmlspecialchars(implode("\n", $lines));
