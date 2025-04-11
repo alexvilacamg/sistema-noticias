@@ -1592,3 +1592,563 @@
 [2025-04-11 12:35:30] [UOL] | Cache: Utilizando dados do cache.
 [2025-04-11 12:35:30] [Cache] | Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
 [2025-04-11 12:35:30] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-11 12:52:25] [G1Scraper] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:52:25] [UOLScraper] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:52:25] [FolhaScraper] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:52:25] [G1Scraper] [G1] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-11 12:52:25] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/
+[2025-04-11 12:52:27] [G1Scraper] [G1] | Listagem: Nós encontrados = 10
+[2025-04-11 12:52:27] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/noticia/2025/04/11/entenda-impasse-em-torno-do-convite-a-pedro-lucas-para-chefia-do-ministerio-das-comunicacoes.ghtml
+[2025-04-11 12:52:28] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/noticia/2025/04/11/bolsonaro-passou-mal-de-madrugada-e-foi-medicado-por-ex-ministro.ghtml
+[2025-04-11 12:52:29] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/video/bolsonaro-passou-mal-de-madrugada-e-nao-dormiu-diz-ex-ministro-13508896.ghtml
+[2025-04-11 12:52:30] [G1Scraper] [G1] | Alerta: Título não extraído para artigo: https://g1.globo.com/politica/video/bolsonaro-passou-mal-de-madrugada-e-nao-dormiu-diz-ex-ministro-13508896.ghtml
+[2025-04-11 12:52:30] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/video/bolsonaro-embarca-em-helicoptero-para-natal-apos-passar-mal-13508845.ghtml
+[2025-04-11 12:52:31] [G1Scraper] [G1] | Alerta: Título não extraído para artigo: https://g1.globo.com/politica/video/bolsonaro-embarca-em-helicoptero-para-natal-apos-passar-mal-13508845.ghtml
+[2025-04-11 12:52:31] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/noticia/2025/04/11/em-greve-de-fome-ha-quase-60-horas-glauber-faz-exames-de-sangue-e-toma-soro-diz-equipe.ghtml
+[2025-04-11 12:52:33] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/noticia/2025/04/11/convidado-por-lula-para-ministerio-deputado-diz-que-quer-ouvir-bancada-do-uniao-antes-de-decisao.ghtml
+[2025-04-11 12:52:35] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/video/anistia-projeto-atinge-assinaturas-para-propor-rito-acelerado-na-camara-13508837.ghtml
+[2025-04-11 12:52:39] [G1Scraper] [G1] | Alerta: Título não extraído para artigo: https://g1.globo.com/politica/video/anistia-projeto-atinge-assinaturas-para-propor-rito-acelerado-na-camara-13508837.ghtml
+[2025-04-11 12:52:39] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/video/bolsonaro-e-transferido-de-helicoptero-para-hospital-em-natal-13508746.ghtml
+[2025-04-11 12:52:39] [G1Scraper] [G1] | Alerta: Título não extraído para artigo: https://g1.globo.com/politica/video/bolsonaro-e-transferido-de-helicoptero-para-hospital-em-natal-13508746.ghtml
+[2025-04-11 12:52:39] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/noticia/2025/04/11/alckmin-se-reune-com-ministro-chines-em-meio-a-tarifacos-eua-china.ghtml
+[2025-04-11 12:52:42] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/video/bolsonaro-estava-manifestacao-em-bom-jesus-rn-e-passou-mal-13508649.ghtml
+[2025-04-11 12:52:43] [G1Scraper] [G1] | Alerta: Título não extraído para artigo: https://g1.globo.com/politica/video/bolsonaro-estava-manifestacao-em-bom-jesus-rn-e-passou-mal-13508649.ghtml
+[2025-04-11 12:52:43] [G1Scraper] [G1] | Concluído: Scraping finalizado. Artigos encontrados = 5
+[2025-04-11 12:52:43] [UOLScraper] [UOL] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-11 12:52:43] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/politica/
+[2025-04-11 12:52:46] [UOLScraper] [UOL] | Listagem: Itens encontrados = 11
+[2025-04-11 12:52:46] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/prefeito-tiktoker-sorocaba-dinheiro-especie-operacao-pf-rodrigo-manga.htm
+[2025-04-11 12:52:47] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/bolsonaro-e-transferido-em-aeronave-cedida-por-governadora-do-pt-no-rn.htm
+[2025-04-11 12:52:48] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/gleisi-diz-que-rever-penas-do-81-cabe-exclusivamente-ao-stf.htm
+[2025-04-11 12:52:49] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/bolsonaro-passa-mal-e-e-atendido-em-hospital-do-rio-grande-do-norte.htm
+[2025-04-11 12:52:51] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/vereadora-presente-emenda-milhao-noivo-deputado-federal.htm
+[2025-04-11 12:52:53] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/colunas/josias-de-souza/2025/04/11/xi-insinua-que-trump-vai-tornar-os-eua-superfluos-para-a-china.htm
+[2025-04-11 12:52:55] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/colunas/a-hora/2025/04/11/cleptocracia-e-trump-pump-dao-tombo-no-mercado-financeiro.htm
+[2025-04-11 12:52:58] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/colunas/amanda-cotrim/2025/04/11/ministros-discutem-flexibilizacao-do-mercosul-em-buenos-aires.htm
+[2025-04-11 12:53:00] [UOLScraper] getHtml: Buscando HTML de https://tab.uol.com.br/noticias/redacao/2025/04/11/punidos-com-aposentadoria-estes-juizes-ainda-recebem-penduricalhos.htm
+[2025-04-11 12:53:02] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/alvo-da-pf-prefeito-tiktoker-usa-desinformacao-por-projecao-nacional.htm
+[2025-04-11 12:53:04] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/colunas/andreza-matais/2025/04/11/lider-do-pl-diz-ter-as-257-assinaturas-para-urgencia-do-projeto-de-anistia.htm
+[2025-04-11 12:53:05] [UOLScraper] [UOL] | Concluído: Scraping finalizado. Artigos encontrados = 11
+[2025-04-11 12:53:05] [FolhaScraper] [Folha] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-11 12:53:05] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/
+[2025-04-11 12:53:07] [FolhaScraper] [Folha] | Listagem: Nós encontrados = 100
+[2025-04-11 12:53:07] [FolhaScraper] [Folha] | Concluído: Scraping finalizado. Artigos encontrados = 100
+[2025-04-11 12:53:07] [G1Scraper] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:53:07] [UOLScraper] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:53:07] [FolhaScraper] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:53:07] [G1Scraper] [G1] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-11 12:53:07] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/
+[2025-04-11 12:53:09] [G1Scraper] [G1] | Listagem: Nós encontrados = 10
+[2025-04-11 12:53:09] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/noticia/2025/04/11/entenda-impasse-em-torno-do-convite-a-pedro-lucas-para-chefia-do-ministerio-das-comunicacoes.ghtml
+[2025-04-11 12:53:13] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/noticia/2025/04/11/bolsonaro-passou-mal-de-madrugada-e-foi-medicado-por-ex-ministro.ghtml
+[2025-04-11 12:53:15] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/video/bolsonaro-passou-mal-de-madrugada-e-nao-dormiu-diz-ex-ministro-13508896.ghtml
+[2025-04-11 12:53:17] [G1Scraper] [G1] | Alerta: Título não extraído para artigo: https://g1.globo.com/politica/video/bolsonaro-passou-mal-de-madrugada-e-nao-dormiu-diz-ex-ministro-13508896.ghtml
+[2025-04-11 12:53:17] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/video/bolsonaro-embarca-em-helicoptero-para-natal-apos-passar-mal-13508845.ghtml
+[2025-04-11 12:53:18] [G1Scraper] [G1] | Alerta: Título não extraído para artigo: https://g1.globo.com/politica/video/bolsonaro-embarca-em-helicoptero-para-natal-apos-passar-mal-13508845.ghtml
+[2025-04-11 12:53:18] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/noticia/2025/04/11/em-greve-de-fome-ha-quase-60-horas-glauber-faz-exames-de-sangue-e-toma-soro-diz-equipe.ghtml
+[2025-04-11 12:53:19] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/noticia/2025/04/11/convidado-por-lula-para-ministerio-deputado-diz-que-quer-ouvir-bancada-do-uniao-antes-de-decisao.ghtml
+[2025-04-11 12:53:23] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/video/anistia-projeto-atinge-assinaturas-para-propor-rito-acelerado-na-camara-13508837.ghtml
+[2025-04-11 12:53:23] [G1Scraper] [G1] | Alerta: Título não extraído para artigo: https://g1.globo.com/politica/video/anistia-projeto-atinge-assinaturas-para-propor-rito-acelerado-na-camara-13508837.ghtml
+[2025-04-11 12:53:23] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/video/bolsonaro-e-transferido-de-helicoptero-para-hospital-em-natal-13508746.ghtml
+[2025-04-11 12:53:24] [G1Scraper] [G1] | Alerta: Título não extraído para artigo: https://g1.globo.com/politica/video/bolsonaro-e-transferido-de-helicoptero-para-hospital-em-natal-13508746.ghtml
+[2025-04-11 12:53:24] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/noticia/2025/04/11/alckmin-se-reune-com-ministro-chines-em-meio-a-tarifacos-eua-china.ghtml
+[2025-04-11 12:53:25] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/video/bolsonaro-estava-manifestacao-em-bom-jesus-rn-e-passou-mal-13508649.ghtml
+[2025-04-11 12:53:26] [G1Scraper] [G1] | Alerta: Título não extraído para artigo: https://g1.globo.com/politica/video/bolsonaro-estava-manifestacao-em-bom-jesus-rn-e-passou-mal-13508649.ghtml
+[2025-04-11 12:53:26] [G1Scraper] [G1] | Concluído: Scraping finalizado. Artigos encontrados = 5
+[2025-04-11 12:53:26] [UOLScraper] [UOL] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-11 12:53:26] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/politica/
+[2025-04-11 12:53:27] [UOLScraper] [UOL] | Listagem: Itens encontrados = 11
+[2025-04-11 12:53:27] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/prefeito-tiktoker-sorocaba-dinheiro-especie-operacao-pf-rodrigo-manga.htm
+[2025-04-11 12:53:28] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/bolsonaro-e-transferido-em-aeronave-cedida-por-governadora-do-pt-no-rn.htm
+[2025-04-11 12:53:29] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/gleisi-diz-que-rever-penas-do-81-cabe-exclusivamente-ao-stf.htm
+[2025-04-11 12:53:35] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/bolsonaro-passa-mal-e-e-atendido-em-hospital-do-rio-grande-do-norte.htm
+[2025-04-11 12:53:36] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/vereadora-presente-emenda-milhao-noivo-deputado-federal.htm
+[2025-04-11 12:53:36] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/colunas/josias-de-souza/2025/04/11/xi-insinua-que-trump-vai-tornar-os-eua-superfluos-para-a-china.htm
+[2025-04-11 12:53:37] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/colunas/a-hora/2025/04/11/cleptocracia-e-trump-pump-dao-tombo-no-mercado-financeiro.htm
+[2025-04-11 12:53:38] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/colunas/amanda-cotrim/2025/04/11/ministros-discutem-flexibilizacao-do-mercosul-em-buenos-aires.htm
+[2025-04-11 12:53:39] [UOLScraper] getHtml: Buscando HTML de https://tab.uol.com.br/noticias/redacao/2025/04/11/punidos-com-aposentadoria-estes-juizes-ainda-recebem-penduricalhos.htm
+[2025-04-11 12:53:39] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/alvo-da-pf-prefeito-tiktoker-usa-desinformacao-por-projecao-nacional.htm
+[2025-04-11 12:53:40] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/colunas/andreza-matais/2025/04/11/lider-do-pl-diz-ter-as-257-assinaturas-para-urgencia-do-projeto-de-anistia.htm
+[2025-04-11 12:53:40] [UOLScraper] [UOL] | Concluído: Scraping finalizado. Artigos encontrados = 11
+[2025-04-11 12:53:40] [FolhaScraper] [Folha] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-11 12:53:40] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/
+[2025-04-11 12:53:41] [FolhaScraper] [Folha] | Listagem: Nós encontrados = 100
+[2025-04-11 12:53:41] [FolhaScraper] [Folha] | Concluído: Scraping finalizado. Artigos encontrados = 100
+[2025-04-11 12:53:43] [G1Scraper] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:53:43] [UOLScraper] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:53:43] [FolhaScraper] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:53:43] [G1Scraper] Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-11 12:53:43] [G1Scraper] [G1] | Cache: Utilizando dados do cache.
+[2025-04-11 12:53:43] [UOLScraper] Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-11 12:53:43] [UOLScraper] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-11 12:53:43] [FolhaScraper] Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-11 12:53:43] [FolhaScraper] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-11 12:53:44] [G1Scraper] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:53:44] [UOLScraper] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:53:44] [FolhaScraper] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:53:44] [G1Scraper] Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-11 12:53:44] [G1Scraper] [G1] | Cache: Utilizando dados do cache.
+[2025-04-11 12:53:44] [UOLScraper] Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-11 12:53:44] [UOLScraper] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-11 12:53:44] [FolhaScraper] Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-11 12:53:44] [FolhaScraper] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-11 12:53:58] [G1Scraper] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:53:58] [UOLScraper] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:53:58] [FolhaScraper] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:53:58] [G1Scraper] Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-11 12:53:58] [G1Scraper] [G1] | Cache: Utilizando dados do cache.
+[2025-04-11 12:53:58] [UOLScraper] Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-11 12:53:58] [UOLScraper] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-11 12:53:58] [FolhaScraper] Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-11 12:53:58] [FolhaScraper] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-11 12:53:59] [G1Scraper] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:53:59] [UOLScraper] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:53:59] [FolhaScraper] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:53:59] [G1Scraper] Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-11 12:53:59] [G1Scraper] [G1] | Cache: Utilizando dados do cache.
+[2025-04-11 12:53:59] [UOLScraper] Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-11 12:53:59] [UOLScraper] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-11 12:53:59] [FolhaScraper] Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-11 12:53:59] [FolhaScraper] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-11 12:54:04] [G1Scraper] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:54:04] [UOLScraper] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:54:04] [FolhaScraper] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:54:04] [G1Scraper] [G1] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-11 12:54:04] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/
+[2025-04-11 12:54:14] [HttpClient] | Erro ao obter HTML de https://g1.globo.com/politica/: Operation timed out after 10003 milliseconds with 655182 bytes received
+[2025-04-11 12:54:14] [G1Scraper] [G1] | Erro: Falha ao obter HTML da listagem.
+[2025-04-11 12:54:14] [UOLScraper] [UOL] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-11 12:54:14] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/politica/
+[2025-04-11 12:54:16] [UOLScraper] [UOL] | Listagem: Itens encontrados = 11
+[2025-04-11 12:54:16] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/prefeito-tiktoker-sorocaba-dinheiro-especie-operacao-pf-rodrigo-manga.htm
+[2025-04-11 12:54:23] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/bolsonaro-e-transferido-em-aeronave-cedida-por-governadora-do-pt-no-rn.htm
+[2025-04-11 12:54:28] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/gleisi-diz-que-rever-penas-do-81-cabe-exclusivamente-ao-stf.htm
+[2025-04-11 12:54:38] [HttpClient] | Erro ao obter HTML de https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/gleisi-diz-que-rever-penas-do-81-cabe-exclusivamente-ao-stf.htm: Operation timed out after 10000 milliseconds with 529552 out of 542385 bytes received
+[2025-04-11 12:54:38] [UOLScraper] [UOL] | Erro: Falha ao obter HTML do artigo: https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/gleisi-diz-que-rever-penas-do-81-cabe-exclusivamente-ao-stf.htm
+[2025-04-11 12:54:38] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/bolsonaro-passa-mal-e-e-atendido-em-hospital-do-rio-grande-do-norte.htm
+[2025-04-11 12:54:48] [HttpClient] | Erro ao obter HTML de https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/bolsonaro-passa-mal-e-e-atendido-em-hospital-do-rio-grande-do-norte.htm: Operation timed out after 10005 milliseconds with 31360 out of 548374 bytes received
+[2025-04-11 12:54:48] [UOLScraper] [UOL] | Erro: Falha ao obter HTML do artigo: https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/bolsonaro-passa-mal-e-e-atendido-em-hospital-do-rio-grande-do-norte.htm
+[2025-04-11 12:54:48] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/vereadora-presente-emenda-milhao-noivo-deputado-federal.htm
+[2025-04-11 12:54:56] [HttpClient] | Erro ao obter HTML de https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/vereadora-presente-emenda-milhao-noivo-deputado-federal.htm: Resolving timed out after 5011 milliseconds
+[2025-04-11 12:54:56] [UOLScraper] [UOL] | Erro: Falha ao obter HTML do artigo: https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/vereadora-presente-emenda-milhao-noivo-deputado-federal.htm
+[2025-04-11 12:54:56] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/colunas/josias-de-souza/2025/04/11/xi-insinua-que-trump-vai-tornar-os-eua-superfluos-para-a-china.htm
+[2025-04-11 12:55:00] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/colunas/a-hora/2025/04/11/cleptocracia-e-trump-pump-dao-tombo-no-mercado-financeiro.htm
+[2025-04-11 12:55:10] [HttpClient] | Erro ao obter HTML de https://noticias.uol.com.br/colunas/a-hora/2025/04/11/cleptocracia-e-trump-pump-dao-tombo-no-mercado-financeiro.htm: Operation timed out after 10009 milliseconds with 520304 out of 550365 bytes received
+[2025-04-11 12:55:10] [UOLScraper] [UOL] | Erro: Falha ao obter HTML do artigo: https://noticias.uol.com.br/colunas/a-hora/2025/04/11/cleptocracia-e-trump-pump-dao-tombo-no-mercado-financeiro.htm
+[2025-04-11 12:55:10] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/colunas/amanda-cotrim/2025/04/11/ministros-discutem-flexibilizacao-do-mercosul-em-buenos-aires.htm
+[2025-04-11 12:55:12] [UOLScraper] getHtml: Buscando HTML de https://tab.uol.com.br/noticias/redacao/2025/04/11/punidos-com-aposentadoria-estes-juizes-ainda-recebem-penduricalhos.htm
+[2025-04-11 12:55:15] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/alvo-da-pf-prefeito-tiktoker-usa-desinformacao-por-projecao-nacional.htm
+[2025-04-11 12:55:15] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/colunas/andreza-matais/2025/04/11/lider-do-pl-diz-ter-as-257-assinaturas-para-urgencia-do-projeto-de-anistia.htm
+[2025-04-11 12:55:16] [UOLScraper] [UOL] | Concluído: Scraping finalizado. Artigos encontrados = 11
+[2025-04-11 12:55:16] [FolhaScraper] [Folha] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-11 12:55:16] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/
+[2025-04-11 12:55:22] [FolhaScraper] [Folha] | Listagem: Nós encontrados = 100
+[2025-04-11 12:55:22] [FolhaScraper] [Folha] | Concluído: Scraping finalizado. Artigos encontrados = 100
+[2025-04-11 12:55:24] [G1Scraper] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:55:24] [UOLScraper] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:55:24] [FolhaScraper] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:55:24] [G1Scraper] Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-11 12:55:24] [G1Scraper] [G1] | Cache: Utilizando dados do cache.
+[2025-04-11 12:55:24] [UOLScraper] Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-11 12:55:24] [UOLScraper] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-11 12:55:24] [FolhaScraper] Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-11 12:55:24] [FolhaScraper] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-11 12:55:25] [G1Scraper] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:55:25] [UOLScraper] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:55:25] [FolhaScraper] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:55:25] [G1Scraper] Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-11 12:55:25] [G1Scraper] [G1] | Cache: Utilizando dados do cache.
+[2025-04-11 12:55:25] [UOLScraper] Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-11 12:55:25] [UOLScraper] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-11 12:55:25] [FolhaScraper] Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-11 12:55:25] [FolhaScraper] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-11 12:58:39] [G1Scraper] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:58:39] [UOLScraper] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:58:39] [FolhaScraper] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:58:39] [G1Scraper] Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-11 12:58:39] [G1Scraper] [G1] | Cache: Utilizando dados do cache.
+[2025-04-11 12:58:39] [UOLScraper] Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-11 12:58:39] [UOLScraper] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-11 12:58:39] [FolhaScraper] Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-11 12:58:39] [FolhaScraper] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-11 12:58:39] [G1Scraper] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:58:39] [UOLScraper] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:58:39] [FolhaScraper] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:58:39] [G1Scraper] Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-11 12:58:39] [G1Scraper] [G1] | Cache: Utilizando dados do cache.
+[2025-04-11 12:58:39] [UOLScraper] Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-11 12:58:39] [UOLScraper] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-11 12:58:39] [FolhaScraper] Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-11 12:58:39] [FolhaScraper] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-11 12:58:49] [G1Scraper] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:58:49] [UOLScraper] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:58:49] [FolhaScraper] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 12:58:49] [G1Scraper] [G1] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-11 12:58:49] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/
+[2025-04-11 12:58:59] [HttpClient] | Erro ao obter HTML de https://g1.globo.com/politica/: Operation timed out after 10000 milliseconds with 421754 bytes received
+[2025-04-11 12:58:59] [G1Scraper] [G1] | Erro: Falha ao obter HTML da listagem.
+[2025-04-11 12:58:59] [UOLScraper] [UOL] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-11 12:58:59] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/politica/
+[2025-04-11 12:59:01] [UOLScraper] [UOL] | Listagem: Itens encontrados = 11
+[2025-04-11 12:59:01] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/lider-do-pl-agradece-centrao-por-assinaturas-ao-projeto-da-anistia.htm
+[2025-04-11 12:59:07] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/prefeito-tiktoker-sorocaba-dinheiro-especie-operacao-pf-rodrigo-manga.htm
+[2025-04-11 12:59:12] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/bolsonaro-e-transferido-em-aeronave-cedida-por-governadora-do-pt-no-rn.htm
+[2025-04-11 12:59:15] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/gleisi-diz-que-rever-penas-do-81-cabe-exclusivamente-ao-stf.htm
+[2025-04-11 12:59:19] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/bolsonaro-passa-mal-e-e-atendido-em-hospital-do-rio-grande-do-norte.htm
+[2025-04-11 12:59:25] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/vereadora-presente-emenda-milhao-noivo-deputado-federal.htm
+[2025-04-11 12:59:28] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/colunas/josias-de-souza/2025/04/11/xi-insinua-que-trump-vai-tornar-os-eua-superfluos-para-a-china.htm
+[2025-04-11 12:59:32] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/colunas/a-hora/2025/04/11/cleptocracia-e-trump-pump-dao-tombo-no-mercado-financeiro.htm
+[2025-04-11 12:59:38] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/colunas/amanda-cotrim/2025/04/11/ministros-discutem-flexibilizacao-do-mercosul-em-buenos-aires.htm
+[2025-04-11 12:59:44] [UOLScraper] getHtml: Buscando HTML de https://tab.uol.com.br/noticias/redacao/2025/04/11/punidos-com-aposentadoria-estes-juizes-ainda-recebem-penduricalhos.htm
+[2025-04-11 12:59:51] [UOLScraper] getHtml: Buscando HTML de https://noticias.uol.com.br/politica/ultimas-noticias/2025/04/11/alvo-da-pf-prefeito-tiktoker-usa-desinformacao-por-projecao-nacional.htm
+[2025-04-11 12:59:57] [UOLScraper] [UOL] | Concluído: Scraping finalizado. Artigos encontrados = 11
+[2025-04-11 12:59:57] [FolhaScraper] [Folha] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-11 12:59:57] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/
+[2025-04-11 13:00:06] [FolhaScraper] [Folha] | Listagem: Nós encontrados = 100
+[2025-04-11 13:00:06] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/deborah-bizarria/2025/04/vestido-de-noiva-racao-e-perfume-o-que-motiva-a-corrida-as-compras-nos-eua.shtml
+[2025-04-11 13:00:06] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/deborah-bizarria/2025/04/vestido-de-noiva-racao-e-perfume-o-que-motiva-a-corrida-as-compras-nos-eua.shtml
+[2025-04-11 13:00:10] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:00:10] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/gleisi-tenta-desfazer-ruidos-com-stf-apos-falar-sobre-revisao-de-penas-do-81.shtml
+[2025-04-11 13:00:10] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/gleisi-tenta-desfazer-ruidos-com-stf-apos-falar-sobre-revisao-de-penas-do-81.shtml
+[2025-04-11 13:00:14] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Catia Seabra
+[2025-04-11 13:00:14] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/pedro-lucas-diz-que-vai-ouvir-bancada-do-uniao-brasil-antes-de-decidir-sobre-ministerio.shtml
+[2025-04-11 13:00:14] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/pedro-lucas-diz-que-vai-ouvir-bancada-do-uniao-brasil-antes-de-decidir-sobre-ministerio.shtml
+[2025-04-11 13:00:17] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Victoria Azevedo
+[2025-04-11 13:00:17] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/alckmin-e-ministro-do-comercio-chines-defendem-multilateralismo-em-meio-a-guerra-comercial-com-eua.shtml
+[2025-04-11 13:00:17] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/alckmin-e-ministro-do-comercio-chines-defendem-multilateralismo-em-meio-a-guerra-comercial-com-eua.shtml
+[2025-04-11 13:00:19] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Mariana Brasil
+[2025-04-11 13:00:19] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/comissao-da-camara-aprova-dia-nacional-de-jejum-oracao-e-arrependimento.shtml
+[2025-04-11 13:00:19] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/comissao-da-camara-aprova-dia-nacional-de-jejum-oracao-e-arrependimento.shtml
+[2025-04-11 13:00:22] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:00:22] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/bolsonaro-sente-dores-e-e-atendido-em-hospital-no-rio-grande-do-norte.shtml
+[2025-04-11 13:00:22] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/bolsonaro-sente-dores-e-e-atendido-em-hospital-no-rio-grande-do-norte.shtml
+[2025-04-11 13:00:25] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Marianna Holanda
+[2025-04-11 13:00:25] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/lider-do-pl-diz-que-partido-atingiu-257-assinaturas-para-pedir-que-anistia-va-direto-para-plenario.shtml
+[2025-04-11 13:00:25] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/lider-do-pl-diz-que-partido-atingiu-257-assinaturas-para-pedir-que-anistia-va-direto-para-plenario.shtml
+[2025-04-11 13:00:26] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Marianna Holanda
+[2025-04-11 13:00:26] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/blogs/novo-em-folha/2025/04/serrapilheira-anuncia-edital-para-podcasts-de-ciencia-liderados-por-pessoas-negras-e-indigenas.shtml
+[2025-04-11 13:00:26] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/blogs/novo-em-folha/2025/04/serrapilheira-anuncia-edital-para-podcasts-de-ciencia-liderados-por-pessoas-negras-e-indigenas.shtml
+[2025-04-11 13:00:28] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:00:28] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/lula-chama-diretora-geral-do-fmi-de-mulherzinha-relembre-outras-falas-machistas.shtml
+[2025-04-11 13:00:28] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/lula-chama-diretora-geral-do-fmi-de-mulherzinha-relembre-outras-falas-machistas.shtml
+[2025-04-11 13:00:31] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Arthur Guimarães de Oliveira
+[2025-04-11 13:00:31] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/stf-estica-feriado-de-pascoa-e-fica-sem-sessoes-durante-toda-a-semana.shtml
+[2025-04-11 13:00:31] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/stf-estica-feriado-de-pascoa-e-fica-sem-sessoes-durante-toda-a-semana.shtml
+[2025-04-11 13:00:34] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:00:34] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/governo-lula-segue-gestao-castro-e-da-aval-para-reativacao-de-banco-sob-influencia-politica.shtml
+[2025-04-11 13:00:34] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/governo-lula-segue-gestao-castro-e-da-aval-para-reativacao-de-banco-sob-influencia-politica.shtml
+[2025-04-11 13:00:37] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Italo Nogueira
+[2025-04-11 13:00:37] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/aliados-de-nunes-agem-para-extinguir-cpis-na-camara-municipal.shtml
+[2025-04-11 13:00:37] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/aliados-de-nunes-agem-para-extinguir-cpis-na-camara-municipal.shtml
+[2025-04-11 13:00:40] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Carlos Petrocilo
+[2025-04-11 13:00:40] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/washington-quaqua-diz-ser-candidato-a-presidencia-do-pt-em-meio-a-racha-na-sigla.shtml
+[2025-04-11 13:00:40] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/washington-quaqua-diz-ser-candidato-a-presidencia-do-pt-em-meio-a-racha-na-sigla.shtml
+[2025-04-11 13:00:43] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:00:43] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-58-acham-que-tarcisio-deveria-disputar-reeleicao-em-sp-e-30-presidencia.shtml
+[2025-04-11 13:00:43] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/datafolha-58-acham-que-tarcisio-deveria-disputar-reeleicao-em-sp-e-30-presidencia.shtml
+[2025-04-11 13:00:45] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Bruno Ribeiro
+[2025-04-11 13:00:45] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/bolsonaro-manda-pl-estudar-ajuste-na-proposta-de-anistia-apos-conversa-com-motta.shtml
+[2025-04-11 13:00:45] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/bolsonaro-manda-pl-estudar-ajuste-na-proposta-de-anistia-apos-conversa-com-motta.shtml
+[2025-04-11 13:00:49] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Marianna Holanda
+[2025-04-11 13:00:49] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/psol-ve-situacao-de-glauber-braga-delicada-apos-briga-com-rivais-e-isolamento-no-partido.shtml
+[2025-04-11 13:00:49] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/psol-ve-situacao-de-glauber-braga-delicada-apos-briga-com-rivais-e-isolamento-no-partido.shtml
+[2025-04-11 13:00:58] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Juliana Arreguy
+[2025-04-11 13:00:58] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/vice-governador-da-bahia-constrange-geddel-ao-citar-bunker-com-r-51-milhoes-em-entrevista.shtml
+[2025-04-11 13:00:58] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/vice-governador-da-bahia-constrange-geddel-ao-citar-bunker-com-r-51-milhoes-em-entrevista.shtml
+[2025-04-11 13:01:05] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Aléxia Sousa
+[2025-04-11 13:01:05] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/gleisi-critica-deputados-da-base-de-lula-que-assinam-urgencia-de-anistia-a-81.shtml
+[2025-04-11 13:01:05] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/gleisi-critica-deputados-da-base-de-lula-que-assinam-urgencia-de-anistia-a-81.shtml
+[2025-04-11 13:01:08] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Mariana Brasil
+[2025-04-11 13:01:08] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/pt-e-prerrogativas-querem-campanha-para-expor-deputados-pro-anistia.shtml
+[2025-04-11 13:01:08] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/pt-e-prerrogativas-querem-campanha-para-expor-deputados-pro-anistia.shtml
+[2025-04-11 13:01:13] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:01:13] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/quem-e-pedro-lucas-novo-ministro-das-comunicacoes-de-lula.shtml
+[2025-04-11 13:01:13] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/quem-e-pedro-lucas-novo-ministro-das-comunicacoes-de-lula.shtml
+[2025-04-11 13:01:14] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Raphael Di Cunto
+[2025-04-11 13:01:14] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/governo-anuncia-pedro-lucas-como-novo-ministro-das-comunicacoes.shtml
+[2025-04-11 13:01:14] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/governo-anuncia-pedro-lucas-como-novo-ministro-das-comunicacoes.shtml
+[2025-04-11 13:01:14] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Victoria Azevedo
+[2025-04-11 13:01:14] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/toffoli-adia-leitura-de-voto-em-acao-sobre-confisco-de-bens-de-delatores-da-lava-jato.shtml
+[2025-04-11 13:01:14] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/toffoli-adia-leitura-de-voto-em-acao-sobre-confisco-de-bens-de-delatores-da-lava-jato.shtml
+[2025-04-11 13:01:14] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Ana Pompeu
+[2025-04-11 13:01:14] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/cfm-proibe-bloqueio-hormonal-para-criancas-e-adolescentes-trans.shtml
+[2025-04-11 13:01:14] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/cfm-proibe-bloqueio-hormonal-para-criancas-e-adolescentes-trans.shtml
+[2025-04-11 13:01:15] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Danielle Brant
+[2025-04-11 13:01:15] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/stf-forma-maioria-para-manter-indenizacao-de-eduardo-bolsonaro-a-jornalista-da-folha.shtml
+[2025-04-11 13:01:15] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/stf-forma-maioria-para-manter-indenizacao-de-eduardo-bolsonaro-a-jornalista-da-folha.shtml
+[2025-04-11 13:01:15] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Ana Pompeu
+[2025-04-11 13:01:15] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/fux-libera-caso-debora-para-julgamento-na-primeira-turma-do-stf.shtml
+[2025-04-11 13:01:15] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/fux-libera-caso-debora-para-julgamento-na-primeira-turma-do-stf.shtml
+[2025-04-11 13:01:16] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Cézar Feitoza
+[2025-04-11 13:01:16] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/desembargador-aposentado-condenado-por-venda-de-decisoes-e-preso-em-fortaleza.shtml
+[2025-04-11 13:01:16] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/desembargador-aposentado-condenado-por-venda-de-decisoes-e-preso-em-fortaleza.shtml
+[2025-04-11 13:01:17] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Maurício Moreira
+[2025-04-11 13:01:17] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/moraes-autoriza-24-parlamentares-a-visitarem-braga-netto-na-prisao.shtml
+[2025-04-11 13:01:17] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/moraes-autoriza-24-parlamentares-a-visitarem-braga-netto-na-prisao.shtml
+[2025-04-11 13:01:18] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:01:18] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/marcosaugustogoncalves/2025/04/recuo-de-trump-e-alivio-mas-crise-com-china-segue-azeda.shtml
+[2025-04-11 13:01:18] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/marcosaugustogoncalves/2025/04/recuo-de-trump-e-alivio-mas-crise-com-china-segue-azeda.shtml
+[2025-04-11 13:01:20] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:01:20] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-alckmin-e-marcal-lideram-cenarios-em-eventual-disputa-ao-governo-de-sp-sem-tarcisio.shtml
+[2025-04-11 13:01:20] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/datafolha-alckmin-e-marcal-lideram-cenarios-em-eventual-disputa-ao-governo-de-sp-sem-tarcisio.shtml
+[2025-04-11 13:01:29] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Bruno Ribeiro
+[2025-04-11 13:01:29] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-tarcisio-venceria-disputa-para-governo-de-sp-se-eleicao-fosse-hoje.shtml
+[2025-04-11 13:01:29] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/datafolha-tarcisio-venceria-disputa-para-governo-de-sp-se-eleicao-fosse-hoje.shtml
+[2025-04-11 13:01:30] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Bruno Ribeiro
+[2025-04-11 13:01:30] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/leonardo-avalanche-diz-que-operacao-da-pf-na-casa-de-manga-e-perseguicao-politica.shtml
+[2025-04-11 13:01:30] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/leonardo-avalanche-diz-que-operacao-da-pf-na-casa-de-manga-e-perseguicao-politica.shtml
+[2025-04-11 13:01:31] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Carlos Petrocilo
+[2025-04-11 13:01:31] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-suspende-congresso-da-rede-apos-questionamento-sobre-legalidade-de-processo-eleitoral.shtml
+[2025-04-11 13:01:31] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-suspende-congresso-da-rede-apos-questionamento-sobre-legalidade-de-processo-eleitoral.shtml
+[2025-04-11 13:01:32] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Victória Cócolo
+[2025-04-11 13:01:32] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/maioria-dos-parlamentares-defende-regulamentacao-dos-supersalarios-diz-pesquisa.shtml
+[2025-04-11 13:01:32] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/maioria-dos-parlamentares-defende-regulamentacao-dos-supersalarios-diz-pesquisa.shtml
+[2025-04-11 13:01:33] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:01:33] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/gleisi-mescla-articulacao-no-congresso-e-embate-com-governadores-no-1o-mes-no-ministerio.shtml
+[2025-04-11 13:01:33] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/gleisi-mescla-articulacao-no-congresso-e-embate-com-governadores-no-1o-mes-no-ministerio.shtml
+[2025-04-11 13:01:34] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Mariana Brasil
+[2025-04-11 13:01:34] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-governo-tarcisio-mantem-patamar-de-aprovacao-mas-reprovacao-dobra-em-2-anos.shtml
+[2025-04-11 13:01:34] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/datafolha-governo-tarcisio-mantem-patamar-de-aprovacao-mas-reprovacao-dobra-em-2-anos.shtml
+[2025-04-11 13:01:36] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Bruno Ribeiro
+[2025-04-11 13:01:36] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/blogs/novo-em-folha/2025/04/petrobras-abre-inscricoes-para-bolsas-de-reportagens.shtml
+[2025-04-11 13:01:36] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/blogs/novo-em-folha/2025/04/petrobras-abre-inscricoes-para-bolsas-de-reportagens.shtml
+[2025-04-11 13:01:38] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:01:38] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/itaipu-apresenta-superavit-em-2024-e-promete-manter-tarifa-para-o-consumidor.shtml
+[2025-04-11 13:01:38] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/itaipu-apresenta-superavit-em-2024-e-promete-manter-tarifa-para-o-consumidor.shtml
+[2025-04-11 13:01:39] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:01:39] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/lider-da-maioria-na-camara-defende-contraponto-a-pressao-de-bolsonaristas-por-anistia.shtml
+[2025-04-11 13:01:39] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/lider-da-maioria-na-camara-defende-contraponto-a-pressao-de-bolsonaristas-por-anistia.shtml
+[2025-04-11 13:01:41] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:01:41] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/motta-fala-em-pautar-cassacao-de-chiquinho-brazao-como-equilibrio-de-caso-glauber-braga.shtml
+[2025-04-11 13:01:41] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/motta-fala-em-pautar-cassacao-de-chiquinho-brazao-como-equilibrio-de-caso-glauber-braga.shtml
+[2025-04-11 13:01:42] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Marianna Holanda
+[2025-04-11 13:01:42] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/aline-wolff-psicologa-da-rebeca-andrade-estreia-na-casafolha-curso-sobre-equilibrio-emocional.shtml
+[2025-04-11 13:01:42] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/aline-wolff-psicologa-da-rebeca-andrade-estreia-na-casafolha-curso-sobre-equilibrio-emocional.shtml
+[2025-04-11 13:01:43] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Uirá Machado
+[2025-04-11 13:01:43] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/racha-no-pt-se-acirra-com-acusacoes-sobre-jatinho-e-candidatura-contra-vontade-de-lula.shtml
+[2025-04-11 13:01:43] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/racha-no-pt-se-acirra-com-acusacoes-sobre-jatinho-e-candidatura-contra-vontade-de-lula.shtml
+[2025-04-11 13:01:45] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Catia Seabra
+[2025-04-11 13:01:45] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/cotado-para-comunicacoes-deve-elevar-pressao-sobre-ibama-por-exploracao-da-margem-equatorial.shtml
+[2025-04-11 13:01:45] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/cotado-para-comunicacoes-deve-elevar-pressao-sobre-ibama-por-exploracao-da-margem-equatorial.shtml
+[2025-04-11 13:01:49] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Danielle Brant
+[2025-04-11 13:01:49] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/governo-empresta-avioes-da-fab-ao-stf-e-poe-lista-de-passageiros-em-sigilo-por-5-anos.shtml
+[2025-04-11 13:01:49] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/governo-empresta-avioes-da-fab-ao-stf-e-poe-lista-de-passageiros-em-sigilo-por-5-anos.shtml
+[2025-04-11 13:01:52] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Mateus Vargas
+[2025-04-11 13:01:52] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/bolsonaro-e-motta-se-encontram-para-falar-de-pl-da-anistia.shtml
+[2025-04-11 13:01:52] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/bolsonaro-e-motta-se-encontram-para-falar-de-pl-da-anistia.shtml
+[2025-04-11 13:01:55] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Marianna Holanda
+[2025-04-11 13:01:55] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/cerca-de-320-empresarios-se-inscreveram-para-forum-do-lide-em-ny.shtml
+[2025-04-11 13:01:55] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/cerca-de-320-empresarios-se-inscreveram-para-forum-do-lide-em-ny.shtml
+[2025-04-11 13:01:57] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:01:57] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/monicabergamo/2025/04/entidades-enviam-carta-a-lula-pedindo-permanencia-de-cida-goncalves-no-ministerio-das-mulheres.shtml
+[2025-04-11 13:01:57] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/monicabergamo/2025/04/entidades-enviam-carta-a-lula-pedindo-permanencia-de-cida-goncalves-no-ministerio-das-mulheres.shtml
+[2025-04-11 13:02:02] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:02:02] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/lula-diz-que-uniao-brasil-tem-o-direito-de-indicar-substituto-de-juscelino.shtml
+[2025-04-11 13:02:02] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/lula-diz-que-uniao-brasil-tem-o-direito-de-indicar-substituto-de-juscelino.shtml
+[2025-04-11 13:02:04] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Daniela Arcanjo
+[2025-04-11 13:02:04] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/lider-do-psol-liga-para-motta-para-tentar-interromper-cassacao-de-glauber-e-nao-e-atendida.shtml
+[2025-04-11 13:02:04] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/lider-do-psol-liga-para-motta-para-tentar-interromper-cassacao-de-glauber-e-nao-e-atendida.shtml
+[2025-04-11 13:02:06] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Danielle Brant
+[2025-04-11 13:02:06] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/ministerio-publico-questiona-indicacao-para-tribunal-de-contas-de-filha-de-chefe-da-assembleia-da-paraiba.shtml
+[2025-04-11 13:02:06] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/ministerio-publico-questiona-indicacao-para-tribunal-de-contas-de-filha-de-chefe-da-assembleia-da-paraiba.shtml
+[2025-04-11 13:02:08] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = José Matheus Santos
+[2025-04-11 13:02:08] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-pode-suspender-eleicao-para-direcao-da-rede-apos-questionamento-sobre-lista-de-delegados.shtml
+[2025-04-11 13:02:08] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-pode-suspender-eleicao-para-direcao-da-rede-apos-questionamento-sobre-lista-de-delegados.shtml
+[2025-04-11 13:02:11] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Victória Cócolo
+[2025-04-11 13:02:11] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/candidatos-em-eleicao-interna-do-pt-terao-direito-a-passagens-aereas-hotel-e-jornalzinho.shtml
+[2025-04-11 13:02:11] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/candidatos-em-eleicao-interna-do-pt-terao-direito-a-passagens-aereas-hotel-e-jornalzinho.shtml
+[2025-04-11 13:02:14] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:02:14] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/glauber-braga-anuncia-greve-de-fome-em-protesto-contra-processo-de-cassacao-de-mandato.shtml
+[2025-04-11 13:02:14] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/glauber-braga-anuncia-greve-de-fome-em-protesto-contra-processo-de-cassacao-de-mandato.shtml
+[2025-04-11 13:02:16] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Marianna Holanda
+[2025-04-11 13:02:16] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-do-trabalho-condena-havan-por-assedio-eleitoral.shtml
+[2025-04-11 13:02:16] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-do-trabalho-condena-havan-por-assedio-eleitoral.shtml
+[2025-04-11 13:02:18] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:02:18] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/maria-herminia-tavares/2025/04/volta-da-ultradireita-e-tragedia-contratada.shtml
+[2025-04-11 13:02:18] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/maria-herminia-tavares/2025/04/volta-da-ultradireita-e-tragedia-contratada.shtml
+[2025-04-11 13:02:20] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:02:20] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/marcosaugustogoncalves/2025/04/sem-aliados-trump-recua-diante-de-retaliacao-da-china.shtml
+[2025-04-11 13:02:20] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/marcosaugustogoncalves/2025/04/sem-aliados-trump-recua-diante-de-retaliacao-da-china.shtml
+[2025-04-11 13:02:25] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:02:25] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-suspende-resolucao-que-permite-prescricao-de-anticoncepcional-por-farmaceuticos.shtml
+[2025-04-11 13:02:25] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-suspende-resolucao-que-permite-prescricao-de-anticoncepcional-por-farmaceuticos.shtml
+[2025-04-11 13:02:29] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Danielle Brant
+[2025-04-11 13:02:29] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/monicabergamo/2025/04/vereadores-do-pl-apresentam-projeto-que-torna-obrigatorio-sepultamento-de-fetos.shtml
+[2025-04-11 13:02:29] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/monicabergamo/2025/04/vereadores-do-pl-apresentam-projeto-que-torna-obrigatorio-sepultamento-de-fetos.shtml
+[2025-04-11 13:02:34] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:02:34] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/rui-falcao-lanca-candidatura-a-presidencia-do-pt-em-oposicao-ao-preferido-de-lula.shtml
+[2025-04-11 13:02:34] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/rui-falcao-lanca-candidatura-a-presidencia-do-pt-em-oposicao-ao-preferido-de-lula.shtml
+[2025-04-11 13:02:35] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Catia Seabra
+[2025-04-11 13:02:35] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/agu-pede-investigacao-contra-deputado-que-pediu-morte-de-lula.shtml
+[2025-04-11 13:02:35] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/agu-pede-investigacao-contra-deputado-que-pediu-morte-de-lula.shtml
+[2025-04-11 13:02:36] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Mariana Brasil
+[2025-04-11 13:02:36] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/prefeitura-de-sp-preve-economia-de-r-45-mi-com-ppp-para-construir-5-ceus.shtml
+[2025-04-11 13:02:36] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/prefeitura-de-sp-preve-economia-de-r-45-mi-com-ppp-para-construir-5-ceus.shtml
+[2025-04-11 13:02:39] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Danielle Brant
+[2025-04-11 13:02:39] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/pl-de-bolsonaro-recua-de-emparedar-deputados-por-anistia-e-mira-proxima-semana.shtml
+[2025-04-11 13:02:39] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/pl-de-bolsonaro-recua-de-emparedar-deputados-por-anistia-e-mira-proxima-semana.shtml
+[2025-04-11 13:02:41] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Marianna Holanda
+[2025-04-11 13:02:41] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/lula-vai-receber-uniao-brasil-para-oficializar-troca-em-ministerio-e-pedro-lucas-deve-assumir.shtml
+[2025-04-11 13:02:41] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/lula-vai-receber-uniao-brasil-para-oficializar-troca-em-ministerio-e-pedro-lucas-deve-assumir.shtml
+[2025-04-11 13:02:44] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Victoria Azevedo
+[2025-04-11 13:02:44] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/policia-arquiva-processo-contra-ex-vereador-bolsonarista-acusado-de-ameacar-reporter.shtml
+[2025-04-11 13:02:44] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/policia-arquiva-processo-contra-ex-vereador-bolsonarista-acusado-de-ameacar-reporter.shtml
+[2025-04-11 13:02:47] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:02:47] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/medico-condenado-por-estupro-recebe-homenagem-na-assembleia-legislativa-de-sp.shtml
+[2025-04-11 13:02:47] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/medico-condenado-por-estupro-recebe-homenagem-na-assembleia-legislativa-de-sp.shtml
+[2025-04-11 13:02:51] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Carlos Petrocilo
+[2025-04-11 13:02:51] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/queda-de-juscelino-destrava-conversas-de-lula-sobre-reforma-ministerial.shtml
+[2025-04-11 13:02:51] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/queda-de-juscelino-destrava-conversas-de-lula-sobre-reforma-ministerial.shtml
+[2025-04-11 13:02:54] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Catia Seabra
+[2025-04-11 13:02:54] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/eliogaspari/2025/04/a-anistia-virou-guerrilha.shtml
+[2025-04-11 13:02:54] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/eliogaspari/2025/04/a-anistia-virou-guerrilha.shtml
+[2025-04-11 13:02:55] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:02:55] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/marinha-deve-ter-1a-expulsao-de-militar-por-participacao-nos-ataques-de-81.shtml
+[2025-04-11 13:02:55] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/marinha-deve-ter-1a-expulsao-de-militar-por-participacao-nos-ataques-de-81.shtml
+[2025-04-11 13:02:57] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Cézar Feitoza
+[2025-04-11 13:02:57] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/monicabergamo/2025/04/haddad-diz-que-falta-honestidade-intelectual-a-criticos-e-que-lula-sera-candidato-competitivo.shtml
+[2025-04-11 13:02:57] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/monicabergamo/2025/04/haddad-diz-que-falta-honestidade-intelectual-a-criticos-e-que-lula-sera-candidato-competitivo.shtml
+[2025-04-11 13:02:58] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:02:58] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/ministerio-publico-pede-r-14-milhoes-para-indenizar-indigenas-vitimas-da-ditadura.shtml
+[2025-04-11 13:02:58] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/ministerio-publico-pede-r-14-milhoes-para-indenizar-indigenas-vitimas-da-ditadura.shtml
+[2025-04-11 13:02:59] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = André Borges
+[2025-04-11 13:02:59] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/entenda-o-que-pesa-sobre-juscelino-filho-e-proximos-passos-da-denuncia-da-pgr.shtml
+[2025-04-11 13:02:59] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/entenda-o-que-pesa-sobre-juscelino-filho-e-proximos-passos-da-denuncia-da-pgr.shtml
+[2025-04-11 13:03:02] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:03:02] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/ratinho-jr-defende-igualdade-de-regras-para-radio-e-tv-e-big-techs-no-uso-do-fundo-eleitoral.shtml
+[2025-04-11 13:03:02] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/ratinho-jr-defende-igualdade-de-regras-para-radio-e-tv-e-big-techs-no-uso-do-fundo-eleitoral.shtml
+[2025-04-11 13:03:09] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:03:09] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/planalto-diz-que-lula-pediu-para-juscelino-se-demitir-ministro-diz-que-decisao-foi-dele.shtml
+[2025-04-11 13:03:09] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/planalto-diz-que-lula-pediu-para-juscelino-se-demitir-ministro-diz-que-decisao-foi-dele.shtml
+[2025-04-11 13:03:11] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Catia Seabra
+[2025-04-11 13:03:11] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/defensoria-da-uniao-recomenda-retirada-de-invasores-de-terras-indigenas-no-mt.shtml
+[2025-04-11 13:03:11] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/defensoria-da-uniao-recomenda-retirada-de-invasores-de-terras-indigenas-no-mt.shtml
+[2025-04-11 13:03:17] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Danielle Brant
+[2025-04-11 13:03:17] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/tre-g0-decide-reverter-decisao-de-1a-instancia-e-mantem-caiado-elegivel.shtml
+[2025-04-11 13:03:17] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/tre-g0-decide-reverter-decisao-de-1a-instancia-e-mantem-caiado-elegivel.shtml
+[2025-04-11 13:03:22] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Renata Galf
+[2025-04-11 13:03:22] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/lider-do-pt-na-camara-quer-investigar-campos-neto-por-norma-usada-por-master.shtml
+[2025-04-11 13:03:22] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/lider-do-pt-na-camara-quer-investigar-campos-neto-por-norma-usada-por-master.shtml
+[2025-04-11 13:03:30] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:03:30] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/folha-nao-publicou-que-usp-nao-divulgaria-publico-de-ato-de-bolsonaro-na-paulista.shtml
+[2025-04-11 13:03:30] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/folha-nao-publicou-que-usp-nao-divulgaria-publico-de-ato-de-bolsonaro-na-paulista.shtml
+[2025-04-11 13:03:33] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Luisa Alcantara e Silva
+[2025-04-11 13:03:33] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/mst-ja-fez-20-invasoes-de-terra-em-10-estados-no-abril-vermelho.shtml
+[2025-04-11 13:03:33] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/mst-ja-fez-20-invasoes-de-terra-em-10-estados-no-abril-vermelho.shtml
+[2025-04-11 13:03:36] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Guilherme Seto
+[2025-04-11 13:03:36] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/tarcisio-diz-que-tarifaco-de-trump-cria-oportunidade-para-sp-e-elogia-postura-de-lula.shtml
+[2025-04-11 13:03:36] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/tarcisio-diz-que-tarifaco-de-trump-cria-oportunidade-para-sp-e-elogia-postura-de-lula.shtml
+[2025-04-11 13:03:40] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Bruno Ribeiro
+[2025-04-11 13:03:40] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/juscelino-filho-ministro-de-lula-decide-pedir-demissao-apos-denuncia-da-pgr.shtml
+[2025-04-11 13:03:40] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/juscelino-filho-ministro-de-lula-decide-pedir-demissao-apos-denuncia-da-pgr.shtml
+[2025-04-11 13:03:43] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:03:43] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/governo-lula-volta-a-exigir-vistos-de-americanos-para-entrada-no-brasil.shtml
+[2025-04-11 13:03:43] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/governo-lula-volta-a-exigir-vistos-de-americanos-para-entrada-no-brasil.shtml
+[2025-04-11 13:03:48] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:03:48] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/gleisi-se-reune-com-juscelino-e-cupula-do-uniao-brasil-apos-denuncia-contra-ministro.shtml
+[2025-04-11 13:03:48] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/gleisi-se-reune-com-juscelino-e-cupula-do-uniao-brasil-apos-denuncia-contra-ministro.shtml
+[2025-04-11 13:03:56] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Raphael Di Cunto
+[2025-04-11 13:03:56] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-rejeita-pedido-de-mamae-falei-para-anular-cassacao-por-falas-machistas.shtml
+[2025-04-11 13:03:56] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-rejeita-pedido-de-mamae-falei-para-anular-cassacao-por-falas-machistas.shtml
+[2025-04-11 13:03:59] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:03:59] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/bndes-ja-aprovou-r-196-bilhoes-para-nova-industria-brasil-diz-mercadante.shtml
+[2025-04-11 13:03:59] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/bndes-ja-aprovou-r-196-bilhoes-para-nova-industria-brasil-diz-mercadante.shtml
+[2025-04-11 13:04:02] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:04:02] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/gilmar-rechaca-anistia-a-81-mas-diz-que-pode-haver-abertura-para-revisao.shtml
+[2025-04-11 13:04:02] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/gilmar-rechaca-anistia-a-81-mas-diz-que-pode-haver-abertura-para-revisao.shtml
+[2025-04-11 13:04:07] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Arthur Guimarães de Oliveira
+[2025-04-11 13:04:07] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/lider-do-pl-vai-a-aeroporto-colher-assinaturas-para-anistia-e-bate-boca-com-manifestantes-veja-video.shtml
+[2025-04-11 13:04:07] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/blogs/brasilia-hoje/2025/04/lider-do-pl-vai-a-aeroporto-colher-assinaturas-para-anistia-e-bate-boca-com-manifestantes-veja-video.shtml
+[2025-04-11 13:04:11] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:04:11] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-diz-que-delegados-eleitos-no-rj-nao-podem-votar-em-conferencia-nacional-da-rede.shtml
+[2025-04-11 13:04:11] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/justica-diz-que-delegados-eleitos-no-rj-nao-podem-votar-em-conferencia-nacional-da-rede.shtml
+[2025-04-11 13:04:17] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Danielle Brant
+[2025-04-11 13:04:17] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/planalto-avalia-que-juscelino-filho-deveria-pedir-demissao-apos-denuncia-da-pgr.shtml
+[2025-04-11 13:04:17] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/planalto-avalia-que-juscelino-filho-deveria-pedir-demissao-apos-denuncia-da-pgr.shtml
+[2025-04-11 13:04:18] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Catia Seabra
+[2025-04-11 13:04:18] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/defesa-de-juscelino-filho-ministro-de-lula-critica-ministerio-publico-e-diz-confiar-no-stf.shtml
+[2025-04-11 13:04:18] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/defesa-de-juscelino-filho-ministro-de-lula-critica-ministerio-publico-e-diz-confiar-no-stf.shtml
+[2025-04-11 13:04:19] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = José Marques
+[2025-04-11 13:04:19] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/secretaria-da-pasta-de-anielle-pede-demissao-e-diz-que-comunicacao-do-governo-lula-e-problema.shtml
+[2025-04-11 13:04:19] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/secretaria-da-pasta-de-anielle-pede-demissao-e-diz-que-comunicacao-do-governo-lula-e-problema.shtml
+[2025-04-11 13:04:21] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Mariana Brasil
+[2025-04-11 13:04:21] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/juscelino-filho-ministro-de-lula-e-denunciado-pela-pgr-em-caso-de-desvio-de-emendas.shtml
+[2025-04-11 13:04:21] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/juscelino-filho-ministro-de-lula-e-denunciado-pela-pgr-em-caso-de-desvio-de-emendas.shtml
+[2025-04-11 13:04:22] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = José Marques
+[2025-04-11 13:04:22] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/mercado/2025/04/quando-voce-faz-o-ajuste-fiscal-o-resultado-vem-rapido-diz-tarcisio.shtml
+[2025-04-11 13:04:22] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/mercado/2025/04/quando-voce-faz-o-ajuste-fiscal-o-resultado-vem-rapido-diz-tarcisio.shtml
+[2025-04-11 13:04:23] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Júlia Moura
+[2025-04-11 13:04:23] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/defesa-de-ex-assessor-diz-que-moraes-mira-advogado-ao-aplicar-punicao-por-live.shtml
+[2025-04-11 13:04:23] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/defesa-de-ex-assessor-diz-que-moraes-mira-advogado-ao-aplicar-punicao-por-live.shtml
+[2025-04-11 13:04:24] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:04:24] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/nova-presidencia-da-camara-de-sp-cria-novo-grupo-de-whatsapp-e-exclui-milton-leite.shtml
+[2025-04-11 13:04:24] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/nova-presidencia-da-camara-de-sp-cria-novo-grupo-de-whatsapp-e-exclui-milton-leite.shtml
+[2025-04-11 13:04:25] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Carlos Petrocilo
+[2025-04-11 13:04:25] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/podcasts/2025/04/podcast-discute-pressao-de-bolsonaristas-sobre-hugo-motta-por-anistia-a-reus-do-81.shtml
+[2025-04-11 13:04:25] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/podcasts/2025/04/podcast-discute-pressao-de-bolsonaristas-sobre-hugo-motta-por-anistia-a-reus-do-81.shtml
+[2025-04-11 13:04:27] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:04:27] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/datafolha-52-acham-que-bolsonaro-deveria-ser-preso-por-tentativa-de-golpe.shtml
+[2025-04-11 13:04:27] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/datafolha-52-acham-que-bolsonaro-deveria-ser-preso-por-tentativa-de-golpe.shtml
+[2025-04-11 13:04:29] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Igor Gielow
+[2025-04-11 13:04:29] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/tarcisio-faz-parceria-com-governo-lula-e-exalta-feito-de-obama-apos-protagonismo-em-ato-de-bolsonaro.shtml
+[2025-04-11 13:04:29] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/tarcisio-faz-parceria-com-governo-lula-e-exalta-feito-de-obama-apos-protagonismo-em-ato-de-bolsonaro.shtml
+[2025-04-11 13:04:34] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Não disponível
+[2025-04-11 13:04:34] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/governo-lula-reclama-de-estados-que-se-apropriam-do-minha-casa-minha-vida.shtml
+[2025-04-11 13:04:34] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/governo-lula-reclama-de-estados-que-se-apropriam-do-minha-casa-minha-vida.shtml
+[2025-04-11 13:04:44] [HttpClient] | Erro ao obter HTML de https://www1.folha.uol.com.br/colunas/painel/2025/04/governo-lula-reclama-de-estados-que-se-apropriam-do-minha-casa-minha-vida.shtml: Operation timed out after 10013 milliseconds with 196464 bytes received
+[2025-04-11 13:04:44] [FolhaScraper] [Folha] | scrapeArticle: Erro ao obter HTML do artigo: https://www1.folha.uol.com.br/colunas/painel/2025/04/governo-lula-reclama-de-estados-que-se-apropriam-do-minha-casa-minha-vida.shtml
+[2025-04-11 13:04:44] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/levantamento-mapeia-perfil-de-vitimas-da-ditadura-militar-no-brasil.shtml
+[2025-04-11 13:04:44] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/levantamento-mapeia-perfil-de-vitimas-da-ditadura-militar-no-brasil.shtml
+[2025-04-11 13:04:49] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Ana Gabriela Oliveira Lima
+[2025-04-11 13:04:49] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/stf-institui-indenizacao-de-r-10-mil-mensais-a-juizes-auxiliares-de-ministros.shtml
+[2025-04-11 13:04:49] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/stf-institui-indenizacao-de-r-10-mil-mensais-a-juizes-auxiliares-de-ministros.shtml
+[2025-04-11 13:04:54] [FolhaScraper] [Folha] | scrapeArticle: Autor extraído = Ana Pompeu
+[2025-04-11 13:04:54] [FolhaScraper] [Folha] | scrapeArticle: Buscando HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/bolsonaro-diz-concordar-com-fala-de-malafaia-sobre-generais-frouxos.shtml
+[2025-04-11 13:04:54] [FolhaScraper] getHtml: Buscando HTML de https://www1.folha.uol.com.br/poder/2025/04/bolsonaro-diz-concordar-com-fala-de-malafaia-sobre-generais-frouxos.shtml
+[2025-04-11 13:05:04] [HttpClient] | Erro ao obter HTML de https://www1.folha.uol.com.br/poder/2025/04/bolsonaro-diz-concordar-com-fala-de-malafaia-sobre-generais-frouxos.shtml: Operation timed out after 10003 milliseconds with 180098 bytes received
+[2025-04-11 13:05:04] [FolhaScraper] [Folha] | scrapeArticle: Erro ao obter HTML do artigo: https://www1.folha.uol.com.br/poder/2025/04/bolsonaro-diz-concordar-com-fala-de-malafaia-sobre-generais-frouxos.shtml
+[2025-04-11 13:05:04] [FolhaScraper] [Folha] | Concluído: Scraping finalizado. Artigos encontrados = 100
+[2025-04-11 13:05:06] [G1Scraper] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 13:05:06] [UOLScraper] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 13:05:06] [FolhaScraper] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 13:05:06] [G1Scraper] [G1] | Scraping: Iniciando scraping da página de listagem.
+[2025-04-11 13:05:06] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/
+[2025-04-11 13:05:16] [G1Scraper] [G1] | Listagem: Nós encontrados = 10
+[2025-04-11 13:05:16] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/noticia/2025/04/11/entenda-impasse-em-torno-do-convite-a-pedro-lucas-para-chefia-do-ministerio-das-comunicacoes.ghtml
+[2025-04-11 13:05:21] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/noticia/2025/04/11/bolsonaro-passou-mal-de-madrugada-e-foi-medicado-por-ex-ministro.ghtml
+[2025-04-11 13:05:23] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/video/bolsonaro-passou-mal-de-madrugada-e-nao-dormiu-diz-ex-ministro-13508896.ghtml
+[2025-04-11 13:05:24] [G1Scraper] [G1] | Alerta: Título não extraído para artigo: https://g1.globo.com/politica/video/bolsonaro-passou-mal-de-madrugada-e-nao-dormiu-diz-ex-ministro-13508896.ghtml
+[2025-04-11 13:05:24] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/video/bolsonaro-embarca-em-helicoptero-para-natal-apos-passar-mal-13508845.ghtml
+[2025-04-11 13:05:31] [G1Scraper] [G1] | Alerta: Título não extraído para artigo: https://g1.globo.com/politica/video/bolsonaro-embarca-em-helicoptero-para-natal-apos-passar-mal-13508845.ghtml
+[2025-04-11 13:05:31] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/noticia/2025/04/11/em-greve-de-fome-ha-quase-60-horas-glauber-faz-exames-de-sangue-e-toma-soro-diz-equipe.ghtml
+[2025-04-11 13:05:41] [HttpClient] | Erro ao obter HTML de https://g1.globo.com/politica/noticia/2025/04/11/em-greve-de-fome-ha-quase-60-horas-glauber-faz-exames-de-sangue-e-toma-soro-diz-equipe.ghtml: Operation timed out after 10003 milliseconds with 732968 bytes received
+[2025-04-11 13:05:41] [G1Scraper] [G1] | Erro: Falha ao obter HTML do artigo: https://g1.globo.com/politica/noticia/2025/04/11/em-greve-de-fome-ha-quase-60-horas-glauber-faz-exames-de-sangue-e-toma-soro-diz-equipe.ghtml
+[2025-04-11 13:05:41] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/noticia/2025/04/11/convidado-por-lula-para-ministerio-deputado-diz-que-quer-ouvir-bancada-do-uniao-antes-de-decisao.ghtml
+[2025-04-11 13:05:51] [HttpClient] | Erro ao obter HTML de https://g1.globo.com/politica/noticia/2025/04/11/convidado-por-lula-para-ministerio-deputado-diz-que-quer-ouvir-bancada-do-uniao-antes-de-decisao.ghtml: Operation timed out after 10012 milliseconds with 319393 bytes received
+[2025-04-11 13:05:51] [G1Scraper] [G1] | Erro: Falha ao obter HTML do artigo: https://g1.globo.com/politica/noticia/2025/04/11/convidado-por-lula-para-ministerio-deputado-diz-que-quer-ouvir-bancada-do-uniao-antes-de-decisao.ghtml
+[2025-04-11 13:05:51] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/video/anistia-projeto-atinge-assinaturas-para-propor-rito-acelerado-na-camara-13508837.ghtml
+[2025-04-11 13:06:01] [HttpClient] | Erro ao obter HTML de https://g1.globo.com/politica/video/anistia-projeto-atinge-assinaturas-para-propor-rito-acelerado-na-camara-13508837.ghtml: Operation timed out after 10014 milliseconds with 90085 bytes received
+[2025-04-11 13:06:01] [G1Scraper] [G1] | Erro: Falha ao obter HTML do artigo: https://g1.globo.com/politica/video/anistia-projeto-atinge-assinaturas-para-propor-rito-acelerado-na-camara-13508837.ghtml
+[2025-04-11 13:06:01] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/video/bolsonaro-e-transferido-de-helicoptero-para-hospital-em-natal-13508746.ghtml
+[2025-04-11 13:06:11] [HttpClient] | Erro ao obter HTML de https://g1.globo.com/politica/video/bolsonaro-e-transferido-de-helicoptero-para-hospital-em-natal-13508746.ghtml: Operation timed out after 10010 milliseconds with 40951 bytes received
+[2025-04-11 13:06:11] [G1Scraper] [G1] | Erro: Falha ao obter HTML do artigo: https://g1.globo.com/politica/video/bolsonaro-e-transferido-de-helicoptero-para-hospital-em-natal-13508746.ghtml
+[2025-04-11 13:06:11] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/noticia/2025/04/11/alckmin-se-reune-com-ministro-chines-em-meio-a-tarifacos-eua-china.ghtml
+[2025-04-11 13:06:16] [HttpClient] | Erro ao obter HTML de https://g1.globo.com/politica/noticia/2025/04/11/alckmin-se-reune-com-ministro-chines-em-meio-a-tarifacos-eua-china.ghtml: Connection timed out after 5010 milliseconds
+[2025-04-11 13:06:16] [G1Scraper] [G1] | Erro: Falha ao obter HTML do artigo: https://g1.globo.com/politica/noticia/2025/04/11/alckmin-se-reune-com-ministro-chines-em-meio-a-tarifacos-eua-china.ghtml
+[2025-04-11 13:06:16] [G1Scraper] getHtml: Buscando HTML de https://g1.globo.com/politica/video/bolsonaro-estava-manifestacao-em-bom-jesus-rn-e-passou-mal-13508649.ghtml
+[2025-04-11 13:06:21] [HttpClient] | Erro ao obter HTML de https://g1.globo.com/politica/video/bolsonaro-estava-manifestacao-em-bom-jesus-rn-e-passou-mal-13508649.ghtml: Connection timed out after 5003 milliseconds
+[2025-04-11 13:06:21] [G1Scraper] [G1] | Erro: Falha ao obter HTML do artigo: https://g1.globo.com/politica/video/bolsonaro-estava-manifestacao-em-bom-jesus-rn-e-passou-mal-13508649.ghtml
+[2025-04-11 13:06:21] [G1Scraper] [G1] | Concluído: Scraping finalizado. Artigos encontrados = 2
+[2025-04-11 13:06:21] [UOLScraper] Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-11 13:06:21] [UOLScraper] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-11 13:06:21] [FolhaScraper] Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-11 13:06:21] [FolhaScraper] [Folha] | Cache: Utilizando dados do cache.
+[2025-04-11 13:06:21] [G1Scraper] [G1] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 13:06:21] [UOLScraper] [UOL] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 13:06:21] [FolhaScraper] [Folha] | Inicializado: Cache definido para 10 minutos.
+[2025-04-11 13:06:21] [G1Scraper] Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/g1_news.json
+[2025-04-11 13:06:21] [G1Scraper] [G1] | Cache: Utilizando dados do cache.
+[2025-04-11 13:06:21] [UOLScraper] Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/uol_news.json
+[2025-04-11 13:06:21] [UOLScraper] [UOL] | Cache: Utilizando dados do cache.
+[2025-04-11 13:06:21] [FolhaScraper] Utilizando cache do arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models/../../cache/folha_news.json
+[2025-04-11 13:06:21] [FolhaScraper] [Folha] | Cache: Utilizando dados do cache.
