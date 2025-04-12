@@ -230,6 +230,9 @@
                 $lines = file(LOG_FILE, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
                 $lines = array_reverse($lines); // Mais recentes primeiro
                 
+                // Armazena o número total de logs
+                $logCount = count($lines);
+                
                 // Limita a exibição aos 100 logs mais recentes para melhor desempenho
                 $displayLines = array_slice($lines, 0, 100);
                 
@@ -303,13 +306,11 @@
 
     <!-- Exemplos de uso dos novos logs -->
     <?php
-    log_info("Usuário fez login", "Auth");
-    log_warning("Múltiplas tentativas de login", "Auth");
-    log_error("Falha na conexão com o banco de dados", "Database");
-    log_debug("Query executada: SELECT * FROM users", "SQL");
-
-    // Ou continue usando a função genérica com nível personalizado
-    debug_log("Operação personalizada", "CUSTOM", "Context");
+    // log_info("Usuário fez login", "Auth");
+    // log_warning("Múltiplas tentativas de login", "Auth");
+    // log_error("Falha na conexão com o banco de dados", "Database");
+    // log_debug("Query executada: SELECT * FROM users", "SQL");
+    // debug_log("Operação personalizada", "CUSTOM", "Context");
     ?>
     
     <!-- Adicione este script JavaScript -->

@@ -2,6 +2,7 @@ ESTRUTURA DO DIRETÓRIO:
 ================================================================================
 
 ├── .gitignore
+├── .phpunit.result.cache
 ├── README.md
 ├── background_scrape.php
 ├── compile_code.py
@@ -11,6 +12,7 @@ ESTRUTURA DO DIRETÓRIO:
 ├── config
 │   ├── config.php
 │   └── scrapers_config.php
+├── phpunit.xml
 ├── public
 │   ├── api
 │   │   ├── cache.php
@@ -61,7 +63,23 @@ ESTRUTURA DO DIRETÓRIO:
 │           ├── Helpers
 │           │   └── ViewHelper.php
 │           └── index.php
-└── test-redis.php
+├── test-redis.php
+└── tests
+    ├── Cache
+    │   ├── FileCacheTest.php
+    │   └── RedisCacheTest.php
+    ├── Scrapers
+    │   ├── G1ScraperTest.php
+    │   └── UOLScraperTest.php
+    ├── TestCase.php
+    ├── TestData
+    │   ├── folha_sample.html
+    │   ├── g1_sample.html
+    │   └── uol_sample.html
+    └── temp
+        ├── cache_test_67fac04f00e85test_8c32d1183251df9828f929b935ae0419.cache
+        ├── cache_test_67fac04f03079test_bfbcaeebdd80b99dd4d72414d41f564e.cache
+        └── cache_test_67fac0510eef4test_cdbdc580eadbc0455a846c1680a056c2.cache
 
 ================================================================================
 CONTEÚDO DOS ARQUIVOS:
@@ -104,6 +122,10 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\composer.jso
         "php": ">=7.4",
         "predis/predis": "^2.3"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "mockery/mockery": "^1.4"
+    },
     "autoload": {
         "psr-4": {
             "App\\": "src/App/"
@@ -112,12 +134,22 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\composer.jso
             "config/config.php"
         ]
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "Alex Vilaça",
             "email": "alexandrevilaca.jor@gmail.com"
         }
-    ]
+    ],
+    "scripts": {
+        "test": "vendor\\bin\\phpunit",
+        "test:cache": "vendor\\bin\\phpunit --testsuite Cache",
+        "test:scrapers": "vendor\\bin\\phpunit --testsuite Scrapers"
+    }
 }
 
 
@@ -2285,9 +2317,9 @@ use App\Utils\Logger;
 
 class RedisCache implements CacheInterface
 {
-    private $redis;
-    private $prefix;
-    private $defaultTtl;
+    protected $redis;
+    protected $prefix;
+    protected $defaultTtl;
     
     /**
      * Cria uma nova instância de RedisCache
@@ -2299,21 +2331,26 @@ class RedisCache implements CacheInterface
         $this->prefix = $config['prefix'] ?? 'news_';
         $this->defaultTtl = $config['ttl'] ?? 600;
         
-        try {
-            $this->redis = new Client([
-                'scheme' => $config['scheme'] ?? 'tcp',
-                'host'   => $config['host'] ?? '127.0.0.1',
-                'port'   => $config['port'] ?? 6379,
-                'password' => $config['password'] ?? null,
-                'database' => $config['database'] ?? 0,
-            ]);
-            
-            // Teste a conexão
-            $this->redis->ping();
-            Logger::info('Redis cache iniciado com sucesso', 'Cache');
-        } catch (\Exception $e) {
-            Logger::error('Falha ao inicializar o Redis: ' . $e->getMessage(), 'Cache');
-            throw $e;
+        // Permitir injeção do cliente Redis para testes
+        if (isset($config['client'])) {
+            $this->redis = $config['client'];
+        } else {
+            try {
+                $this->redis = new Client([
+                    'scheme' => $config['scheme'] ?? 'tcp',
+                    'host'   => $config['host'] ?? '127.0.0.1',
+                    'port'   => $config['port'] ?? 6379,
+                    'password' => $config['password'] ?? null,
+                    'database' => $config['database'] ?? 0,
+                ]);
+                
+                // Teste a conexão
+                $this->redis->ping();
+                Logger::info('Redis cache iniciado com sucesso', 'Cache');
+            } catch (\Exception $e) {
+                Logger::error('Falha ao inicializar o Redis: ' . $e->getMessage(), 'Cache');
+                throw $e;
+            }
         }
     }
     
@@ -3609,4 +3646,544 @@ class ViewHelper
         return substr($text, 0, $length) . '...';
     }
 }
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\tests\TestCase.php
+================================================================================
+
+<?php
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\tests\TestCase.php
+
+namespace Tests;
+
+use PHPUnit\Framework\TestCase as BaseTestCase;
+
+abstract class TestCase extends BaseTestCase
+{
+    /**
+     * Carrega um arquivo HTML de teste
+     *
+     * @param string $filename Nome do arquivo em tests/TestData
+     * @return string Conteúdo do arquivo
+     */
+    protected function loadTestHtml(string $filename): string
+    {
+        $path = __DIR__ . '/TestData/' . $filename;
+        if (!file_exists($path)) {
+            $this->fail("Arquivo de teste não encontrado: $path");
+        }
+        return file_get_contents($path);
+    }
+    
+    /**
+     * Cria um mock para HttpClient para retornar HTML predefinido
+     *
+     * @param string $htmlContent Conteúdo HTML para retornar
+     * @return void
+     */
+    protected function mockHttpClient(string $htmlContent): void
+    {
+        // Cria um mock da classe HttpClient usando uma função anônima
+        // que substitui o método estático get()
+        $mock = \Mockery::mock('alias:App\Utils\HttpClient');
+        $mock->shouldReceive('get')
+            ->withAnyArgs()
+            ->andReturn($htmlContent);
+    }
+}
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\tests\Cache\FileCacheTest.php
+================================================================================
+
+<?php
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\tests\Cache\FileCacheTest.php
+
+namespace Tests\Cache;
+
+use App\Cache\FileCache;
+use Tests\TestCase;
+
+class FileCacheTest extends TestCase
+{
+    private $cache;
+    private $tempDir;
+    
+    protected function setUp(): void
+    {
+        parent::setUp();
+        
+        // Criar diretório temporário para testes
+        $this->tempDir = __DIR__ . '/../temp/cache_test_' . uniqid();
+        if (!is_dir($this->tempDir)) {
+            mkdir($this->tempDir, 0777, true);
+        }
+        
+        $this->cache = new FileCache([
+            'directory' => $this->tempDir,
+            'prefix' => 'test_',
+            'ttl' => 10
+        ]);
+    }
+    
+    public function testSetAndGet()
+    {
+        $key = 'test_key';
+        $value = ['name' => 'Test', 'value' => 123];
+        
+        // Verificar que o valor ainda não existe
+        $this->assertNull($this->cache->get($key));
+        
+        // Armazenar o valor
+        $result = $this->cache->set($key, $value);
+        $this->assertTrue($result);
+        
+        // Verificar que o valor foi armazenado corretamente
+        $storedValue = $this->cache->get($key);
+        $this->assertEquals($value, $storedValue);
+    }
+    
+    public function testHas()
+    {
+        $key = 'test_exists';
+        $value = 'test value';
+        
+        // Verificar que o valor ainda não existe
+        $this->assertFalse($this->cache->has($key));
+        
+        // Armazenar o valor
+        $this->cache->set($key, $value);
+        
+        // Verificar que o valor existe agora
+        $this->assertTrue($this->cache->has($key));
+    }
+    
+    public function testDelete()
+    {
+        $key = 'test_delete';
+        $this->cache->set($key, 'value to delete');
+        
+        // Verificar que o valor existe
+        $this->assertTrue($this->cache->has($key));
+        
+        // Excluir e verificar
+        $result = $this->cache->delete($key);
+        $this->assertTrue($result);
+        $this->assertFalse($this->cache->has($key));
+    }
+    
+    public function testClear()
+    {
+        // Adicionar vários itens
+        $this->cache->set('key1', 'value1');
+        $this->cache->set('key2', 'value2');
+        
+        // Verificar que existem
+        $this->assertTrue($this->cache->has('key1'));
+        $this->assertTrue($this->cache->has('key2'));
+        
+        // Limpar e verificar
+        $result = $this->cache->clear();
+        $this->assertTrue($result);
+        $this->assertFalse($this->cache->has('key1'));
+        $this->assertFalse($this->cache->has('key2'));
+    }
+    
+    public function testExpiration()
+    {
+        $key = 'test_expiration';
+        
+        // Armazenar com TTL de 1 segundo
+        $this->cache->set($key, 'expiring soon', 1);
+        
+        // Verificar que existe imediatamente
+        $this->assertTrue($this->cache->has($key));
+        
+        // Aguardar a expiração
+        sleep(2);
+        
+        // Verificar que expirou
+        $this->assertFalse($this->cache->has($key));
+        $this->assertNull($this->cache->get($key));
+    }
+    
+    public function testRemember()
+    {
+        $key = 'test_remember';
+        $callCount = 0;
+        
+        // Função que será chamada apenas uma vez
+        $callback = function() use (&$callCount) {
+            $callCount++;
+            return "Value generated, count: $callCount";
+        };
+        
+        // Primeira chamada - deve executar o callback
+        $value1 = $this->cache->remember($key, 10, $callback);
+        $this->assertEquals("Value generated, count: 1", $value1);
+        $this->assertEquals(1, $callCount);
+        
+        // Segunda chamada - deve usar o cache
+        $value2 = $this->cache->remember($key, 10, $callback);
+        $this->assertEquals("Value generated, count: 1", $value2);
+        $this->assertEquals(1, $callCount); // o contador ainda é 1
+    }
+    
+    protected function tearDown(): void
+    {
+        // Remover diretório temporário
+        $this->removeDirectory($this->tempDir);
+        parent::tearDown();
+    }
+    
+    private function removeDirectory($dir)
+    {
+        if (!is_dir($dir)) {
+            return;
+        }
+        
+        $files = array_diff(scandir($dir), ['.', '..']);
+        foreach ($files as $file) {
+            $path = "$dir/$file";
+            is_dir($path) ? $this->removeDirectory($path) : unlink($path);
+        }
+        
+        return rmdir($dir);
+    }
+}
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\tests\Cache\RedisCacheTest.php
+================================================================================
+
+<?php
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\tests\Cache\RedisCacheTest.php
+
+namespace Tests\Cache;
+
+use App\Cache\RedisCache;
+use Tests\TestCase;
+use Mockery;
+use Predis\Client;
+
+class RedisCacheTest extends TestCase
+{
+    private $mockRedis;
+    private $cache;
+    
+    protected function setUp(): void
+    {
+        parent::setUp();
+        
+        // Criar o mock do cliente Redis
+        $this->mockRedis = Mockery::mock('Predis\Client');
+        
+        $this->cache = new class($this->mockRedis) extends RedisCache {
+            // Declarar as propriedades explicitamente
+            protected $redis;
+            protected $prefix;
+            protected $defaultTtl;
+            private $mockClient;
+            
+            public function __construct($mockClient)
+            {
+                $this->mockClient = $mockClient;
+                $this->prefix = 'test_';
+                $this->defaultTtl = 600;
+                // Não inicializa $redis aqui, será feito via reflection
+            }
+        };
+        
+        // Injetar o mock diretamente na propriedade $redis usando reflexão
+        $reflection = new \ReflectionClass($this->cache);
+        $property = $reflection->getProperty('redis');
+        $property->setAccessible(true);
+        $property->setValue($this->cache, $this->mockRedis);
+    }
+    
+    public function testSetAndGet()
+    {
+        $key = 'test_key';
+        $value = ['name' => 'Test', 'value' => 123];
+        $encodedValue = json_encode($value);
+        
+        // Configurar expectativas do mock
+        $this->mockRedis->shouldReceive('setex')
+            ->once()
+            ->with('test_' . $key, 600, $encodedValue)
+            ->andReturn('OK');
+            
+        $this->mockRedis->shouldReceive('get')
+            ->once()
+            ->with('test_' . $key)
+            ->andReturn($encodedValue);
+        
+        // Testar o método set
+        $this->assertTrue($this->cache->set($key, $value));
+        
+        // Testar o método get
+        $this->assertEquals($value, $this->cache->get($key));
+    }
+    
+    public function testHas()
+    {
+        $key = 'test_exists';
+        
+        // Configurar expectativas do mock
+        $this->mockRedis->shouldReceive('exists')
+            ->once()
+            ->with('test_' . $key)
+            ->andReturn(1);
+        
+        // Verificar que o método has funciona
+        $this->assertTrue($this->cache->has($key));
+    }
+    
+    public function testDelete()
+    {
+        $key = 'test_delete';
+        
+        // Configurar expectativas do mock
+        $this->mockRedis->shouldReceive('del')
+            ->once()
+            ->with('test_' . $key)
+            ->andReturn(1);
+        
+        // Verificar que o método delete funciona
+        $this->assertTrue($this->cache->delete($key));
+    }
+    
+    public function testClear()
+    {
+        // Configurar expectativas do mock para keys e del
+        $this->mockRedis->shouldReceive('keys')
+            ->once()
+            ->with('test_*')
+            ->andReturn(['test_key1', 'test_key2']);
+            
+        $this->mockRedis->shouldReceive('del')
+            ->once()
+            ->with(['test_key1', 'test_key2'])
+            ->andReturn(2);
+        
+        // Verificar que o método clear funciona
+        $this->assertTrue($this->cache->clear());
+    }
+    
+    protected function tearDown(): void
+    {
+        Mockery::close();
+        parent::tearDown();
+    }
+}
+
+class RedisCache implements CacheInterface
+{
+    protected $redis;
+    protected $prefix;
+    protected $defaultTtl;
+    // ...
+}
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\tests\Scrapers\G1ScraperTest.php
+================================================================================
+
+<?php
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\tests\Scrapers\G1ScraperTest.php
+
+namespace Tests\Scrapers;
+
+use App\Models\G1Scraper;
+use Tests\TestCase;
+use App\Cache\FileCache;
+
+class G1ScraperTest extends TestCase
+{
+    private $scraper;
+    
+    protected function setUp(): void
+    {
+        parent::setUp();
+        
+        // Configurar um cache de teste
+        $testCache = new FileCache([
+            'directory' => __DIR__ . '/../temp/',
+            'prefix' => 'test_'
+        ]);
+        
+        // Substituir a função global getCache para retornar nosso cache de teste
+        global $testCacheInstance;
+        $testCacheInstance = $testCache;
+        
+        if (!function_exists('getCache')) {
+            function getCache() {
+                global $testCacheInstance;
+                return $testCacheInstance;
+            }
+        }
+        
+        $this->scraper = new G1Scraper();
+    }
+    
+    public function testScrapeArticle()
+    {
+        // Carregar HTML de teste
+        $html = $this->loadTestHtml('g1_sample.html');
+        
+        // Mock do HttpClient para retornar o HTML de teste
+        $this->mockHttpClient($html);
+        
+        // Usar reflexão para acessar o método privado scrapeArticle
+        $reflection = new \ReflectionClass($this->scraper);
+        $method = $reflection->getMethod('scrapeArticle');
+        $method->setAccessible(true);
+        
+        // Chamar o método privado com os parâmetros necessários
+        $result = $method->invokeArgs($this->scraper, ['https://teste.com', []]);
+        
+        // Verificar se os dados foram extraídos corretamente
+        $this->assertIsArray($result);
+        $this->assertEquals('Título da notícia de teste G1', $result['title']);
+        $this->assertEquals('Descrição de exemplo para teste', $result['description']);
+        $this->assertEquals('João Silva', $result['author']);
+        $this->assertEquals('2025-04-12T10:30:00-03:00', $result['publishedAt']);
+        $this->assertEquals('G1', $result['source']);
+    }
+    
+    protected function tearDown(): void
+    {
+        \Mockery::close();
+        parent::tearDown();
+    }
+}
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\tests\Scrapers\UOLScraperTest.php
+================================================================================
+
+<?php
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\tests\Scrapers\UOLScraperTest.php
+
+namespace Tests\Scrapers;
+
+use App\Models\UOLScraper;
+use Tests\TestCase;
+use App\Cache\FileCache;
+
+class UOLScraperTest extends TestCase
+{
+    private $scraper;
+    
+    protected function setUp(): void
+    {
+        parent::setUp();
+        
+        // Configurar um cache de teste
+        $testCache = new FileCache([
+            'directory' => __DIR__ . '/../temp/',
+            'prefix' => 'test_'
+        ]);
+        
+        // Substituir a função global getCache
+        global $testCacheInstance;
+        $testCacheInstance = $testCache;
+        
+        $this->scraper = new UOLScraper();
+    }
+    
+    public function testScrapeArticle()
+    {
+        // Carregar HTML de teste
+        $html = $this->loadTestHtml('uol_sample.html');
+        
+        // Mock do HttpClient para retornar o HTML de teste
+        $this->mockHttpClient($html);
+        
+        // Usar reflexão para acessar o método privado scrapeArticle
+        $reflection = new \ReflectionClass($this->scraper);
+        $method = $reflection->getMethod('scrapeArticle');
+        $method->setAccessible(true);
+        
+        // Chamar o método privado
+        $result = $method->invokeArgs($this->scraper, ['https://teste.com', []]);
+        
+        // Verificar os resultados
+        $this->assertIsArray($result);
+        $this->assertEquals('Este é o primeiro parágrafo da notícia de teste.', $result['description']);
+        $this->assertEquals('Maria Santos', $result['author']);
+        $this->assertEquals('2025-04-12T11:15:00-03:00', $result['publishedAt']);
+    }
+    
+    protected function tearDown(): void
+    {
+        \Mockery::close();
+        parent::tearDown();
+    }
+}
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\tests\TestData\folha_sample.html
+================================================================================
+
+<?php
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\tests\TestData\folha_sample.html
+?>
+<!DOCTYPE html>
+<html>
+<body>
+    <div class="c-news__wrap">
+        <div class="c-signature">
+            <strong class="c-signature__author">
+                <a href="#">Pedro Oliveira</a>
+            </strong>
+        </div>
+    </div>
+    <h1 class="c-content-head__title">Título de teste da Folha</h1>
+</body>
+</html>
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\tests\TestData\g1_sample.html
+================================================================================
+
+<?php
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\tests\TestData\g1_sample.html
+?>
+<!DOCTYPE html>
+<html>
+<body>
+    <div class="mc-article-header">
+        <h1 itemprop="headline">Título da notícia de teste G1</h1>
+        <h2 class="content-head__subtitle" itemprop="alternativeHeadline">Descrição de exemplo para teste</h2>
+        <time itemprop="datePublished" datetime="2025-04-12T10:30:00-03:00">12/04/2025 10:30</time>
+        <p class="content-publication-data__from">
+            <a href="#">João Silva</a>
+        </p>
+    </div>
+</body>
+</html>
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\tests\TestData\uol_sample.html
+================================================================================
+
+<?php
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\tests\TestData\uol_sample.html
+?>
+<!DOCTYPE html>
+<html>
+<body>
+    <div class="jupiter-paragraph-fragment">
+        <p>Este é o primeiro parágrafo da notícia de teste.</p>
+        <p>Este é o segundo parágrafo da notícia de teste.</p>
+    </div>
+    <div class="solar-author-names">
+        <a class="solar-author-name">Maria Santos</a>
+    </div>
+    <div class="solar-date">
+        <time class="date" datetime="2025-04-12T11:15:00-03:00">12/04/2025 11:15</time>
+    </div>
+</body>
+</html>
 

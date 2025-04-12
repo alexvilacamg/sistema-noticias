@@ -8,9 +8,9 @@ use App\Utils\Logger;
 
 class RedisCache implements CacheInterface
 {
-    private $redis;
-    private $prefix;
-    private $defaultTtl;
+    protected $redis;
+    protected $prefix;
+    protected $defaultTtl;
     
     /**
      * Cria uma nova instância de RedisCache
@@ -22,21 +22,26 @@ class RedisCache implements CacheInterface
         $this->prefix = $config['prefix'] ?? 'news_';
         $this->defaultTtl = $config['ttl'] ?? 600;
         
-        try {
-            $this->redis = new Client([
-                'scheme' => $config['scheme'] ?? 'tcp',
-                'host'   => $config['host'] ?? '127.0.0.1',
-                'port'   => $config['port'] ?? 6379,
-                'password' => $config['password'] ?? null,
-                'database' => $config['database'] ?? 0,
-            ]);
-            
-            // Teste a conexão
-            $this->redis->ping();
-            Logger::info('Redis cache iniciado com sucesso', 'Cache');
-        } catch (\Exception $e) {
-            Logger::error('Falha ao inicializar o Redis: ' . $e->getMessage(), 'Cache');
-            throw $e;
+        // Permitir injeção do cliente Redis para testes
+        if (isset($config['client'])) {
+            $this->redis = $config['client'];
+        } else {
+            try {
+                $this->redis = new Client([
+                    'scheme' => $config['scheme'] ?? 'tcp',
+                    'host'   => $config['host'] ?? '127.0.0.1',
+                    'port'   => $config['port'] ?? 6379,
+                    'password' => $config['password'] ?? null,
+                    'database' => $config['database'] ?? 0,
+                ]);
+                
+                // Teste a conexão
+                $this->redis->ping();
+                Logger::info('Redis cache iniciado com sucesso', 'Cache');
+            } catch (\Exception $e) {
+                Logger::error('Falha ao inicializar o Redis: ' . $e->getMessage(), 'Cache');
+                throw $e;
+            }
         }
     }
     
