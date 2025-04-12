@@ -662,10 +662,194 @@
         html body.dark-mode .update-empty {
             color: #e2e8f0 !important;
         }
+
+        /* Adicione ao seu conjunto de estilos */
+        .view-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: auto;
+        }
+
+        .view-btn {
+            width: 36px;
+            height: 36px;
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .view-btn:hover, .view-btn.active {
+            background: #4299e1;
+            color: white;
+            border-color: #4299e1;
+        }
+
+        body.dark-mode .view-btn {
+            background: #2d3748;
+            border-color: #4a5568;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .view-btn:hover, 
+        body.dark-mode .view-btn.active {
+            background: #4a5568;
+            border-color: #718096;
+        }
+
+        /* Agrupar controles em dispositivos móveis */
+        @media (max-width: 768px) {
+            .controls-container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                align-items: center;
+                gap: 10px;
+            }
+            .source-filters, .view-controls {
+                margin: 5px 0;
+            }
+        }
+
+        /* Estilos para a tabela em ambos os modos */
+        #newsTable {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        #newsTable th {
+            background-color: #f7fafc;
+            color: #4a5568;
+            font-weight: 600;
+            text-align: left;
+            padding: 12px 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        #newsTable td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        #newsTable tr:last-child td {
+            border-bottom: none;
+        }
+
+        .news-link {
+            color: #2a4365;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .news-link:hover {
+            text-decoration: underline;
+            color: #3182ce;
+        }
+
+        .description-preview {
+            font-size: 13px;
+            color: #718096;
+            margin-top: 5px;
+            line-height: 1.4;
+        }
+
+        /* Para ajustar a descrição no modo escuro */
+        body.dark-mode .description-preview {
+            color: #a0aec0;
+        }
+
+        .source-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Adaptar tabela para modo escuro */
+        body.dark-mode #newsTable {
+            border-color: #4a5568;
+        }
+
+        body.dark-mode #newsTable th {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            border-bottom-color: #4a5568;
+        }
+
+        body.dark-mode #newsTable td {
+            border-bottom-color: #4a5568;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .news-link {
+            color: #63b3ed;
+        }
+
+        body.dark-mode .news-link:hover {
+            color: #90cdf4;
+        }
+
+        body.dark-mode .description-preview {
+            color: #a0aec0;
+        }
+
+        /* Ajustes para os controles do DataTables */
+        body.dark-mode .dataTables_wrapper .dataTables_length,
+        body.dark-mode .dataTables_wrapper .dataTables_filter,
+        body.dark-mode .dataTables_wrapper .dataTables_info,
+        body.dark-mode .dataTables_wrapper .dataTables_processing,
+        body.dark-mode .dataTables_wrapper .dataTables_paginate {
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button {
+            color: #e2e8f0 !important;
+        }
+
+        body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+        body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+            color: #2d3748 !important;
+            background: #63b3ed;
+            border-color: #63b3ed;
+        }
+
+        body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            color: #2d3748 !important;
+            background: #4299e1;
+            border-color: #4299e1;
+        }
+
+        /* Adicione este CSS ao seu arquivo de estilos */
+        body.dark-mode .dataTables_length select,
+        body.dark-mode .dataTables_filter input {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            border-color: #4a5568;
+        }
+
+        /* Melhorar também o estilo dos inputs no hover/focus */
+        body.dark-mode .dataTables_length select:focus,
+        body.dark-mode .dataTables_filter input:focus {
+            border-color: #63b3ed;
+            outline: none;
+            box-shadow: 0 0 0 1px #63b3ed;
+        }
     </style>
     <script>
         $(document).ready(function(){
-            $('#newsTable').DataTable({
+            // Inicializar o DataTables (já deve estar presente no seu código)
+            const newsTable = $('#newsTable').DataTable({
                 language: {
                     "decimal":        "",
                     "emptyTable":     "Nenhuma notícia encontrada",
@@ -690,7 +874,9 @@
                     }
                 },
                 order: [[0, 'desc']], // Ordena pela coluna de data usando o valor ISO no atributo data-order.
-                pageLength: 10
+                pageLength: 10,
+                deferRender: true,
+                processing: true
             });
             
             // Ao clicar no botão "Forçar Atualização"
@@ -826,7 +1012,7 @@
                 setupEventSource();
             });
 
-            // Script para filtrar notícias por fonte
+            // Script para filtrar notícias por fonte (para cards e tabela)
             $('.source-filter').click(function() {
                 const source = $(this).data('source');
                 
@@ -834,13 +1020,57 @@
                 $('.source-filter').removeClass('active');
                 $(this).addClass('active');
                 
+                // Filtro para os cards
                 if (source === 'all') {
                     $('.news-card').show();
                 } else {
                     $('.news-card').hide();
                     $(`.news-card .news-source.${source}`).parent().show();
                 }
+                
+                // Filtro para a tabela usando DataTables API
+                if (newsTable) {
+                    if (source === 'all') {
+                        newsTable.column(2).search('').draw();
+                    } else {
+                        newsTable.column(2).search(source, false, false).draw();
+                    }
+                }
+                
+                // Salva a preferência de filtro
+                localStorage.setItem('preferred-filter', source);
             });
+
+            // Restaurar preferência de filtro
+            const preferredFilter = localStorage.getItem('preferred-filter');
+            if (preferredFilter && preferredFilter !== 'all') {
+                $(`.source-filter[data-source="${preferredFilter}"]`).click();
+            }
+
+            // Alternar entre visualização em cards e tabela
+            $('#grid-view-btn').click(function() {
+                $(this).addClass('active');
+                $('#table-view-btn').removeClass('active');
+                $('#grid-view').show();
+                $('#table-view').hide();
+                localStorage.setItem('preferred-view', 'grid');
+            });
+
+            $('#table-view-btn').click(function() {
+                $(this).addClass('active');
+                $('#grid-view-btn').removeClass('active');
+                $('#table-view').show();
+                $('#grid-view').hide();
+                // Ajusta as colunas da tabela quando ela se torna visível
+                newsTable.columns.adjust();
+                localStorage.setItem('preferred-view', 'table');
+            });
+
+            // Restaurar preferência de visualização
+            const preferredView = localStorage.getItem('preferred-view');
+            if (preferredView === 'table') {
+                $('#table-view-btn').click();
+            }
         });
 
         // Adicione este script para o toggle do modo escuro
@@ -909,18 +1139,30 @@
         </button>
     </div>
     
-    <!-- Adicione antes da tabela de notícias -->
-    <div class="source-filters">
-        <span class="filter-title">Filtrar por fonte:</span>
-        <button class="source-filter active" data-source="all">Todas</button>
-        <button class="source-filter" data-source="g1">G1</button>
-        <button class="source-filter" data-source="uol">UOL</button>
-        <button class="source-filter" data-source="folha">Folha</button>
+    <!-- Agrupar filtros e controles de visualização -->
+    <div class="controls-container">
+        <div class="source-filters">
+            <span class="filter-title">Filtrar por fonte:</span>
+            <button class="source-filter active" data-source="all">Todas</button>
+            <button class="source-filter" data-source="g1">G1</button>
+            <button class="source-filter" data-source="uol">UOL</button>
+            <button class="source-filter" data-source="folha">Folha</button>
+        </div>
+        <div class="view-controls">
+            <span class="filter-title">Visualização:</span>
+            <button id="grid-view-btn" class="view-btn active" title="Visualização em cards">
+                <i class="fas fa-th-large"></i>
+            </button>
+            <button id="table-view-btn" class="view-btn" title="Visualização em tabela">
+                <i class="fas fa-table"></i>
+            </button>
+        </div>
     </div>
 
+    <!-- Substitua o bloco onde mostra as notícias por: -->
     <?php if (isset($news) && is_array($news) && count($news) > 0): ?>
-        <!-- Substitua a tabela existente por esta estrutura de cards -->
-        <div class="news-grid">
+        <!-- Visualização em cards (padrão) -->
+        <div class="news-grid" id="grid-view">
             <?php foreach ($news as $item): ?>
                 <div class="news-card">
                     <span class="news-source <?php echo strtolower($item['source']); ?>">
@@ -949,6 +1191,51 @@
                 </div>
             <?php endforeach; ?>
         </div>
+        
+        <!-- Visualização em tabela (inicialmente oculta) -->
+        <div id="table-view" style="display: none;">
+            <table id="newsTable" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Título</th>
+                        <th>Fonte</th>
+                        <th>Autor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($news as $item): ?>
+                    <tr>
+                        <td data-order="<?php echo $item['publishedAt'] ?? ''; ?>">
+                            <?php 
+                            if (!empty($item['publishedAt']) && $item['publishedAt'] !== "1970-01-01T00:00:00+00:00") {
+                                echo date("d/m/Y H:i", strtotime($item['publishedAt']));
+                            } else {
+                                echo "Data não disponível";
+                            }
+                            ?>
+                        </td>
+                        <td>
+                            <a href="<?php echo $item['url']; ?>" target="_blank" class="news-link">
+                                <?php echo $item['title'] ?? 'Sem título'; ?>
+                            </a>
+                            <?php if (!empty($item['description'])): ?>
+                            <div class="description-preview">
+                                <?php echo $item['description']; ?>
+                            </div>
+                            <?php endif; ?>
+                        </td>
+                        <td>
+                            <span class="source-badge <?php echo strtolower($item['source']); ?>">
+                                <?php echo $item['source']; ?>
+                            </span>
+                        </td>
+                        <td><?php echo $item['author'] ?? 'Não disponível'; ?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
     <?php else: ?>
         <p>Nenhuma notícia encontrada.</p>
     <?php endif; ?>
@@ -976,7 +1263,6 @@
             if (defined('LOG_FILE') && file_exists(LOG_FILE)) {
                 $lines = file(LOG_FILE, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
                 $lines = array_reverse($lines); // Mais recentes primeiro
-                $logCount = count($lines);
                 
                 // Limita a exibição aos 100 logs mais recentes para melhor desempenho
                 $displayLines = array_slice($lines, 0, 100);
