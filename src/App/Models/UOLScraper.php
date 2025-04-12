@@ -7,10 +7,8 @@ class UOLScraper extends AbstractNewsScraper
 {
     public function __construct()
     {
-        $cacheFile = __DIR__ . '/../../../cache/uol_news.json';
-        $cacheTime = 600;
-        parent::__construct($cacheFile, $cacheTime);
-        $this->log("[UOL] | Inicializado: Cache definido para 10 minutos.");
+        parent::__construct('uol_news', 600);
+        $this->log("Inicializado: Cache definido para 10 minutos.");
     }
 
     public function fetchNews(bool $forceUpdate = false): array

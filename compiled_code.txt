@@ -13,6 +13,7 @@ ESTRUTURA DO DIRETÓRIO:
 │   └── scrapers_config.php
 ├── public
 │   ├── api
+│   │   ├── cache.php
 │   │   ├── force_update.php
 │   │   └── news.php
 │   ├── assets
@@ -33,26 +34,34 @@ ESTRUTURA DO DIRETÓRIO:
 │   ├── index.php
 │   └── js
 │       └── script.js
-└── src
-    └── App
-        ├── Controllers
-        │   └── NewsController.php
-        ├── Factories
-        │   └── ScraperFactory.php
-        ├── Models
-        │   ├── AbstractNewsScraper.php
-        │   ├── FolhaScraper.php
-        │   ├── G1Scraper.php
-        │   ├── NewsScraperInterface.php
-        │   ├── Scraper.php
-        │   └── UOLScraper.php
-        ├── Utils
-        │   ├── HttpClient.php
-        │   └── Logger.php
-        └── Views
-            ├── Helpers
-            │   └── ViewHelper.php
-            └── index.php
+├── src
+│   └── App
+│       ├── Cache
+│       │   ├── CacheFactory.php
+│       │   ├── CacheInterface.php
+│       │   ├── CacheManager.php
+│       │   ├── FileCache.php
+│       │   ├── MemcachedCache.php
+│       │   └── RedisCache.php
+│       ├── Controllers
+│       │   └── NewsController.php
+│       ├── Factories
+│       │   └── ScraperFactory.php
+│       ├── Models
+│       │   ├── AbstractNewsScraper.php
+│       │   ├── FolhaScraper.php
+│       │   ├── G1Scraper.php
+│       │   ├── NewsScraperInterface.php
+│       │   ├── Scraper.php
+│       │   └── UOLScraper.php
+│       ├── Utils
+│       │   ├── HttpClient.php
+│       │   └── Logger.php
+│       └── Views
+│           ├── Helpers
+│           │   └── ViewHelper.php
+│           └── index.php
+└── test-redis.php
 
 ================================================================================
 CONTEÚDO DOS ARQUIVOS:
@@ -111,6 +120,28 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\composer.jso
     ]
 }
 
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\test-redis.php
+================================================================================
+
+<?php
+// Salve como test-redis.php na raiz do projeto
+require_once __DIR__ . '/vendor/autoload.php';
+
+try {
+    $redis = new \Predis\Client();
+    echo "Conectando ao Redis...\n";
+    
+    // Tenta um comando simples
+    $redis->set('test_key', 'Hello Redis!');
+    $value = $redis->get('test_key');
+    
+    echo "Valor recuperado: $value\n";
+    echo "Redis está funcionando corretamente!\n";
+} catch (Exception $e) {
+    echo "Erro: " . $e->getMessage() . "\n";
+}
 
 ================================================================================
 Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\config\config.php
@@ -174,6 +205,68 @@ if (!function_exists('log_debug')) {
         return debug_log($message, LOG_DEBUG, $context);
     }
 }
+
+/**
+ * Configurações de Cache
+ */
+define('CACHE_TYPE', 'redis'); // Se o teste acima funcionar
+
+// Configurações Redis
+define('REDIS_HOST', '127.0.0.1');
+define('REDIS_PORT', 6379);
+define('REDIS_PASSWORD', null); // Altere para sua senha, se necessário
+define('REDIS_DATABASE', 0);
+
+// Configurações Memcached
+define('MEMCACHED_HOST', '127.0.0.1');
+define('MEMCACHED_PORT', 11211);
+
+// Configurações gerais de cache
+define('CACHE_PREFIX', 'news_');
+define('CACHE_TTL', 600); // 10 minutos
+
+/**
+ * Função para obter a instância de cache
+ * 
+ * @return App\Cache\CacheInterface
+ */
+function getCache()
+{
+    static $cache = null;
+    
+    if ($cache === null) {
+        $config = [
+            'prefix' => CACHE_PREFIX,
+            'ttl' => CACHE_TTL,
+            'directory' => CACHE_DIR . '/data/',
+        ];
+        
+        // Adiciona configurações específicas dependendo do tipo
+        switch (CACHE_TYPE) {
+            case 'redis':
+                $config['host'] = REDIS_HOST;
+                $config['port'] = REDIS_PORT;
+                $config['password'] = REDIS_PASSWORD;
+                $config['database'] = REDIS_DATABASE;
+                break;
+                
+            case 'memcached':
+                $config['servers'] = [
+                    [
+                        'host' => MEMCACHED_HOST,
+                        'port' => MEMCACHED_PORT,
+                        'weight' => 100
+                    ]
+                ];
+                break;
+        }
+        
+        // Utiliza a fábrica para criar a implementação
+        $cache = \App\Cache\CacheFactory::create(CACHE_TYPE, $config);
+    }
+    
+    return $cache;
+}
 ?>
 
 
@@ -213,6 +306,56 @@ $controller = new NewsController();
 $controller->index();
 ?>
 
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\public\api\cache.php
+================================================================================
+
+<?php
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\public\api\cache.php
+
+require_once __DIR__ . '/../../vendor/autoload.php';
+
+use App\Cache\CacheManager;
+use App\Utils\Logger;
+
+header('Content-Type: application/json');
+
+// Verifica se é uma solicitação POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $action = $_POST['action'] ?? '';
+    
+    switch ($action) {
+        case 'clear':
+            $result = CacheManager::clearNewsCache();
+            echo json_encode([
+                'success' => $result,
+                'message' => $result ? 'Cache limpo com sucesso' : 'Falha ao limpar o cache'
+            ]);
+            break;
+            
+        case 'warm':
+            $result = CacheManager::warmNewsCache();
+            echo json_encode([
+                'success' => $result,
+                'message' => $result ? 'Cache pré-aquecido com sucesso' : 'Falha ao pré-aquecer o cache'
+            ]);
+            break;
+            
+        default:
+            echo json_encode([
+                'success' => false,
+                'message' => 'Ação desconhecida'
+            ]);
+    }
+} else {
+    // Para solicitações GET, retorna estatísticas
+    $stats = CacheManager::getStats();
+    echo json_encode([
+        'success' => true,
+        'stats' => $stats
+    ]);
+}
 
 ================================================================================
 Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\public\api\force_update.php
@@ -1641,6 +1784,629 @@ setInterval(fetchNews, 60000);
 
 
 ================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Cache\CacheFactory.php
+================================================================================
+
+<?php
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Cache\CacheFactory.php
+
+namespace App\Cache;
+
+use App\Utils\Logger;
+
+class CacheFactory
+{
+    /**
+     * Cria uma instância de cache com base no tipo especificado
+     * 
+     * @param string $type Tipo de cache (redis, memcached, file)
+     * @param array $config Configurações
+     * @return CacheInterface Instância da implementação
+     */
+    public static function create(string $type = 'file', array $config = []): CacheInterface
+    {
+        $type = strtolower($type);
+        
+        try {
+            switch ($type) {
+                case 'redis':
+                    if (class_exists('\Predis\Client')) {
+                        return new RedisCache($config);
+                    }
+                    Logger::warning('Predis não encontrado, usando fallback', 'Cache');
+                    return self::create('file', $config);
+                    
+                case 'memcached':
+                    if (class_exists('\Memcached')) {
+                        return new MemcachedCache($config);
+                    }
+                    Logger::warning('Memcached não encontrado, usando fallback', 'Cache');
+                    return self::create('file', $config);
+                    
+                case 'file':
+                default:
+                    return new FileCache($config);
+            }
+        } catch (\Exception $e) {
+            Logger::error('Erro ao criar cache: ' . $e->getMessage(), 'Cache');
+            return new FileCache($config);
+        }
+    }
+}
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Cache\CacheInterface.php
+================================================================================
+
+<?php
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Cache\CacheInterface.php
+
+namespace App\Cache;
+
+interface CacheInterface
+{
+    /**
+     * Recupera um item do cache
+     * 
+     * @param string $key A chave do item
+     * @param mixed $default Valor padrão caso o item não exista
+     * @return mixed O item do cache ou o valor padrão
+     */
+    public function get(string $key, $default = null);
+    
+    /**
+     * Armazena um item no cache
+     * 
+     * @param string $key A chave do item
+     * @param mixed $value O valor a ser armazenado
+     * @param int $ttl Tempo de vida em segundos
+     * @return bool Sucesso da operação
+     */
+    public function set(string $key, $value, int $ttl = 600): bool;
+    
+    /**
+     * Verifica se um item existe no cache e não expirou
+     * 
+     * @param string $key A chave do item
+     * @return bool Verdadeiro se o item existir
+     */
+    public function has(string $key): bool;
+    
+    /**
+     * Remove um item do cache
+     * 
+     * @param string $key A chave do item
+     * @return bool Sucesso da operação
+     */
+    public function delete(string $key): bool;
+    
+    /**
+     * Limpa todo o cache
+     * 
+     * @return bool Sucesso da operação
+     */
+    public function clear(): bool;
+    
+    /**
+     * Obtém ou calcula um valor
+     * 
+     * @param string $key A chave do item
+     * @param int $ttl Tempo de vida em segundos
+     * @param callable $callback Função para calcular o valor se não existir
+     * @return mixed O valor armazenado ou calculado
+     */
+    public function remember(string $key, int $ttl, callable $callback);
+}
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Cache\CacheManager.php
+================================================================================
+
+<?php
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Cache\CacheManager.php
+
+namespace App\Cache;
+
+use App\Utils\Logger;
+
+class CacheManager
+{
+    /**
+     * Limpa o cache de notícias
+     * 
+     * @return bool Sucesso da operação
+     */
+    public static function clearNewsCache(): bool
+    {
+        $cache = getCache();
+        
+        $result = $cache->clear();
+        
+        if ($result) {
+            Logger::info('Cache de notícias limpo com sucesso', 'CacheManager');
+        } else {
+            Logger::error('Falha ao limpar o cache de notícias', 'CacheManager');
+        }
+        
+        return $result;
+    }
+    
+    /**
+     * Pré-aquece o cache buscando os dados
+     * 
+     * @return bool Sucesso da operação
+     */
+    public static function warmNewsCache(): bool
+    {
+        try {
+            Logger::info('Iniciando pré-aquecimento do cache', 'CacheManager');
+            
+            $scraper = new \App\Models\Scraper();
+            $news = $scraper->getAllPoliticalNews(true);
+            
+            Logger::info('Cache pré-aquecido com ' . count($news) . ' notícias', 'CacheManager');
+            return true;
+        } catch (\Exception $e) {
+            Logger::error('Erro no pré-aquecimento do cache: ' . $e->getMessage(), 'CacheManager');
+            return false;
+        }
+    }
+    
+    /**
+     * Retorna estatísticas do cache
+     * 
+     * @return array Estatísticas
+     */
+    public static function getStats(): array
+    {
+        $cache = getCache();
+        $stats = [
+            'type' => CACHE_TYPE,
+            'ttl' => CACHE_TTL,
+            'status' => 'ativo'
+        ];
+        
+        // Para Redis e Memcached, podemos adicionar mais estatísticas
+        if (CACHE_TYPE === 'redis' && $cache instanceof RedisCache) {
+            try {
+                // Exemplo, precisaria ser implementado na classe RedisCache
+                // $info = $cache->getRedisInfo();
+                // $stats['memory_used'] = $info['used_memory_human'];
+                // $stats['total_keys'] = $info['db0'];
+            } catch (\Exception $e) {
+                $stats['error'] = $e->getMessage();
+            }
+        }
+        
+        return $stats;
+    }
+}
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Cache\FileCache.php
+================================================================================
+
+<?php
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Cache\FileCache.php
+
+namespace App\Cache;
+
+use App\Utils\Logger;
+
+class FileCache implements CacheInterface
+{
+    private $cacheDir;
+    private $prefix;
+    private $defaultTtl;
+    
+    /**
+     * Cria uma nova instância de FileCache
+     * 
+     * @param array $config Configuração do cache de arquivo
+     */
+    public function __construct(array $config = [])
+    {
+        $this->prefix = $config['prefix'] ?? 'news_';
+        $this->defaultTtl = $config['ttl'] ?? 600;
+        $this->cacheDir = $config['directory'] ?? __DIR__ . '/../../../cache/';
+        
+        if (!is_dir($this->cacheDir)) {
+            mkdir($this->cacheDir, 0777, true);
+            Logger::info('Diretório de cache criado: ' . $this->cacheDir, 'Cache');
+        }
+        
+        Logger::info('File cache iniciado com sucesso', 'Cache');
+    }
+    
+    /**
+     * Retorna o caminho completo do arquivo de cache
+     */
+    private function getFilename(string $key): string
+    {
+        return $this->cacheDir . $this->prefix . md5($key) . '.cache';
+    }
+    
+    public function get(string $key, $default = null)
+    {
+        $filename = $this->getFilename($key);
+        
+        if (!file_exists($filename)) {
+            return $default;
+        }
+        
+        $content = file_get_contents($filename);
+        if ($content === false) {
+            Logger::error('Erro ao ler o arquivo de cache: ' . $filename, 'Cache');
+            return $default;
+        }
+        
+        $data = json_decode($content, true);
+        
+        // Verifica se o cache expirou
+        if ($data['expires'] < time()) {
+            $this->delete($key);
+            return $default;
+        }
+        
+        return $data['value'];
+    }
+    
+    public function set(string $key, $value, int $ttl = 0): bool
+    {
+        if ($ttl === 0) {
+            $ttl = $this->defaultTtl;
+        }
+        
+        $filename = $this->getFilename($key);
+        
+        $data = [
+            'expires' => time() + $ttl,
+            'value' => $value
+        ];
+        
+        $result = file_put_contents($filename, json_encode($data));
+        
+        if ($result === false) {
+            Logger::error('Erro ao gravar o arquivo de cache: ' . $filename, 'Cache');
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public function has(string $key): bool
+    {
+        $filename = $this->getFilename($key);
+        
+        if (!file_exists($filename)) {
+            return false;
+        }
+        
+        // Verifica se o cache expirou
+        $content = file_get_contents($filename);
+        if ($content === false) {
+            return false;
+        }
+        
+        $data = json_decode($content, true);
+        
+        if ($data['expires'] < time()) {
+            $this->delete($key);
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public function delete(string $key): bool
+    {
+        $filename = $this->getFilename($key);
+        
+        if (file_exists($filename)) {
+            return unlink($filename);
+        }
+        
+        return true;
+    }
+    
+    public function clear(): bool
+    {
+        $files = glob($this->cacheDir . $this->prefix . '*.cache');
+        
+        foreach ($files as $file) {
+            if (is_file($file)) {
+                unlink($file);
+            }
+        }
+        
+        return true;
+    }
+    
+    public function remember(string $key, int $ttl, callable $callback)
+    {
+        if ($this->has($key)) {
+            return $this->get($key);
+        }
+        
+        $value = $callback();
+        $this->set($key, $value, $ttl);
+        return $value;
+    }
+}
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Cache\MemcachedCache.php
+================================================================================
+
+<?php
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Cache\MemcachedCache.php
+
+namespace App\Cache;
+
+use App\Utils\Logger;
+
+class MemcachedCache implements CacheInterface
+{
+    private $memcached;
+    private $prefix;
+    private $defaultTtl;
+    
+    /**
+     * Cria uma nova instância de MemcachedCache
+     * 
+     * @param array $config Configuração do Memcached
+     */
+    public function __construct(array $config = [])
+    {
+        $this->prefix = $config['prefix'] ?? 'news_';
+        $this->defaultTtl = $config['ttl'] ?? 600;
+        
+        try {
+            $this->memcached = new \Memcached();
+            
+            // Adiciona os servidores (pode ser um array de servidores para cluster)
+            $servers = $config['servers'] ?? [
+                ['host' => '127.0.0.1', 'port' => 11211, 'weight' => 100]
+            ];
+            
+            foreach ($servers as $server) {
+                $this->memcached->addServer(
+                    $server['host'],
+                    $server['port'],
+                    $server['weight'] ?? 100
+                );
+            }
+            
+            // Configura opções
+            $this->memcached->setOption(\Memcached::OPT_COMPRESSION, true);
+            $this->memcached->setOption(\Memcached::OPT_BINARY_PROTOCOL, true);
+            
+            Logger::info('Memcached cache iniciado com sucesso', 'Cache');
+        } catch (\Exception $e) {
+            Logger::error('Falha ao inicializar o Memcached: ' . $e->getMessage(), 'Cache');
+            throw $e;
+        }
+    }
+    
+    /**
+     * Retorna a chave completa com o prefixo
+     */
+    private function key(string $key): string
+    {
+        return $this->prefix . $key;
+    }
+    
+    public function get(string $key, $default = null)
+    {
+        try {
+            $value = $this->memcached->get($this->key($key));
+            
+            if ($this->memcached->getResultCode() === \Memcached::RES_NOTFOUND) {
+                return $default;
+            }
+            
+            return $value;
+        } catch (\Exception $e) {
+            Logger::error('Erro ao recuperar do Memcached: ' . $e->getMessage(), 'Cache');
+            return $default;
+        }
+    }
+    
+    public function set(string $key, $value, int $ttl = 0): bool
+    {
+        if ($ttl === 0) {
+            $ttl = $this->defaultTtl;
+        }
+        
+        try {
+            return $this->memcached->set($this->key($key), $value, $ttl);
+        } catch (\Exception $e) {
+            Logger::error('Erro ao gravar no Memcached: ' . $e->getMessage(), 'Cache');
+            return false;
+        }
+    }
+    
+    public function has(string $key): bool
+    {
+        try {
+            $this->memcached->get($this->key($key));
+            return $this->memcached->getResultCode() !== \Memcached::RES_NOTFOUND;
+        } catch (\Exception $e) {
+            Logger::error('Erro ao verificar existência no Memcached: ' . $e->getMessage(), 'Cache');
+            return false;
+        }
+    }
+    
+    public function delete(string $key): bool
+    {
+        try {
+            return $this->memcached->delete($this->key($key));
+        } catch (\Exception $e) {
+            Logger::error('Erro ao excluir do Memcached: ' . $e->getMessage(), 'Cache');
+            return false;
+        }
+    }
+    
+    public function clear(): bool
+    {
+        try {
+            // Infelizmente, Memcached não tem método para limpar apenas chaves com prefixo
+            // então precisamos limpar tudo ou manter um registro das chaves
+            return $this->memcached->flush();
+        } catch (\Exception $e) {
+            Logger::error('Erro ao limpar o Memcached: ' . $e->getMessage(), 'Cache');
+            return false;
+        }
+    }
+    
+    public function remember(string $key, int $ttl, callable $callback)
+    {
+        if ($this->has($key)) {
+            return $this->get($key);
+        }
+        
+        $value = $callback();
+        $this->set($key, $value, $ttl);
+        return $value;
+    }
+}
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Cache\RedisCache.php
+================================================================================
+
+<?php
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Cache\RedisCache.php
+
+namespace App\Cache;
+
+use Predis\Client;
+use App\Utils\Logger;
+
+class RedisCache implements CacheInterface
+{
+    private $redis;
+    private $prefix;
+    private $defaultTtl;
+    
+    /**
+     * Cria uma nova instância de RedisCache
+     * 
+     * @param array $config Configuração do Redis
+     */
+    public function __construct(array $config = [])
+    {
+        $this->prefix = $config['prefix'] ?? 'news_';
+        $this->defaultTtl = $config['ttl'] ?? 600;
+        
+        try {
+            $this->redis = new Client([
+                'scheme' => $config['scheme'] ?? 'tcp',
+                'host'   => $config['host'] ?? '127.0.0.1',
+                'port'   => $config['port'] ?? 6379,
+                'password' => $config['password'] ?? null,
+                'database' => $config['database'] ?? 0,
+            ]);
+            
+            // Teste a conexão
+            $this->redis->ping();
+            Logger::info('Redis cache iniciado com sucesso', 'Cache');
+        } catch (\Exception $e) {
+            Logger::error('Falha ao inicializar o Redis: ' . $e->getMessage(), 'Cache');
+            throw $e;
+        }
+    }
+    
+    /**
+     * Retorna a chave completa com o prefixo
+     */
+    private function key(string $key): string
+    {
+        return $this->prefix . $key;
+    }
+    
+    public function get(string $key, $default = null)
+    {
+        try {
+            $value = $this->redis->get($this->key($key));
+            
+            if ($value === null) {
+                return $default;
+            }
+            
+            $decoded = json_decode($value, true);
+            return $decoded === null ? $value : $decoded;
+        } catch (\Exception $e) {
+            Logger::error('Erro ao recuperar do Redis: ' . $e->getMessage(), 'Cache');
+            return $default;
+        }
+    }
+    
+    public function set(string $key, $value, int $ttl = 0): bool
+    {
+        if ($ttl === 0) {
+            $ttl = $this->defaultTtl;
+        }
+        
+        try {
+            $value = is_scalar($value) && !is_string($value) ? $value : json_encode($value);
+            $this->redis->setex($this->key($key), $ttl, $value);
+            return true;
+        } catch (\Exception $e) {
+            Logger::error('Erro ao gravar no Redis: ' . $e->getMessage(), 'Cache');
+            return false;
+        }
+    }
+    
+    public function has(string $key): bool
+    {
+        try {
+            return (bool) $this->redis->exists($this->key($key));
+        } catch (\Exception $e) {
+            Logger::error('Erro ao verificar existência no Redis: ' . $e->getMessage(), 'Cache');
+            return false;
+        }
+    }
+    
+    public function delete(string $key): bool
+    {
+        try {
+            $this->redis->del($this->key($key));
+            return true;
+        } catch (\Exception $e) {
+            Logger::error('Erro ao excluir do Redis: ' . $e->getMessage(), 'Cache');
+            return false;
+        }
+    }
+    
+    public function clear(): bool
+    {
+        try {
+            // Limpa apenas as chaves com o prefixo
+            $keys = $this->redis->keys($this->prefix . '*');
+            if (count($keys) > 0) {
+                $this->redis->del($keys);
+            }
+            return true;
+        } catch (\Exception $e) {
+            Logger::error('Erro ao limpar o Redis: ' . $e->getMessage(), 'Cache');
+            return false;
+        }
+    }
+    
+    public function remember(string $key, int $ttl, callable $callback)
+    {
+        if ($this->has($key)) {
+            return $this->get($key);
+        }
+        
+        $value = $callback();
+        $this->set($key, $value, $ttl);
+        return $value;
+    }
+}
+
+================================================================================
 Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Controllers\NewsController.php
 ================================================================================
 
@@ -1718,6 +2484,7 @@ namespace App\Models;
 
 use App\Utils\HttpClient;
 use App\Utils\Logger;
+use App\Cache\CacheInterface;
 
 /**
  * Classe abstrata que cuida de:
@@ -1728,13 +2495,15 @@ use App\Utils\Logger;
  */
 abstract class AbstractNewsScraper implements NewsScraperInterface
 {
-    protected $cacheFile;
-    protected $cacheTime;
+    protected $cacheKey;
+    protected $cacheTtl;
+    protected $cache;
 
-    public function __construct($cacheFile, $cacheTime = 600)
+    public function __construct(string $cacheKey, int $cacheTtl = 600)
     {
-        $this->cacheFile = $cacheFile;
-        $this->cacheTime = $cacheTime;
+        $this->cacheKey = $cacheKey;
+        $this->cacheTtl = $cacheTtl;
+        $this->cache = getCache(); // Função definida em config.php
     }
 
     /**
@@ -1742,14 +2511,13 @@ abstract class AbstractNewsScraper implements NewsScraperInterface
      */
     protected function getFromCache(): ?array
     {
-        if (file_exists($this->cacheFile) && ((time() - filemtime($this->cacheFile)) < $this->cacheTime)) {
-            $this->log("Utilizando cache do arquivo: " . $this->cacheFile);
-            $data = file_get_contents($this->cacheFile);
-            $newsItems = json_decode($data, true);
-            if (is_array($newsItems)) {
-                return $newsItems;
-            }
+        $result = $this->cache->get($this->cacheKey);
+        
+        if ($result !== null) {
+            $this->log("Cache: Utilizando dados do cache para " . $this->cacheKey);
+            return $result;
         }
+        
         return null;
     }
 
@@ -1758,10 +2526,8 @@ abstract class AbstractNewsScraper implements NewsScraperInterface
      */
     protected function saveToCache(array $data): void
     {
-        if (!is_dir(dirname($this->cacheFile))) {
-            mkdir(dirname($this->cacheFile), 0777, true);
-        }
-        file_put_contents($this->cacheFile, json_encode($data));
+        $this->cache->set($this->cacheKey, $data, $this->cacheTtl);
+        $this->log("Cache: Dados salvos com TTL de {$this->cacheTtl} segundos");
     }
 
     /**
@@ -1813,10 +2579,9 @@ class FolhaScraper extends AbstractNewsScraper
 {
     public function __construct()
     {
-        $cacheFile = __DIR__ . '/../../../cache/folha_news.json';
-        $cacheTime = 600; // 10 minutos
-        parent::__construct($cacheFile, $cacheTime);
-        $this->log("[Folha] | Inicializado: Cache definido para 10 minutos.");
+        // Passa apenas a chave de cache e TTL
+        parent::__construct('folha_news', 600); // ou uol_news, folha_news
+        $this->log("Inicializado: Cache definido para 10 minutos.");
     }
 
     public function fetchNews(bool $forceUpdate = false): array
@@ -1991,10 +2756,9 @@ class G1Scraper extends AbstractNewsScraper
 {
     public function __construct()
     {
-        $cacheFile = __DIR__ . '/../../../cache/g1_news.json';
-        $cacheTime = 600; // 10 minutos
-        parent::__construct($cacheFile, $cacheTime);
-        $this->log("[G1] | Inicializado: Cache definido para 10 minutos.");
+        // Passa apenas a chave de cache e TTL
+        parent::__construct('g1_news', 600); // ou uol_news, folha_news
+        $this->log("Inicializado: Cache definido para 10 minutos.");
     }
 
     public function fetchNews(bool $forceUpdate = false): array
@@ -2238,10 +3002,8 @@ class UOLScraper extends AbstractNewsScraper
 {
     public function __construct()
     {
-        $cacheFile = __DIR__ . '/../../../cache/uol_news.json';
-        $cacheTime = 600;
-        parent::__construct($cacheFile, $cacheTime);
-        $this->log("[UOL] | Inicializado: Cache definido para 10 minutos.");
+        parent::__construct('uol_news', 600);
+        $this->log("Inicializado: Cache definido para 10 minutos.");
     }
 
     public function fetchNews(bool $forceUpdate = false): array
@@ -2630,6 +3392,39 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\View
         <p>Nenhuma notícia encontrada.</p>
     <?php endif; ?>
 
+    <!-- Seção de administração de cache -->
+    <div class="admin-section">
+        <h3>Gerenciamento de Cache</h3>
+        <div class="cache-stats">
+            <?php
+            $stats = \App\Cache\CacheManager::getStats();
+            ?>
+            <div class="stat-item">
+                <span class="label">Tipo de Cache:</span>
+                <span class="value"><?php echo $stats['type']; ?></span>
+            </div>
+            <div class="stat-item">
+                <span class="label">TTL Padrão:</span>
+                <span class="value"><?php echo $stats['ttl']; ?> segundos</span>
+            </div>
+            <div class="stat-item">
+                <span class="label">Status:</span>
+                <span class="value <?php echo $stats['status'] === 'ativo' ? 'active' : 'inactive'; ?>">
+                    <?php echo $stats['status']; ?>
+                </span>
+            </div>
+        </div>
+        
+        <div class="cache-actions">
+            <button id="clear-cache-btn" class="btn btn-warning">
+                <i class="fas fa-trash-alt"></i> Limpar Cache
+            </button>
+            <button id="warm-cache-btn" class="btn btn-info">
+                <i class="fas fa-fire"></i> Pré-aquecer Cache
+            </button>
+        </div>
+    </div>
+
     <!-- Área para exibir os logs de depuração com melhorias visuais -->
     <div id="debug-container">
         <div id="debug-header">
@@ -2735,6 +3530,46 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\View
     // Ou continue usando a função genérica com nível personalizado
     debug_log("Operação personalizada", "CUSTOM", "Context");
     ?>
+    
+    <!-- Adicione este script JavaScript -->
+    <script>
+    $(document).ready(function() {
+        $('#clear-cache-btn').click(function() {
+            if (confirm("Tem certeza que deseja limpar todo o cache?")) {
+                $.post('/api/cache.php', { action: 'clear' })
+                    .done(function(response) {
+                        alert(response.message);
+                        if (response.success) {
+                            location.reload();
+                        }
+                    })
+                    .fail(function() {
+                        alert("Erro de comunicação com o servidor");
+                    });
+            }
+        });
+        
+        $('#warm-cache-btn').click(function() {
+            if (confirm("Iniciar pré-aquecimento do cache?")) {
+                $(this).prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Processando...');
+                
+                $.post('/api/cache.php', { action: 'warm' })
+                    .done(function(response) {
+                        alert(response.message);
+                        if (response.success) {
+                            location.reload();
+                        } else {
+                            $('#warm-cache-btn').prop('disabled', false).html('<i class="fas fa-fire"></i> Pré-aquecer Cache');
+                        }
+                    })
+                    .fail(function() {
+                        alert("Erro de comunicação com o servidor");
+                        $('#warm-cache-btn').prop('disabled', false).html('<i class="fas fa-fire"></i> Pré-aquecer Cache');
+                    });
+            }
+        });
+    });
+    </script>
 </body>
 </html>
 

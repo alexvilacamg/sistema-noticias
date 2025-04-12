@@ -173,6 +173,39 @@
         <p>Nenhuma notícia encontrada.</p>
     <?php endif; ?>
 
+    <!-- Seção de administração de cache -->
+    <div class="admin-section">
+        <h3>Gerenciamento de Cache</h3>
+        <div class="cache-stats">
+            <?php
+            $stats = \App\Cache\CacheManager::getStats();
+            ?>
+            <div class="stat-item">
+                <span class="label">Tipo de Cache:</span>
+                <span class="value"><?php echo $stats['type']; ?></span>
+            </div>
+            <div class="stat-item">
+                <span class="label">TTL Padrão:</span>
+                <span class="value"><?php echo $stats['ttl']; ?> segundos</span>
+            </div>
+            <div class="stat-item">
+                <span class="label">Status:</span>
+                <span class="value <?php echo $stats['status'] === 'ativo' ? 'active' : 'inactive'; ?>">
+                    <?php echo $stats['status']; ?>
+                </span>
+            </div>
+        </div>
+        
+        <div class="cache-actions">
+            <button id="clear-cache-btn" class="btn btn-warning">
+                <i class="fas fa-trash-alt"></i> Limpar Cache
+            </button>
+            <button id="warm-cache-btn" class="btn btn-info">
+                <i class="fas fa-fire"></i> Pré-aquecer Cache
+            </button>
+        </div>
+    </div>
+
     <!-- Área para exibir os logs de depuração com melhorias visuais -->
     <div id="debug-container">
         <div id="debug-header">
@@ -278,5 +311,45 @@
     // Ou continue usando a função genérica com nível personalizado
     debug_log("Operação personalizada", "CUSTOM", "Context");
     ?>
+    
+    <!-- Adicione este script JavaScript -->
+    <script>
+    $(document).ready(function() {
+        $('#clear-cache-btn').click(function() {
+            if (confirm("Tem certeza que deseja limpar todo o cache?")) {
+                $.post('/api/cache.php', { action: 'clear' })
+                    .done(function(response) {
+                        alert(response.message);
+                        if (response.success) {
+                            location.reload();
+                        }
+                    })
+                    .fail(function() {
+                        alert("Erro de comunicação com o servidor");
+                    });
+            }
+        });
+        
+        $('#warm-cache-btn').click(function() {
+            if (confirm("Iniciar pré-aquecimento do cache?")) {
+                $(this).prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Processando...');
+                
+                $.post('/api/cache.php', { action: 'warm' })
+                    .done(function(response) {
+                        alert(response.message);
+                        if (response.success) {
+                            location.reload();
+                        } else {
+                            $('#warm-cache-btn').prop('disabled', false).html('<i class="fas fa-fire"></i> Pré-aquecer Cache');
+                        }
+                    })
+                    .fail(function() {
+                        alert("Erro de comunicação com o servidor");
+                        $('#warm-cache-btn').prop('disabled', false).html('<i class="fas fa-fire"></i> Pré-aquecer Cache');
+                    });
+            }
+        });
+    });
+    </script>
 </body>
 </html>

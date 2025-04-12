@@ -5,6 +5,7 @@ namespace App\Models;
 
 use App\Utils\HttpClient;
 use App\Utils\Logger;
+use App\Cache\CacheInterface;
 
 /**
  * Classe abstrata que cuida de:
@@ -15,13 +16,15 @@ use App\Utils\Logger;
  */
 abstract class AbstractNewsScraper implements NewsScraperInterface
 {
-    protected $cacheFile;
-    protected $cacheTime;
+    protected $cacheKey;
+    protected $cacheTtl;
+    protected $cache;
 
-    public function __construct($cacheFile, $cacheTime = 600)
+    public function __construct(string $cacheKey, int $cacheTtl = 600)
     {
-        $this->cacheFile = $cacheFile;
-        $this->cacheTime = $cacheTime;
+        $this->cacheKey = $cacheKey;
+        $this->cacheTtl = $cacheTtl;
+        $this->cache = getCache(); // Função definida em config.php
     }
 
     /**
@@ -29,14 +32,13 @@ abstract class AbstractNewsScraper implements NewsScraperInterface
      */
     protected function getFromCache(): ?array
     {
-        if (file_exists($this->cacheFile) && ((time() - filemtime($this->cacheFile)) < $this->cacheTime)) {
-            $this->log("Utilizando cache do arquivo: " . $this->cacheFile);
-            $data = file_get_contents($this->cacheFile);
-            $newsItems = json_decode($data, true);
-            if (is_array($newsItems)) {
-                return $newsItems;
-            }
+        $result = $this->cache->get($this->cacheKey);
+        
+        if ($result !== null) {
+            $this->log("Cache: Utilizando dados do cache para " . $this->cacheKey);
+            return $result;
         }
+        
         return null;
     }
 
@@ -45,10 +47,8 @@ abstract class AbstractNewsScraper implements NewsScraperInterface
      */
     protected function saveToCache(array $data): void
     {
-        if (!is_dir(dirname($this->cacheFile))) {
-            mkdir(dirname($this->cacheFile), 0777, true);
-        }
-        file_put_contents($this->cacheFile, json_encode($data));
+        $this->cache->set($this->cacheKey, $data, $this->cacheTtl);
+        $this->log("Cache: Dados salvos com TTL de {$this->cacheTtl} segundos");
     }
 
     /**
