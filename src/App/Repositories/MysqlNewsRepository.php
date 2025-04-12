@@ -89,6 +89,9 @@ class MysqlNewsRepository implements NewsRepositoryInterface
             // Verificar se a notícia já existe
             $existing = DB::table('news')->where('url', $data['url'])->first();
             
+            // Garantir uso consistente de published_at
+            $published_at = $data['published_at'] ?? $data['publishedAt'] ?? null;
+            
             if ($existing) {
                 // Atualizar
                 DB::table('news')
@@ -96,7 +99,7 @@ class MysqlNewsRepository implements NewsRepositoryInterface
                     ->update([
                         'title' => $data['title'],
                         'description' => $data['description'] ?? '',
-                        'published_at' => $data['publishedAt'] ?? null,
+                        'published_at' => $published_at,
                         'source_id' => $sourceId,
                         'author_id' => $authorId,
                         'updated_at' => now()
@@ -107,7 +110,7 @@ class MysqlNewsRepository implements NewsRepositoryInterface
                     'title' => $data['title'],
                     'url' => $data['url'],
                     'description' => $data['description'] ?? '',
-                    'published_at' => $data['publishedAt'] ?? null,
+                    'published_at' => $published_at,
                     'source_id' => $sourceId,
                     'author_id' => $authorId,
                     'created_at' => now(),

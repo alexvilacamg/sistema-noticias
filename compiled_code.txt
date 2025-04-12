@@ -18,6 +18,7 @@ ESTRUTURA DO DIRETÓRIO:
 ├── create_sqlite_indexes.php
 ├── database.sqlite
 ├── migrate_data.php
+├── normalize_fields.php
 ├── phpunit.xml
 ├── public
 │   ├── api
@@ -340,6 +341,58 @@ function migrateData() {
 
 // Executar a migração
 migrateData();
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\normalize_fields.php
+================================================================================
+
+<?php
+// Script para normalizar os campos no banco de dados
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+// Carregar variáveis de ambiente
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->safeLoad();
+
+use App\Utils\Logger;
+
+echo "Normalizando campos no banco de dados...\n";
+
+try {
+    // Conectar ao SQLite
+    $dbPath = __DIR__ . '/database.sqlite';
+    $db = new PDO("sqlite:$dbPath");
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+    // Obter todas as notícias
+    $stmt = $db->query("SELECT * FROM news");
+    $news = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    echo "Encontradas " . count($news) . " notícias no banco de dados.\n";
+    
+    // Verificar e atualizar registros que precisam de normalização
+    $count = 0;
+    foreach ($news as $item) {
+        // Se o campo published_at estiver vazio ou NULL, podemos ter um problema
+        if (empty($item['published_at']) || $item['published_at'] == '1970-01-01T00:00:00+00:00') {
+            echo "ID " . $item['id'] . ": Campo published_at vazio ou inválido.\n";
+            $count++;
+            
+            // Atualizar o registro se possível
+            $stmt = $db->prepare("UPDATE news SET published_at = :date WHERE id = :id");
+            $stmt->bindValue(':date', date('Y-m-d H:i:s'));
+            $stmt->bindValue(':id', $item['id']);
+            $stmt->execute();
+        }
+    }
+    
+    echo "Total de " . $count . " registros normalizados.\n";
+    echo "Normalização concluída com sucesso!\n";
+    
+} catch (Exception $e) {
+    echo "Erro: " . $e->getMessage() . "\n";
+}
 
 ================================================================================
 Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\test-redis.php
@@ -3173,7 +3226,7 @@ class FolhaScraper extends AbstractNewsScraper
                     'url'         => $articleUrl,
                     'description' => $description,
                     'author'      => $author,
-                    'publishedAt' => $publishedAt,
+                    'published_at' => $publishedAt,  // modificado de publishedAt para published_at
                     'source'      => 'Folha'
                 ];
             }
@@ -3231,6 +3284,7 @@ class FolhaScraper extends AbstractNewsScraper
         ];
     }
 }
+``` 
 
 
 ================================================================================
@@ -3358,7 +3412,7 @@ class G1Scraper extends AbstractNewsScraper
             'url'         => $articleUrl,
             'description' => $description,
             'author'      => $author ?: 'Não disponível',
-            'publishedAt' => $publishedAt ?: 'Data não informada.',
+            'published_at' => $publishedAt ?: null,  // modificado de publishedAt para published_at
             'source'      => 'G1'
         ];
     }
@@ -3450,10 +3504,15 @@ class Scraper
         }
 
         $this->reportProgress("Normalizando datas de " . count($news) . " notícias...");
-        // Normaliza datas
+        // Normaliza datas - alterado para usar published_at consistentemente
         foreach ($news as &$item) {
-            if (!empty($item['publishedAt'])) {
-                $item['publishedAt'] = $this->normalizeDate($item['publishedAt']);
+            // Verifica o campo antigo (publishedAt) e o novo (published_at)
+            if (isset($item['publishedAt']) && !isset($item['published_at'])) {
+                $item['published_at'] = $this->normalizeDate($item['publishedAt']);
+                // Opcional: remova o campo antigo para limpar os dados
+                // unset($item['publishedAt']);
+            } else if (isset($item['published_at'])) {
+                $item['published_at'] = $this->normalizeDate($item['published_at']);
             }
         }
         
@@ -3572,15 +3631,15 @@ class UOLScraper extends AbstractNewsScraper
             $details = $this->scrapeArticle($link, $headers);
             if ($details) {
                 // Se o artigo tiver data válida, substitui a data do listing
-                if (!empty($details['publishedAt']) && $details['publishedAt'] !== null) {
-                    $publishedAt = $details['publishedAt'];
+                if (!empty($details['published_at']) && $details['published_at'] !== null) {
+                    $publishedAt = $details['published_at'];
                 }
                 $newsItems[] = [
                     'title'       => $title,
                     'url'         => $link,
                     'description' => $details['description'] ?? 'Descrição não disponível.',
                     'author'      => $details['author'] ?? 'Não disponível',
-                    'publishedAt' => $publishedAt,
+                    'published_at' => $publishedAt,
                     'source'      => 'UOL'
                 ];
             } else {
@@ -3589,7 +3648,7 @@ class UOLScraper extends AbstractNewsScraper
                     'url'         => $link,
                     'description' => 'Descrição não disponível.',
                     'author'      => 'Não disponível',
-                    'publishedAt' => $publishedAt,
+                    'published_at' => $publishedAt,
                     'source'      => 'UOL'
                 ];
             }
@@ -3631,7 +3690,7 @@ class UOLScraper extends AbstractNewsScraper
         return [
             'description' => $description,
             'author'      => $author,
-            'publishedAt' => $publishedAt
+            'published_at' => $publishedAt
         ];
     }
 }
@@ -4020,7 +4079,10 @@ class SqliteNewsRepository implements NewsRepositoryInterface
             $stmt->bindValue(':description', $data['description'] ?? '');
             $stmt->bindValue(':source', $data['source'] ?? 'Desconhecido');
             $stmt->bindValue(':author', $data['author'] ?? 'Desconhecido');
-            $stmt->bindValue(':published_at', $data['publishedAt'] ?? date('Y-m-d H:i:s'));
+            
+            // Modificar esta linha - usar published_at e verificar ambos os formatos para compatibilidade
+            $published_at = $data['published_at'] ?? $data['publishedAt'] ?? date('Y-m-d H:i:s');
+            $stmt->bindValue(':published_at', $published_at);
             
             return $stmt->execute();
         } catch (\Exception $e) {
@@ -4282,10 +4344,8 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\View
                     <div class="news-meta">
                         <span class="news-date">
                             <?php 
-                            if (!empty($item['published_at'])) {
+                            if (!empty($item['published_at']) && $item['published_at'] !== "1970-01-01T00:00:00+00:00") {
                                 echo '<i class="fas fa-calendar-alt"></i> ' . date("d/m/Y H:i", strtotime($item['published_at']));
-                            } elseif (!empty($item['publishedAt']) && $item['publishedAt'] !== "1970-01-01T00:00:00+00:00") {
-                                echo '<i class="fas fa-calendar-alt"></i> ' . date("d/m/Y H:i", strtotime($item['publishedAt']));
                             } else {
                                 echo '<i class="fas fa-calendar-alt"></i> Data não disponível';
                             }
@@ -4317,11 +4377,8 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\View
                     <tr>
                         <td data-order="<?php echo isset($item['published_at']) ? $item['published_at'] : ''; ?>">
                             <?php 
-                            if (!empty($item['published_at'])) {
+                            if (!empty($item['published_at']) && $item['published_at'] !== "1970-01-01T00:00:00+00:00") {
                                 echo date("d/m/Y H:i", strtotime($item['published_at']));
-                            } elseif (!empty($item['publishedAt'])) {
-                                // Verifica o nome alternativo que pode estar sendo usado
-                                echo date("d/m/Y H:i", strtotime($item['publishedAt']));
                             } else {
                                 echo "Data não disponível";
                             }

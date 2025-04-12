@@ -99,6 +99,9 @@ class SqliteNewsRepository implements NewsRepositoryInterface
             // Verificar se já existe
             $exists = $this->findByUrl($data['url']);
             
+            // Simplificar para usar apenas published_at, com fallback
+            $published_at = $data['published_at'] ?? $data['publishedAt'] ?? date('Y-m-d H:i:s');
+            
             if ($exists) {
                 // Atualizar
                 $stmt = $this->db->prepare("
@@ -122,15 +125,12 @@ class SqliteNewsRepository implements NewsRepositoryInterface
                 ");
             }
             
-            // Definir parâmetros - usando bindValue em vez de bindParam
+            // Definir parâmetros
             $stmt->bindValue(':title', $data['title']);
             $stmt->bindValue(':url', $data['url']);
             $stmt->bindValue(':description', $data['description'] ?? '');
             $stmt->bindValue(':source', $data['source'] ?? 'Desconhecido');
             $stmt->bindValue(':author', $data['author'] ?? 'Desconhecido');
-            
-            // Modificar esta linha - usar published_at e verificar ambos os formatos para compatibilidade
-            $published_at = $data['published_at'] ?? $data['publishedAt'] ?? date('Y-m-d H:i:s');
             $stmt->bindValue(':published_at', $published_at);
             
             return $stmt->execute();
