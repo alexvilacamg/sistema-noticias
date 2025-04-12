@@ -44,7 +44,7 @@ class G1Scraper extends AbstractNewsScraper
         
         // Seleciona os links dos artigos na página de listagem
         $nodes = $xpath->query("//a[contains(@class, 'feed-post-link')]");
-        $this->log("[G1] | Listagem: Nós encontrados = " . $nodes->length);
+        $this->log("[G1] | Listagem: Nós encontrados = " . $nodes->length, LOG_INFO);
         
         $articleLinks = [];
         foreach ($nodes as $node) {

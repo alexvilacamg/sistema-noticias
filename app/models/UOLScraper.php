@@ -44,7 +44,7 @@ class UOLScraper extends AbstractNewsScraper
         
         // Busca nós com a classe "thumbnails-item" (excluindo itemAds)
         $nodes = $xpath->query("//div[contains(@class, 'thumbnails-item') and not(contains(@class, 'itemAds'))]");
-        $this->log("[UOL] | Listagem: Itens encontrados = " . $nodes->length);
+        $this->log("[UOL] | Listagem: Itens encontrados = " . $nodes->length, LOG_INFO);
         
         foreach ($nodes as $node) {
             if (!$node instanceof \DOMElement) continue;

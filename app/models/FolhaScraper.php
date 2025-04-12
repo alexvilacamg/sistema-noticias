@@ -44,7 +44,8 @@ class FolhaScraper extends AbstractNewsScraper
         
         // Seleciona cada bloco <li> com a classe "c-headline c-headline--newslist"
         $nodes = $xpath->query("//li[contains(@class, 'c-headline') and contains(@class, 'c-headline--newslist')]");
-        $this->log("[Folha] | Listagem: Nós encontrados = " . $nodes->length);
+        $this->log("[Folha] | Listagem: Nós encontrados = " . $nodes->length, LOG_INFO);
+        $this->log("[UOL] | Listagem: Itens encontrados = " . $nodes->length, LOG_INFO);
         
         foreach ($nodes as $node) {
             // Extrai URL do artigo

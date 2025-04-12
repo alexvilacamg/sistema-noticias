@@ -76,9 +76,8 @@ abstract class AbstractNewsScraper implements NewsScraperInterface
     /**
      * Método simples de log, para centralizar prefixos.
      */
-    protected function log(string $message): void
+    protected function log(string $message, $level = LOG_INFO): void
     {
-        // Pode customizar o prefixo da classe, se desejar
-        debug_log("[" . static::class . "] " . $message);
+        debug_log($message, $level, get_class($this));
     }
 }

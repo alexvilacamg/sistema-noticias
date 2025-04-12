@@ -499,27 +499,54 @@ require_once __DIR__ . '/../factories/ScraperFactory.php';
 class Scraper
 {
     private $scrapers = [];
+    private $progressCallback = null;
 
-    public function __construct()
+    public function __construct($progressCallback = null)
     {
         // Em vez de instanciar manualmente, carregamos via factory:
         $this->scrapers = ScraperFactory::createAllScrapers();
+        // Armazena o callback para reportar progresso
+        $this->progressCallback = $progressCallback;
+    }
+
+    private function reportProgress($message) {
+        if (is_callable($this->progressCallback)) {
+            call_user_func($this->progressCallback, $message);
+        }
     }
 
     public function getAllPoliticalNews(bool $forceUpdate = false): array
     {
         $news = [];
+        $this->reportProgress("Iniciando coleta de notícias políticas...");
+        
         foreach ($this->scrapers as $scraper) {
-            // Cada $scraper é algo que herda AbstractNewsScraper e implementa fetchNews()
-            $news = array_merge($news, $scraper->fetchNews($forceUpdate));
+            $scraperName = get_class($scraper);
+            $this->reportProgress("Processando fonte: " . $scraperName);
+            
+            try {
+                // Cada $scraper é algo que herda AbstractNewsScraper e implementa fetchNews()
+                $startTime = microtime(true);
+                $sourceNews = $scraper->fetchNews($forceUpdate);
+                $endTime = microtime(true);
+                $timeSpent = round($endTime - $startTime, 2);
+                
+                $this->reportProgress("Concluído " . $scraperName . ": " . count($sourceNews) . " notícias em " . $timeSpent . "s");
+                $news = array_merge($news, $sourceNews);
+            } catch (Exception $e) {
+                $this->reportProgress("ERRO em " . $scraperName . ": " . $e->getMessage());
+            }
         }
 
-        // Normaliza datas (você já tem esse método):
+        $this->reportProgress("Normalizando datas de " . count($news) . " notícias...");
+        // Normaliza datas
         foreach ($news as &$item) {
             if (!empty($item['publishedAt'])) {
                 $item['publishedAt'] = $this->normalizeDate($item['publishedAt']);
             }
         }
+        
+        $this->reportProgress("Processamento completo. Total de notícias: " . count($news));
         return $news;
     }
 
@@ -807,6 +834,18 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\views\in
             font-family: Arial, sans-serif;
             color: #555;
         }
+        #update-log {
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        #update-log div {
+            margin-bottom: 3px;
+            border-bottom: 1px dotted #eee;
+        }
+        .text-primary { color: #1976d2; }
+        .text-success { color: #2e7d32; font-weight: bold; }
+        .text-info { color: #0277bd; }
+        .text-danger { color: #c62828; font-weight: bold; }
     </style>
     <script>
         $(document).ready(function(){
@@ -840,28 +879,135 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\views\in
             
             // Ao clicar no botão "Forçar Atualização"
             $('#force-update-btn').click(function(){
-                // Exibe indicador de carregamento
-                $('#loading-indicator').text("Atualizando...");
-                $.ajax({
-                    url: '/api/force_update.php',
-                    method: 'GET',
-                    dataType: 'json',
-                    complete: function() {
-                        // Atualiza indicador para sucesso por 2 segundos antes de recarregar
-                        $('#loading-indicator').text("Atualização concluída");
-                        setTimeout(function(){
-                            $('#loading-indicator').text("");
-                            location.reload();
-                        }, 2000);
-                    },
-                    error: function(error) {
-                        console.error('Erro ao atualizar:', error);
-                        $('#loading-indicator').text("Erro na atualização");
-                        setTimeout(function(){
-                            $('#loading-indicator').text("");
-                        }, 2000);
+                // Desabilita o botão durante a atualização
+                $(this).prop('disabled', true);
+                
+                // Remove log anterior se existir
+                $('#update-log').remove();
+                
+                // Cria um div para exibir o log de atualização
+                let $updateLog = $('<div id="update-log" style="margin:10px 0; padding:8px; background:#f8f9fa; border:1px solid #ddd; border-radius:4px; font-family:monospace; max-height:300px; overflow-y:auto;"></div>');
+                $('#loading-indicator').html('<span>Conectando ao servidor...</span>').after($updateLog);
+                
+                // Adiciona uma linha ao log de atualização
+                function addLogLine(message, className = '') {
+                    let timestamp = new Date().toLocaleTimeString();
+                    $updateLog.append(`<div class="${className}">[${timestamp}] ${message}</div>`);
+                    // Auto-scroll para o final
+                    $updateLog.scrollTop($updateLog[0].scrollHeight);
+                }
+                
+                // Contador para reconexões
+                let reconnectAttempts = 0;
+                const MAX_RECONNECT_ATTEMPTS = 3;
+                
+                // Função para criar e configurar a conexão SSE
+                function setupEventSource() {
+                    // Fecha a conexão existente se houver
+                    if (window.activeEventSource) {
+                        window.activeEventSource.close();
                     }
-                });
+                    
+                    // Adiciona um timestamp para evitar cache
+                    const eventSource = new EventSource('/api/force_update.php?t=' + Date.now());
+                    window.activeEventSource = eventSource;
+                    
+                    // Evento de abertura da conexão
+                    eventSource.onopen = function() {
+                        addLogLine("Conexão estabelecida com o servidor", "text-info");
+                        reconnectAttempts = 0; // Reseta contagem de tentativas
+                    };
+                    
+                    // Evento de início de processo
+                    eventSource.addEventListener('start', function(e) {
+                        const data = JSON.parse(e.data);
+                        $('#loading-indicator').html('<span style="color:#ff6600">Atualizando...</span>');
+                        addLogLine(data.message, 'text-primary');
+                    });
+                    
+                    // Evento de progresso
+                    eventSource.addEventListener('progress', function(e) {
+                        const data = JSON.parse(e.data);
+                        addLogLine(data.message);
+                    });
+                    
+                    // Evento de heartbeat para manter a conexão
+                    eventSource.addEventListener('heartbeat', function() {
+                        console.log("Heartbeat recebido");
+                    });
+                    
+                    // Evento de conclusão
+                    eventSource.addEventListener('complete', function(e) {
+                        const data = JSON.parse(e.data);
+                        
+                        // Adiciona informação final de sucesso
+                        addLogLine(`Concluído em ${data.execution_time}s! Total de ${data.articles_count} notícias.`, 'text-success');
+                        
+                        // Adiciona estatísticas por fonte
+                        if (data.sources) {
+                            let sourcesText = 'Notícias por fonte: ';
+                            Object.entries(data.sources).forEach(([source, count], index, arr) => {
+                                sourcesText += `${source} (${count})${index < arr.length - 1 ? ', ' : ''}`;
+                            });
+                            addLogLine(sourcesText, 'text-info');
+                        }
+                        
+                        // Exibe mensagem de sucesso no indicador principal
+                        $('#loading-indicator').html(`<span style="color:#228B22">Atualização concluída!</span>`);
+                        
+                        // Fecha a conexão SSE
+                        eventSource.close();
+                        window.activeEventSource = null;
+                        
+                        // Reativa o botão após 1 segundo
+                        setTimeout(function(){
+                            $('#force-update-btn').prop('disabled', false);
+                        }, 1000);
+                        
+                        // Recarrega a página após 5 segundos
+                        setTimeout(function(){
+                            location.reload();
+                        }, 5000);
+                    });
+                    
+                    // Evento de erro no processo
+                    eventSource.addEventListener('error', function(e) {
+                        if (e.data) {
+                            try {
+                                const data = JSON.parse(e.data);
+                                addLogLine(data.message, 'text-danger');
+                            } catch (err) {
+                                addLogLine("Erro no processamento: " + e.data, 'text-danger');
+                            }
+                        }
+                    });
+                    
+                    // Em caso de erro na conexão
+                    eventSource.onerror = function(e) {
+                        // Tenta reconectar algumas vezes
+                        if (reconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
+                            reconnectAttempts++;
+                            addLogLine(`Tentativa de reconexão ${reconnectAttempts}/${MAX_RECONNECT_ATTEMPTS}...`, 'text-warning');
+                            
+                            setTimeout(function() {
+                                eventSource.close();
+                                setupEventSource();
+                            }, 2000); // Espera 2 segundos antes de reconectar
+                        } else {
+                            addLogLine("Conexão com o servidor perdida após várias tentativas", 'text-danger');
+                            $('#loading-indicator').html(`<span style="color:#d32f2f">Erro de conexão</span>`);
+                            
+                            eventSource.close();
+                            window.activeEventSource = null;
+                            $('#force-update-btn').prop('disabled', false);
+                        }
+                    };
+                    
+                    return eventSource;
+                }
+                
+                // Inicia a conexão SSE
+                setupEventSource();
             });
         });
     </script>
@@ -1003,36 +1149,132 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\public\api\f
 ================================================================================
 
 <?php
-// Inicia o buffer e ativa exibição de erros (para depuração - remova display_errors depois)
-// ini_set('display_errors', 1);
-// error_reporting(E_ALL);
+// Desabilitar o limite de tempo de execução do script
+set_time_limit(0);
 
-ob_start();
-header('Content-Type: application/json');
+// Configurações iniciais para garantir que a saída seja enviada corretamente
+ini_set('output_buffering', 'off');
+ini_set('zlib.output_compression', false);
 
-// Inclua as configurações globais (certifique-se de que o config/config.php NÃO tenha saída extra)
+// Headers específicos para Server-Sent Events
+header('Content-Type: text/event-stream');
+header('Cache-Control: no-cache');
+header('Connection: keep-alive');
+header('X-Accel-Buffering: no'); // Para servidores Nginx
+
+// Desativa qualquer buffer de saída para garantir envio imediato
+@ob_end_clean();
+if (ob_get_level() == 0) ob_start();
+
+// Inclui as configurações e classes necessárias
 require_once __DIR__ . '/../../config/config.php';
 require_once __DIR__ . '/../../app/models/Scraper.php';
 
-$scraper = new Scraper();
-$articles = $scraper->getAllPoliticalNews(true); // Força atualização
-
-$cacheDir = __DIR__ . '/../../cache';
-if (!is_dir($cacheDir)) {
-    mkdir($cacheDir, 0777, true);
+// Função para enviar evento para o cliente
+function sendEvent($message, $type = "progress") {
+    echo "event: {$type}\n";
+    echo "data: " . json_encode($message) . "\n\n";
+    ob_flush();
+    flush();
 }
-$cacheFile = $cacheDir . '/all_news.json';
-file_put_contents($cacheFile, json_encode($articles));
 
-$response = [
-    'status' => 'success',
-    'message' => 'Atualização forçada realizada com sucesso!',
-    'articles_count' => count($articles)
-];
+// Envia um heartbeat a cada 15 segundos para manter a conexão viva
+function startHeartbeat() {
+    ignore_user_abort(true); // continua executando mesmo se o cliente desconectar
+    
+    register_shutdown_function(function() {
+        // Envia um evento de erro se o script terminar inesperadamente
+        sendEvent(['status' => 'error', 'message' => 'O servidor finalizou a conexão inesperadamente'], 'error');
+    });
+    
+    // Inicia o heartbeat
+    $lastHeartbeat = time();
+    return $lastHeartbeat;
+}
 
-// Limpa qualquer saída que possa ter sido gerada antes do JSON
-ob_end_clean();
-echo json_encode($response);
+// Inicia o heartbeat
+$lastHeartbeat = startHeartbeat();
+
+try {
+    // Envia mensagem inicial
+    sendEvent(['status' => 'start', 'message' => 'Iniciando processo de atualização...'], 'start');
+    
+    // Registra o início do processo para calcular o tempo total
+    $startTime = microtime(true);
+    
+    // Define um callback personalizado para o Scraper que também verifica heartbeat
+    $progressCallback = function($message) use (&$lastHeartbeat) {
+        // Envia update de progresso
+        sendEvent(['status' => 'progress', 'message' => $message]);
+        
+        // Verifica se precisa enviar heartbeat (a cada 15 segundos)
+        $now = time();
+        if ($now - $lastHeartbeat >= 15) {
+            sendEvent(['status' => 'heartbeat', 'timestamp' => $now], 'heartbeat');
+            $lastHeartbeat = $now;
+        }
+    };
+    
+    // Instancia o scraper com o callback personalizado
+    $scraper = new Scraper($progressCallback);
+    
+    // Envia mensagem antes de começar o scraping
+    sendEvent(['status' => 'progress', 'message' => 'Iniciando scraping dos portais de notícias...']);
+    
+    // Força a atualização do scraping
+    $articles = $scraper->getAllPoliticalNews(true);
+    
+    // Cria o diretório de cache se não existir
+    $cacheDir = __DIR__ . '/../../cache';
+    if (!is_dir($cacheDir)) {
+        mkdir($cacheDir, 0777, true);
+        sendEvent(['status' => 'progress', 'message' => 'Diretório de cache criado']);
+    }
+    
+    // Salva os artigos no cache
+    $cacheFile = $cacheDir . '/all_news.json';
+    $articlesCount = count($articles);
+    sendEvent(['status' => 'progress', 'message' => "Salvando {$articlesCount} artigos no cache..."]);
+    file_put_contents($cacheFile, json_encode($articles));
+    
+    // Calcula estatísticas
+    $endTime = microtime(true);
+    $executionTime = round($endTime - $startTime, 2);
+    
+    // Contagem por fonte
+    $sourceStats = [];
+    foreach ($articles as $article) {
+        $source = $article['source'] ?? 'Desconhecido';
+        if (!isset($sourceStats[$source])) {
+            $sourceStats[$source] = 0;
+        }
+        $sourceStats[$source]++;
+    }
+    
+    // Envia mensagem de conclusão
+    sendEvent([
+        'status' => 'success',
+        'message' => 'Atualização realizada com sucesso!',
+        'articles_count' => $articlesCount,
+        'execution_time' => $executionTime,
+        'sources' => $sourceStats,
+        'cache_size' => filesize($cacheFile),
+        'timestamp' => date('Y-m-d H:i:s')
+    ], 'complete');
+    
+} catch (Exception $e) {
+    // Captura qualquer exceção e envia como evento de erro
+    sendEvent([
+        'status' => 'error',
+        'message' => 'Erro durante a atualização: ' . $e->getMessage()
+    ], 'error');
+} finally {
+    // Aguarda 1 segundo antes de encerrar a conexão
+    sleep(1);
+}
+
+// Encerra o script
+exit();
 ?>
 
 
