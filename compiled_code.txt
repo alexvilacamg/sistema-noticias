@@ -14,6 +14,9 @@ ESTRUTURA DO DIRETÓRIO:
 │   ├── config.example.php
 │   ├── config.php
 │   └── scrapers_config.php
+├── create_sqlite_indexes.php
+├── database.sqlite
+├── migrate_data.php
 ├── phpunit.xml
 ├── public
 │   ├── api
@@ -50,6 +53,7 @@ ESTRUTURA DO DIRETÓRIO:
 │       ├── Controllers
 │       │   └── NewsController.php
 │       ├── Factories
+│       │   ├── RepositoryFactory.php
 │       │   └── ScraperFactory.php
 │       ├── Models
 │       │   ├── AbstractNewsScraper.php
@@ -58,6 +62,10 @@ ESTRUTURA DO DIRETÓRIO:
 │       │   ├── NewsScraperInterface.php
 │       │   ├── Scraper.php
 │       │   └── UOLScraper.php
+│       ├── Repositories
+│       │   ├── MysqlNewsRepository.php
+│       │   ├── NewsRepositoryInterface.php
+│       │   └── SqliteNewsRepository.php
 │       ├── Utils
 │       │   ├── HttpClient.php
 │       │   └── Logger.php
@@ -66,10 +74,14 @@ ESTRUTURA DO DIRETÓRIO:
 │           │   └── ViewHelper.php
 │           └── index.php
 ├── test-redis.php
+├── test_db_connection.php
+├── test_search.php
 └── tests
     ├── Cache
     │   ├── FileCacheTest.php
     │   └── RedisCacheTest.php
+    ├── Repositories
+    │   └── NewsRepositoryTest.php
     ├── Scrapers
     │   ├── G1ScraperTest.php
     │   └── UOLScraperTest.php
@@ -124,7 +136,8 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\composer.jso
     "require": {
         "php": ">=7.4",
         "predis/predis": "^2.3",
-        "vlucas/phpdotenv": "^5.6"
+        "vlucas/phpdotenv": "^5.6",
+        "illuminate/database": "^12.8"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
@@ -132,11 +145,9 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\composer.jso
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/App/"
-        },
-        "files": [
-            "config/config.php"
-        ]
+            "App\\": "src/App/",
+            "App\\Repositories\\": "src/App/Repositories/"
+        }
     },
     "autoload-dev": {
         "psr-4": {
@@ -158,6 +169,148 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\composer.jso
 
 
 ================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\create_sqlite_indexes.php
+================================================================================
+
+<?php
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\create_sqlite_indexes.php
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+// Carregar variáveis de ambiente
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->safeLoad();
+
+echo "Criando índices para SQLite...\n";
+
+try {
+    $dbPath = __DIR__ . '/database.sqlite';
+    $db = new PDO("sqlite:$dbPath");
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+    // Índice para buscas por título
+    echo "Criando índice para título...\n";
+    $db->exec("CREATE INDEX IF NOT EXISTS idx_news_title ON news(title)");
+    
+    // Índice composto para filtragem por fonte e data
+    echo "Criando índice composto para fonte e data...\n";
+    $db->exec("CREATE INDEX IF NOT EXISTS idx_news_source_date ON news(source, published_at)");
+    
+    // Criar tabela virtual FTS5 para busca em texto completo
+    echo "Criando tabela FTS5 para busca em texto completo...\n";
+    $db->exec("
+    CREATE VIRTUAL TABLE IF NOT EXISTS news_fts USING fts5(
+        title, description, content='news', content_rowid='id'
+    )");
+    
+    // Verificar se a tabela FTS já tem dados
+    $count = $db->query("SELECT COUNT(*) FROM news_fts")->fetchColumn();
+    
+    if ($count == 0) {
+        echo "Populando tabela FTS com dados existentes...\n";
+        // Preencher a tabela FTS com os dados existentes
+        $db->exec("
+        INSERT INTO news_fts(rowid, title, description)
+        SELECT id, title, description FROM news
+        ");
+    }
+    
+    // Criar trigger para manter a tabela FTS atualizada em inserções
+    $db->exec("
+    CREATE TRIGGER IF NOT EXISTS news_ai AFTER INSERT ON news BEGIN
+        INSERT INTO news_fts(rowid, title, description)
+        VALUES (new.id, new.title, new.description);
+    END;
+    ");
+    
+    // Criar trigger para manter a tabela FTS atualizada em atualizações
+    $db->exec("
+    CREATE TRIGGER IF NOT EXISTS news_au AFTER UPDATE ON news BEGIN
+        UPDATE news_fts SET
+            title = new.title,
+            description = new.description
+        WHERE rowid = old.id;
+    END;
+    ");
+    
+    // Criar trigger para manter a tabela FTS atualizada em exclusões
+    $db->exec("
+    CREATE TRIGGER IF NOT EXISTS news_ad AFTER DELETE ON news BEGIN
+        DELETE FROM news_fts WHERE rowid = old.id;
+    END;
+    ");
+    
+    echo "Índices criados com sucesso!\n";
+    
+} catch (Exception $e) {
+    echo "ERRO: " . $e->getMessage() . "\n";
+    echo "Trace: \n" . $e->getTraceAsString() . "\n";
+}
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\migrate_data.php
+================================================================================
+
+<?php
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\migrate_data.php
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+// Carregar variáveis de ambiente
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->safeLoad();
+
+use App\Factories\RepositoryFactory;
+use App\Utils\Logger;
+
+// Função para a migração
+function migrateData() {
+    echo "Iniciando migração de dados...\n";
+    
+    $cacheFile = __DIR__ . '/cache/all_news.json';
+    if (!file_exists($cacheFile)) {
+        echo "Arquivo de cache não encontrado. Nada para migrar.\n";
+        return false;
+    }
+    
+    try {
+        $repository = RepositoryFactory::createNewsRepository();
+        
+        // Carregar dados do arquivo JSON
+        $jsonData = file_get_contents($cacheFile);
+        $newsItems = json_decode($jsonData, true);
+        
+        if (!$newsItems || !is_array($newsItems)) {
+            echo "O arquivo de cache está vazio ou inválido.\n";
+            return false;
+        }
+        
+        echo "Encontradas " . count($newsItems) . " notícias para migrar...\n";
+        
+        // Salvar no banco de dados
+        $result = $repository->saveMany($newsItems);
+        
+        if ($result) {
+            echo "Migração concluída com sucesso!\n";
+            // Renomear o arquivo original para backup
+            rename($cacheFile, $cacheFile . '.bak');
+            echo "Backup do arquivo original criado como {$cacheFile}.bak\n";
+        } else {
+            echo "Falha na migração. Verifique os logs.\n";
+        }
+        
+        return $result;
+    } catch (Exception $e) {
+        echo "Erro durante a migração: " . $e->getMessage() . "\n";
+        Logger::error("Erro na migração: " . $e->getMessage(), "Migration");
+        return false;
+    }
+}
+
+// Executar a migração
+migrateData();
+
+================================================================================
 Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\test-redis.php
 ================================================================================
 
@@ -177,6 +330,83 @@ try {
     echo "Redis está funcionando corretamente!\n";
 } catch (Exception $e) {
     echo "Erro: " . $e->getMessage() . "\n";
+}
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\test_db_connection.php
+================================================================================
+
+<?php
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\test_db_connection.php
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+// Carregar variáveis de ambiente
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->safeLoad();
+
+echo "Testando conexão com o banco de dados...\n";
+echo "Tipo: " . (getenv('DB_TYPE') ?: 'mysql') . "\n";
+echo "Host: " . (getenv('DB_HOST') ?: '127.0.0.1') . "\n";
+echo "Porta: " . (getenv('DB_PORT') ?: (getenv('DB_TYPE') == 'mongodb' ? '27017' : '3306')) . "\n";
+echo "Banco: " . (getenv('DB_DATABASE') ?: 'sistema_noticias') . "\n\n";
+
+try {
+    $repository = App\Factories\RepositoryFactory::createNewsRepository();
+    
+    // Fazer uma operação simples para testar
+    $allNews = $repository->getAll();
+    
+    echo "Conexão estabelecida com sucesso!\n";
+    echo "Total de notícias no banco: " . count($allNews) . "\n";
+    
+    echo "\nDetalhes da primeira notícia:\n";
+    if (!empty($allNews)) {
+        print_r($allNews[0]);
+    } else {
+        echo "Não há notícias no banco ainda.\n";
+    }
+} catch (Exception $e) {
+    echo "ERRO: " . $e->getMessage() . "\n";
+    echo "Trace: \n" . $e->getTraceAsString() . "\n";
+}
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\test_search.php
+================================================================================
+
+<?php
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\test_search.php
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+// Carregar variáveis de ambiente
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->safeLoad();
+
+// Termo de pesquisa do argumento da linha de comando
+$searchTerm = $argv[1] ?? 'política';
+
+echo "Pesquisando por: '$searchTerm'\n\n";
+
+try {
+    $repository = App\Factories\RepositoryFactory::createNewsRepository();
+    
+    // Pesquisa usando o novo filtro
+    $results = $repository->getAll(['search' => $searchTerm]);
+    
+    echo "Resultados encontrados: " . count($results) . "\n\n";
+    
+    // Exibe os 5 primeiros resultados
+    foreach (array_slice($results, 0, 5) as $index => $news) {
+        echo ($index + 1) . ". " . $news['title'] . "\n";
+        echo "   Fonte: " . $news['source'] . " | Data: " . $news['published_at'] . "\n";
+        echo "   URL: " . $news['url'] . "\n\n";
+    }
+    
+} catch (Exception $e) {
+    echo "ERRO: " . $e->getMessage() . "\n";
+    echo "Trace: \n" . $e->getTraceAsString() . "\n";
 }
 
 ================================================================================
@@ -329,6 +559,10 @@ define('REDIS_DATABASE', getenv('REDIS_DATABASE') ?: 0);
 
 define('MEMCACHED_HOST', getenv('MEMCACHED_HOST') ?: '127.0.0.1');
 define('MEMCACHED_PORT', getenv('MEMCACHED_PORT') ?: 11211);
+
+// Modificar config.php para incluir configuração SQLite
+define('DB_TYPE', 'sqlite');
+define('DB_PATH', __DIR__ . '/../database.sqlite');
 
 // Define constantes para níveis de log apenas se não estiverem definidas
 if (!defined('LOG_INFO'))    define('LOG_INFO', 'INFO');
@@ -2067,6 +2301,7 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Cach
 namespace App\Cache;
 
 use App\Utils\Logger;
+use App\Factories\RepositoryFactory;
 
 class CacheManager
 {
@@ -2077,17 +2312,28 @@ class CacheManager
      */
     public static function clearNewsCache(): bool
     {
-        $cache = getCache();
-        
-        $result = $cache->clear();
-        
-        if ($result) {
-            Logger::info('Cache de notícias limpo com sucesso', 'CacheManager');
-        } else {
-            Logger::error('Falha ao limpar o cache de notícias', 'CacheManager');
+        try {
+            // Limpa o cache do Redis/Memcached/File
+            $cache = getCache();
+            $cacheResult = $cache->clear();
+            
+            // Limpa o banco de dados também
+            $repository = RepositoryFactory::createNewsRepository();
+            $dbResult = $repository->clear();
+            
+            $success = $cacheResult && $dbResult;
+            
+            if ($success) {
+                Logger::info('Cache e banco de dados de notícias limpos com sucesso', 'CacheManager');
+            } else {
+                Logger::error('Falha ao limpar cache ou banco de dados de notícias', 'CacheManager');
+            }
+            
+            return $success;
+        } catch (\Exception $e) {
+            Logger::error('Erro ao limpar cache: ' . $e->getMessage(), 'CacheManager');
+            return false;
         }
-        
-        return $result;
     }
     
     /**
@@ -2098,15 +2344,15 @@ class CacheManager
     public static function warmNewsCache(): bool
     {
         try {
-            Logger::info('Iniciando pré-aquecimento do cache', 'CacheManager');
+            Logger::info('Iniciando pré-aquecimento do cache e banco', 'CacheManager');
             
             $scraper = new \App\Models\Scraper();
             $news = $scraper->getAllPoliticalNews(true);
             
-            Logger::info('Cache pré-aquecido com ' . count($news) . ' notícias', 'CacheManager');
+            Logger::info('Cache e banco pré-aquecido com ' . count($news) . ' notícias', 'CacheManager');
             return true;
         } catch (\Exception $e) {
-            Logger::error('Erro no pré-aquecimento do cache: ' . $e->getMessage(), 'CacheManager');
+            Logger::error('Erro no pré-aquecimento: ' . $e->getMessage(), 'CacheManager');
             return false;
         }
     }
@@ -2581,12 +2827,32 @@ namespace App\Controllers;
 
 use App\Models\Scraper;
 use App\Views\Helpers\ViewHelper;
+use App\Factories\RepositoryFactory;
 
 class NewsController {
     public function index() {
-        // Cria variáveis para a view
-        $scraper = new Scraper();
-        $news = $scraper->getAllPoliticalNews();
+        // Se forceUpdate=1, força atualização
+        $forceUpdate = isset($_GET['forceUpdate']) && $_GET['forceUpdate'] == 1;
+        
+        // Se source=xxx, filtra por fonte
+        $filters = [];
+        if (isset($_GET['source']) && in_array($_GET['source'], ['G1', 'UOL', 'Folha'])) {
+            $filters['source'] = $_GET['source'];
+        }
+        
+        // Busca as notícias do banco em vez de usar o Scraper diretamente
+        $repository = RepositoryFactory::createNewsRepository();
+        
+        // Verifica se precisa forçar atualização
+        if ($forceUpdate) {
+            // Usa o Scraper que agora já salva no banco
+            $scraper = new Scraper();
+            $news = $scraper->getAllPoliticalNews(true);
+        } else {
+            // Obtém direto do banco com filtros
+            $news = $repository->getAll($filters);
+        }
+        
         $helper = new ViewHelper();
         
         // Inclui a view
@@ -2595,6 +2861,46 @@ class NewsController {
 }
 ?>
 
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Factories\RepositoryFactory.php
+================================================================================
+
+<?php
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Factories\RepositoryFactory.php
+
+namespace App\Factories;
+
+use App\Repositories\NewsRepositoryInterface;
+use App\Repositories\MysqlNewsRepository;
+use App\Repositories\MongoNewsRepository;
+use App\Repositories\SqliteNewsRepository;
+use App\Utils\Logger;
+
+class RepositoryFactory
+{
+    public static function createNewsRepository(): NewsRepositoryInterface
+    {
+        $dbType = getenv('DB_TYPE') ?: 'sqlite';
+        
+        try {
+            switch (strtolower($dbType)) {
+                case 'mongodb':
+                    return new MongoNewsRepository();
+                    
+                case 'mysql':
+                    return new MysqlNewsRepository();
+                    
+                case 'sqlite':
+                default:
+                    return new SqliteNewsRepository();
+            }
+        } catch (\Exception $e) {
+            Logger::error('Error creating repository: ' . $e->getMessage(), 'Factory');
+            throw $e;
+        }
+    }
+}
 
 ================================================================================
 Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Factories\ScraperFactory.php
@@ -3067,18 +3373,20 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Mode
 namespace App\Models;
 
 use App\Factories\ScraperFactory;
+use App\Factories\RepositoryFactory;
+use App\Repositories\NewsRepositoryInterface;
 
 class Scraper
 {
     private $scrapers = [];
     private $progressCallback = null;
+    private $repository;
 
     public function __construct($progressCallback = null)
     {
-        // Em vez de instanciar manualmente, carregamos via factory:
         $this->scrapers = ScraperFactory::createAllScrapers();
-        // Armazena o callback para reportar progresso
         $this->progressCallback = $progressCallback;
+        $this->repository = RepositoryFactory::createNewsRepository();
     }
 
     private function reportProgress($message) {
@@ -3090,6 +3398,16 @@ class Scraper
     public function getAllPoliticalNews(bool $forceUpdate = false): array
     {
         $news = [];
+        
+        if (!$forceUpdate) {
+            // Tentar carregar do banco de dados
+            $news = $this->repository->getAll();
+            if (!empty($news)) {
+                $this->reportProgress("Usando dados existentes do banco (" . count($news) . " notícias)");
+                return $news;
+            }
+        }
+        
         $this->reportProgress("Iniciando coleta de notícias políticas...");
         
         foreach ($this->scrapers as $scraper) {
@@ -3104,7 +3422,7 @@ class Scraper
                 
                 $this->reportProgress("Concluído " . $scraperName . ": " . count($sourceNews) . " notícias em " . $timeSpent . "s");
                 $news = array_merge($news, $sourceNews);
-            } catch (\Exception $e) { // Note o namespace global para Exception
+            } catch (\Exception $e) {
                 $this->reportProgress("ERRO em " . $scraperName . ": " . $e->getMessage());
             }
         }
@@ -3116,6 +3434,10 @@ class Scraper
                 $item['publishedAt'] = $this->normalizeDate($item['publishedAt']);
             }
         }
+        
+        // Salvar no banco de dados
+        $this->reportProgress("Salvando " . count($news) . " notícias no banco de dados...");
+        $this->repository->saveMany($news);
         
         $this->reportProgress("Processamento completo. Total de notícias: " . count($news));
         return $news;
@@ -3283,6 +3605,442 @@ class UOLScraper extends AbstractNewsScraper
     }
 }
 
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Repositories\MysqlNewsRepository.php
+================================================================================
+
+<?php
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Repositories\MysqlNewsRepository.php
+
+namespace App\Repositories;
+
+use Illuminate\Database\Capsule\Manager as DB;
+use App\Utils\Logger;
+
+class MysqlNewsRepository implements NewsRepositoryInterface
+{
+    public function __construct()
+    {
+        $this->setupConnection();
+    }
+    
+    private function setupConnection()
+    {
+        $capsule = new DB;
+        $capsule->addConnection([
+            'driver' => 'mysql',
+            'host' => getenv('DB_HOST') ?: '127.0.0.1',
+            'port' => getenv('DB_PORT') ?: '3306',
+            'database' => getenv('DB_DATABASE') ?: 'sistema_noticias',
+            'username' => getenv('DB_USERNAME') ?: 'news_user',
+            'password' => getenv('DB_PASSWORD') ?: '',
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ]);
+        $capsule->setAsGlobal();
+        $capsule->bootEloquent();
+    }
+    
+    public function getAll(array $filters = []): array
+    {
+        try {
+            $query = DB::table('news')
+                ->select(
+                    'news.id', 'news.title', 'news.url', 'news.description', 
+                    'news.published_at', 'sources.name as source', 'authors.name as author'
+                )
+                ->leftJoin('sources', 'news.source_id', '=', 'sources.id')
+                ->leftJoin('authors', 'news.author_id', '=', 'authors.id')
+                ->orderBy('news.published_at', 'desc');
+            
+            // Aplicar filtros
+            if (!empty($filters['source'])) {
+                $query->where('sources.name', $filters['source']);
+            }
+            
+            return $query->get()->toArray();
+        } catch (\Exception $e) {
+            Logger::error('Erro ao buscar notícias: ' . $e->getMessage(), 'Repository');
+            return [];
+        }
+    }
+    
+    public function findByUrl(string $url)
+    {
+        try {
+            return DB::table('news')
+                ->select(
+                    'news.id', 'news.title', 'news.url', 'news.description', 
+                    'news.published_at', 'sources.name as source', 'authors.name as author'
+                )
+                ->leftJoin('sources', 'news.source_id', '=', 'sources.id')
+                ->leftJoin('authors', 'news.author_id', '=', 'authors.id')
+                ->where('news.url', $url)
+                ->first();
+        } catch (\Exception $e) {
+            Logger::error('Erro ao buscar notícia por URL: ' . $e->getMessage(), 'Repository');
+            return null;
+        }
+    }
+    
+    public function save(array $data): bool
+    {
+        try {
+            DB::beginTransaction();
+            
+            // Buscar ou criar fonte
+            $sourceId = $this->getOrCreateSource($data['source'] ?? 'Desconhecido');
+            
+            // Buscar ou criar autor
+            $authorId = $this->getOrCreateAuthor($data['author'] ?? 'Desconhecido');
+            
+            // Verificar se a notícia já existe
+            $existing = DB::table('news')->where('url', $data['url'])->first();
+            
+            if ($existing) {
+                // Atualizar
+                DB::table('news')
+                    ->where('id', $existing->id)
+                    ->update([
+                        'title' => $data['title'],
+                        'description' => $data['description'] ?? '',
+                        'published_at' => $data['publishedAt'] ?? null,
+                        'source_id' => $sourceId,
+                        'author_id' => $authorId,
+                        'updated_at' => now()
+                    ]);
+            } else {
+                // Inserir nova
+                DB::table('news')->insert([
+                    'title' => $data['title'],
+                    'url' => $data['url'],
+                    'description' => $data['description'] ?? '',
+                    'published_at' => $data['publishedAt'] ?? null,
+                    'source_id' => $sourceId,
+                    'author_id' => $authorId,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+            }
+            
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Logger::error('Erro ao salvar notícia: ' . $e->getMessage(), 'Repository');
+            return false;
+        }
+    }
+    
+    public function saveMany(array $newsItems): bool
+    {
+        try {
+            DB::beginTransaction();
+            
+            foreach ($newsItems as $item) {
+                $this->save($item);
+            }
+            
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Logger::error('Erro ao salvar múltiplas notícias: ' . $e->getMessage(), 'Repository');
+            return false;
+        }
+    }
+    
+    public function delete(int $id): bool
+    {
+        try {
+            return DB::table('news')->where('id', $id)->delete() > 0;
+        } catch (\Exception $e) {
+            Logger::error('Erro ao excluir notícia: ' . $e->getMessage(), 'Repository');
+            return false;
+        }
+    }
+    
+    public function clear(): bool
+    {
+        try {
+            DB::table('news')->truncate();
+            return true;
+        } catch (\Exception $e) {
+            Logger::error('Erro ao limpar notícias: ' . $e->getMessage(), 'Repository');
+            return false;
+        }
+    }
+    
+    private function getOrCreateSource(string $sourceName): int
+    {
+        $source = DB::table('sources')->where('name', $sourceName)->first();
+        if ($source) {
+            return $source->id;
+        }
+        
+        return DB::table('sources')->insertGetId([
+            'name' => $sourceName,
+            'website' => $this->getWebsiteFromSource($sourceName),
+            'created_at' => now()
+        ]);
+    }
+    
+    private function getOrCreateAuthor(string $authorName): int
+    {
+        $author = DB::table('authors')->where('name', $authorName)->first();
+        if ($author) {
+            return $author->id;
+        }
+        
+        return DB::table('authors')->insertGetId([
+            'name' => $authorName,
+            'created_at' => now()
+        ]);
+    }
+    
+    private function getWebsiteFromSource(string $sourceName): string
+    {
+        switch ($sourceName) {
+            case 'G1': return 'https://g1.globo.com/';
+            case 'UOL': return 'https://noticias.uol.com.br/';
+            case 'Folha': return 'https://www1.folha.uol.com.br/';
+            default: return 'https://exemplo.com.br/';
+        }
+    }
+}
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Repositories\NewsRepositoryInterface.php
+================================================================================
+
+<?php
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Repositories\NewsRepositoryInterface.php
+
+namespace App\Repositories;
+
+interface NewsRepositoryInterface
+{
+    /**
+     * Retorna todas as notícias
+     */
+    public function getAll(array $filters = []): array;
+    
+    /**
+     * Busca uma notícia pelo URL
+     */
+    public function findByUrl(string $url);
+    
+    /**
+     * Salva uma notícia (nova ou existente)
+     */
+    public function save(array $data): bool;
+    
+    /**
+     * Salva múltiplas notícias de uma vez
+     */
+    public function saveMany(array $newsItems): bool;
+    
+    /**
+     * Exclui uma notícia
+     */
+    public function delete(int $id): bool;
+    
+    /**
+     * Limpa todas as notícias
+     */
+    public function clear(): bool;
+}
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Repositories\SqliteNewsRepository.php
+================================================================================
+
+<?php
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Repositories\SqliteNewsRepository.php
+
+namespace App\Repositories;
+
+use App\Utils\Logger;
+use PDO;
+
+class SqliteNewsRepository implements NewsRepositoryInterface
+{
+    private $db;
+    
+    public function __construct()
+    {
+        $dbPath = __DIR__ . '/../../../database.sqlite';
+        $this->initializeDatabase($dbPath);
+    }
+    
+    private function initializeDatabase(string $dbPath)
+    {
+        try {
+            // Criar arquivo se não existir
+            $dirPath = dirname($dbPath);
+            if (!is_dir($dirPath)) {
+                mkdir($dirPath, 0777, true);
+            }
+            
+            $this->db = new PDO("sqlite:$dbPath");
+            $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            
+            // Criar tabela se não existir
+            $this->db->exec("
+                CREATE TABLE IF NOT EXISTS news (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    title TEXT NOT NULL,
+                    url TEXT UNIQUE NOT NULL,
+                    description TEXT,
+                    source TEXT NOT NULL,
+                    author TEXT,
+                    published_at TEXT,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                )
+            ");
+        } catch (\Exception $e) {
+            Logger::error('Database initialization error: ' . $e->getMessage(), 'Repository');
+            throw $e;
+        }
+    }
+    
+    public function getAll(array $filters = []): array
+    {
+        try {
+            $query = "SELECT * FROM news";
+            $params = [];
+            
+            // Adicionar filtros se existirem
+            if (!empty($filters['source'])) {
+                $query .= " WHERE source = :source";
+                $params[':source'] = $filters['source'];
+            }
+            
+            // Adicionar pesquisa de texto se especificada
+            if (!empty($filters['search'])) {
+                $whereClause = (strpos($query, 'WHERE') !== false) ? 'AND' : 'WHERE';
+                $query .= " $whereClause (title LIKE :search OR description LIKE :search)";
+                $params[':search'] = '%'.$filters['search'].'%';
+            }
+            
+            $query .= " ORDER BY published_at DESC";
+            
+            $stmt = $this->db->prepare($query);
+            $stmt->execute($params);
+            
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (\Exception $e) {
+            Logger::error('Error getting all news: ' . $e->getMessage(), 'Repository');
+            return [];
+        }
+    }
+    
+    public function findByUrl(string $url)
+    {
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM news WHERE url = :url LIMIT 1");
+            $stmt->bindValue(':url', $url);
+            $stmt->execute();
+            
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (\Exception $e) {
+            Logger::error('Error finding news by URL: ' . $e->getMessage(), 'Repository');
+            return null;
+        }
+    }
+    
+    public function save(array $data): bool
+    {
+        try {
+            // Verificar se já existe
+            $exists = $this->findByUrl($data['url']);
+            
+            if ($exists) {
+                // Atualizar
+                $stmt = $this->db->prepare("
+                    UPDATE news SET 
+                    title = :title,
+                    description = :description,
+                    source = :source,
+                    author = :author,
+                    published_at = :published_at,
+                    updated_at = CURRENT_TIMESTAMP
+                    WHERE url = :url
+                ");
+            } else {
+                // Inserir
+                $stmt = $this->db->prepare("
+                    INSERT INTO news (
+                        title, url, description, source, author, published_at
+                    ) VALUES (
+                        :title, :url, :description, :source, :author, :published_at
+                    )
+                ");
+            }
+            
+            // Definir parâmetros - usando bindValue em vez de bindParam
+            $stmt->bindValue(':title', $data['title']);
+            $stmt->bindValue(':url', $data['url']);
+            $stmt->bindValue(':description', $data['description'] ?? '');
+            $stmt->bindValue(':source', $data['source'] ?? 'Desconhecido');
+            $stmt->bindValue(':author', $data['author'] ?? 'Desconhecido');
+            $stmt->bindValue(':published_at', $data['publishedAt'] ?? date('Y-m-d H:i:s'));
+            
+            return $stmt->execute();
+        } catch (\Exception $e) {
+            Logger::error('Error saving news: ' . $e->getMessage(), 'Repository');
+            return false;
+        }
+    }
+    
+    public function saveMany(array $newsItems): bool
+    {
+        try {
+            $this->db->beginTransaction();
+            
+            foreach ($newsItems as $item) {
+                if (!$this->save($item)) {
+                    throw new \Exception("Failed to save item: " . json_encode($item));
+                }
+            }
+            
+            $this->db->commit();
+            return true;
+        } catch (\Exception $e) {
+            $this->db->rollBack();
+            Logger::error('Error saving multiple news: ' . $e->getMessage(), 'Repository');
+            return false;
+        }
+    }
+    
+    public function delete(int $id): bool
+    {
+        try {
+            $stmt = $this->db->prepare("DELETE FROM news WHERE id = :id");
+            $stmt->bindValue(':id', $id);
+            return $stmt->execute();
+        } catch (\Exception $e) {
+            Logger::error('Error deleting news: ' . $e->getMessage(), 'Repository');
+            return false;
+        }
+    }
+    
+    public function clear(): bool
+    {
+        try {
+            $this->db->exec("DELETE FROM news");
+            return true;
+        } catch (\Exception $e) {
+            Logger::error('Error clearing news table: ' . $e->getMessage(), 'Repository');
+            return false;
+        }
+    }
+}
 
 ================================================================================
 Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Utils\HttpClient.php
@@ -4111,6 +4869,97 @@ class RedisCache implements CacheInterface
     protected $prefix;
     protected $defaultTtl;
     // ...
+}
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\tests\Repositories\NewsRepositoryTest.php
+================================================================================
+
+<?php
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\tests\Repositories\NewsRepositoryTest.php
+
+namespace Tests\Repositories;
+
+use App\Factories\RepositoryFactory;
+use Tests\TestCase;
+
+class NewsRepositoryTest extends TestCase
+{
+    protected $repository;
+    
+    protected function setUp(): void
+    {
+        parent::setUp();
+        
+        // Configurar variável de ambiente para teste
+        putenv('DB_DATABASE=sistema_noticias_test');
+        
+        $this->repository = RepositoryFactory::createNewsRepository();
+        
+        // Limpar dados de teste existentes
+        $this->repository->clear();
+    }
+    
+    public function testSaveAndGet()
+    {
+        // Criar uma notícia de teste
+        $newsItem = [
+            'title' => 'Notícia de Teste',
+            'url' => 'https://teste.com/noticia-' . uniqid(),
+            'description' => 'Descrição de teste',
+            'publishedAt' => date('Y-m-d\TH:i:s'),
+            'source' => 'G1',
+            'author' => 'Autor Teste'
+        ];
+        
+        // Salvar
+        $result = $this->repository->save($newsItem);
+        $this->assertTrue($result);
+        
+        // Recuperar todas as notícias
+        $allNews = $this->repository->getAll();
+        $this->assertCount(1, $allNews);
+        $this->assertEquals($newsItem['title'], $allNews[0]['title']);
+        
+        // Buscar por URL
+        $found = $this->repository->findByUrl($newsItem['url']);
+        $this->assertNotNull($found);
+        $this->assertEquals($newsItem['title'], $found['title']);
+    }
+    
+    public function testClear()
+    {
+        // Primeiro insere alguns dados
+        $this->repository->save([
+            'title' => 'Teste 1',
+            'url' => 'https://teste.com/1',
+            'source' => 'G1'
+        ]);
+        
+        $this->repository->save([
+            'title' => 'Teste 2',
+            'url' => 'https://teste.com/2',
+            'source' => 'UOL'
+        ]);
+        
+        // Verifica que foram inseridos
+        $allNews = $this->repository->getAll();
+        $this->assertCount(2, $allNews);
+        
+        // Limpa
+        $result = $this->repository->clear();
+        $this->assertTrue($result);
+        
+        // Verifica que foram removidos
+        $allNews = $this->repository->getAll();
+        $this->assertCount(0, $allNews);
+    }
+    
+    protected function tearDown(): void
+    {
+        $this->repository->clear();
+        parent::tearDown();
+    }
 }
 
 ================================================================================

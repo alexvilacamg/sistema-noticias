@@ -4,6 +4,7 @@
 namespace App\Cache;
 
 use App\Utils\Logger;
+use App\Factories\RepositoryFactory;
 
 class CacheManager
 {
@@ -14,17 +15,28 @@ class CacheManager
      */
     public static function clearNewsCache(): bool
     {
-        $cache = getCache();
-        
-        $result = $cache->clear();
-        
-        if ($result) {
-            Logger::info('Cache de notícias limpo com sucesso', 'CacheManager');
-        } else {
-            Logger::error('Falha ao limpar o cache de notícias', 'CacheManager');
+        try {
+            // Limpa o cache do Redis/Memcached/File
+            $cache = getCache();
+            $cacheResult = $cache->clear();
+            
+            // Limpa o banco de dados também
+            $repository = RepositoryFactory::createNewsRepository();
+            $dbResult = $repository->clear();
+            
+            $success = $cacheResult && $dbResult;
+            
+            if ($success) {
+                Logger::info('Cache e banco de dados de notícias limpos com sucesso', 'CacheManager');
+            } else {
+                Logger::error('Falha ao limpar cache ou banco de dados de notícias', 'CacheManager');
+            }
+            
+            return $success;
+        } catch (\Exception $e) {
+            Logger::error('Erro ao limpar cache: ' . $e->getMessage(), 'CacheManager');
+            return false;
         }
-        
-        return $result;
     }
     
     /**
@@ -35,15 +47,15 @@ class CacheManager
     public static function warmNewsCache(): bool
     {
         try {
-            Logger::info('Iniciando pré-aquecimento do cache', 'CacheManager');
+            Logger::info('Iniciando pré-aquecimento do cache e banco', 'CacheManager');
             
             $scraper = new \App\Models\Scraper();
             $news = $scraper->getAllPoliticalNews(true);
             
-            Logger::info('Cache pré-aquecido com ' . count($news) . ' notícias', 'CacheManager');
+            Logger::info('Cache e banco pré-aquecido com ' . count($news) . ' notícias', 'CacheManager');
             return true;
         } catch (\Exception $e) {
-            Logger::error('Erro no pré-aquecimento do cache: ' . $e->getMessage(), 'CacheManager');
+            Logger::error('Erro no pré-aquecimento: ' . $e->getMessage(), 'CacheManager');
             return false;
         }
     }

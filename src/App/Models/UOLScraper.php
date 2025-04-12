@@ -57,12 +57,14 @@ class UOLScraper extends AbstractNewsScraper
             
             // Data do listing
             $timeNodes = $xpath->query(".//*[contains(@class, 'thumb-date')]", $node);
-            $publishedAt = ($timeNodes->length > 0) ? trim($timeNodes->item(0)->nodeValue) : 'Data não informada';
+            $publishedAt = ($timeNodes->length > 0) ? 
+                trim($timeNodes->item(0)->getAttribute('datetime')) : 
+                null; // Retornar null em vez de string
             
             $details = $this->scrapeArticle($link, $headers);
             if ($details) {
                 // Se o artigo tiver data válida, substitui a data do listing
-                if (!empty($details['publishedAt']) && $details['publishedAt'] !== 'Data não informada.') {
+                if (!empty($details['publishedAt']) && $details['publishedAt'] !== null) {
                     $publishedAt = $details['publishedAt'];
                 }
                 $newsItems[] = [
@@ -114,7 +116,9 @@ class UOLScraper extends AbstractNewsScraper
         
         // Data
         $timeNodes = $xpath->query("//div[contains(@class, 'solar-date')]//time[@class='date']");
-        $publishedAt = ($timeNodes->length > 0) ? trim($timeNodes->item(0)->getAttribute('datetime')) : 'Data não informada.';
+        $publishedAt = ($timeNodes->length > 0) ? 
+            trim($timeNodes->item(0)->getAttribute('datetime')) : 
+            null; // Retornar null em vez de string
         
         return [
             'description' => $description,

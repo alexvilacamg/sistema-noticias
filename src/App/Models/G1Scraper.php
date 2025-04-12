@@ -95,7 +95,9 @@ class G1Scraper extends AbstractNewsScraper
 
         // Data de publicação
         $timeNodes = $xpath->query("//div[contains(@class, 'mc-article-header')]//time[@itemprop='datePublished']");
-        $publishedAt = $timeNodes->length > 0 ? $timeNodes->item(0)->getAttribute('datetime') : 'Data não informada.';
+        $publishedAt = ($timeNodes->length > 0) ? 
+            trim($timeNodes->item(0)->getAttribute('datetime')) : 
+            null; // Retornar null em vez de string
         
         // Autor
         $author = '';

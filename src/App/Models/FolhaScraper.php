@@ -72,20 +72,9 @@ class FolhaScraper extends AbstractNewsScraper
 
             // Data (pego da listagem)
             $timeNode = $xpath->query(".//time[contains(@class,'c-headline__dateline')]", $node);
-            $publishedAt = 'Data não informada.';
-            if ($timeNode && $timeNode->length > 0) {
-                // Primeiro tenta pegar do atributo datetime
-                $publishedAtAttr = trim($timeNode->item(0)->getAttribute('datetime'));
-                if ($publishedAtAttr) {
-                    $publishedAt = $publishedAtAttr;
-                } else {
-                    // Se não existir, pega o texto dentro de <time>
-                    $timeText = trim($timeNode->item(0)->nodeValue);
-                    if ($timeText) {
-                        $publishedAt = $timeText;
-                    }
-                }
-            }
+            $publishedAt = ($timeNode->length > 0) ? 
+                trim($timeNode->item(0)->getAttribute('datetime')) : 
+                null; // Retornar null em vez de string
 
             // Autor (normalmente não aparece no listing, então vamos buscar na página do artigo)
             $author = 'Não disponível';
