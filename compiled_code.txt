@@ -28,12 +28,14 @@ ESTRUTURA DO DIRETÓRIO:
 │   │   └── news.php
 │   ├── assets
 │   │   ├── css
+│   │   │   ├── admin.css
 │   │   │   ├── cards.css
 │   │   │   ├── dark-mode.css
 │   │   │   ├── logs.css
 │   │   │   ├── main.css
 │   │   │   └── table.css
 │   │   └── js
+│   │       ├── admin.js
 │   │       ├── dark-mode.js
 │   │       ├── logs.js
 │   │       ├── main.js
@@ -55,6 +57,7 @@ ESTRUTURA DO DIRETÓRIO:
 │       │   ├── MemcachedCache.php
 │       │   └── RedisCache.php
 │       ├── Controllers
+│       │   ├── AdminController.php
 │       │   └── NewsController.php
 │       ├── Factories
 │       │   ├── RepositoryFactory.php
@@ -76,6 +79,7 @@ ESTRUTURA DO DIRETÓRIO:
 │       └── Views
 │           ├── Helpers
 │           │   └── ViewHelper.php
+│           ├── admin.php
 │           └── index.php
 ├── test-redis.php
 ├── test_db_connection.php
@@ -862,12 +866,30 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
 $dotenv->safeLoad(); // Não falha se .env não existir
 
-// Usa o namespace correto para o controller
-use App\Controllers\NewsController;
+// Roteamento básico
+$path = $_SERVER['REQUEST_URI'];
+// Remover query string se existir
+if (($pos = strpos($path, '?')) !== false) {
+    $path = substr($path, 0, $pos);
+}
+$path = rtrim($path, '/');
 
-// Instancia o controller
-$controller = new NewsController();
-$controller->index();
+// Roteamento simples
+switch ($path) {
+    case '/admin':
+        // Usa o novo controlador administrativo
+        $controller = new App\Controllers\AdminController();
+        $controller->index();
+        break;
+        
+    case '':
+    case '/':
+    default:
+        // Usa o controlador de notícias normal
+        $controller = new App\Controllers\NewsController();
+        $controller->index();
+        break;
+}
 ?>
 
 
@@ -1078,6 +1100,190 @@ if (file_exists($cacheFile)) {
 }
 ?>
 
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\public\assets\css\admin.css
+================================================================================
+
+/* Estilos para a página de administração */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    color: #4299e1;
+    text-decoration: none;
+    border: 1px solid #4299e1;
+    border-radius: 4px;
+    font-size: 15px;
+    transition: all 0.3s;
+}
+
+.back-link:hover {
+    background-color: #4299e1;
+    color: white;
+}
+
+.back-link i {
+    margin-right: 6px;
+}
+
+.admin-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 25px;
+}
+
+.admin-panel {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    padding: 20px;
+    position: relative;
+}
+
+.admin-panel h2 {
+    font-size: 18px;
+    color: #2d3748;
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #edf2f7;
+    display: flex;
+    align-items: center;
+}
+
+.admin-panel h2 i {
+    margin-right: 8px;
+    color: #4299e1;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 15px;
+    background: #f7fafc;
+    border-radius: 8px;
+    transition: transform 0.2s;
+}
+
+.stat-item:hover {
+    transform: translateY(-3px);
+}
+
+.stat-value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2d3748;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #718096;
+}
+
+.cache-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.admin-btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.btn-warning {
+    background: #ed8936;
+    color: white;
+}
+
+.btn-warning:hover {
+    background: #dd6b20;
+    box-shadow: 0 4px 6px rgba(221, 107, 32, 0.2);
+}
+
+.btn-info {
+    background: #4299e1;
+    color: white;
+}
+
+.btn-info:hover {
+    background: #3182ce;
+    box-shadow: 0 4px 6px rgba(49, 130, 206, 0.2);
+}
+
+/* Modo escuro */
+body.dark-mode .admin-panel {
+    background: #1e1e1e;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+body.dark-mode .admin-panel h2 {
+    color: #e2e8f0;
+    border-bottom-color: #4a5568;
+}
+
+body.dark-mode .admin-panel h2 i {
+    color: #63b3ed;
+}
+
+body.dark-mode .stat-item {
+    background: #2d3748;
+}
+
+body.dark-mode .stat-value {
+    color: #e2e8f0;
+}
+
+body.dark-mode .stat-label {
+    color: #a0aec0;
+}
+
+body.dark-mode .back-link {
+    border-color: #4299e1;
+    color: #63b3ed;
+}
+
+body.dark-mode .back-link:hover {
+    background: #2b6cb0;
+    color: #e2e8f0;
+}
+
+/* Responsividade */
+@media (min-width: 768px) {
+    .admin-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .admin-panel:first-child {
+        grid-column: 1 / -1;
+    }
+    
+    #debug-container {
+        grid-column: 1 / -1;
+    }
+}
 
 ================================================================================
 Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\public\assets\css\cards.css
@@ -1840,6 +2046,50 @@ body.dark-mode .search-clear {
     }
 }
 
+/* Adicionar ao final do arquivo main.css */
+.admin-link-container {
+    margin-top: 40px;
+    text-align: center;
+    padding: 20px 0;
+    border-top: 1px solid #e2e8f0;
+}
+
+.admin-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    color: #718096;
+    font-size: 14px;
+    text-decoration: none;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.admin-link:hover {
+    background-color: #f7fafc;
+    color: #4a5568;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.admin-link i {
+    margin-right: 6px;
+}
+
+body.dark-mode .admin-link-container {
+    border-top-color: #4a5568;
+}
+
+body.dark-mode .admin-link {
+    color: #a0aec0;
+    border-color: #4a5568;
+}
+
+body.dark-mode .admin-link:hover {
+    background-color: #2d3748;
+    color: #e2e8f0;
+}
+
 ================================================================================
 Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\public\assets\css\table.css
 ================================================================================
@@ -1987,6 +2237,51 @@ body.dark-mode .dataTables_filter input:focus {
     outline: none;
     box-shadow: 0 0 0 1px #63b3ed;
 }
+
+/* Adicionar ao final */
+/* Melhor espaçamento quando campo de busca padrão é removido */
+div.dataTables_wrapper div.dataTables_length, 
+div.dataTables_wrapper div.dataTables_info, 
+div.dataTables_wrapper div.dataTables_paginate {
+    margin-top: 10px;
+}
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\public\assets\js\admin.js
+================================================================================
+
+/**
+ * Funções específicas para a página de administração
+ */
+$(document).ready(function() {
+    // Alternância entre diferentes painéis (se necessário)
+    $('.admin-nav-item').click(function() {
+        const target = $(this).data('target');
+        
+        // Ativa o item de navegação atual
+        $('.admin-nav-item').removeClass('active');
+        $(this).addClass('active');
+        
+        // Mostra o painel correspondente
+        $('.admin-panel').hide();
+        $(target).show();
+    });
+    
+    // Atualização de estatísticas em tempo real (opcional)
+    function refreshStats() {
+        $.getJSON('/api/admin-stats.php')
+            .done(function(data) {
+                if (data.success) {
+                    $('#total-news').text(data.stats.totalNews);
+                    $('#total-sources').text(data.stats.totalSources);
+                    $('#last-update').text(data.stats.lastUpdate);
+                }
+            });
+    }
+    
+    // Opcional: atualizar estatísticas a cada 60 segundos
+    // setInterval(refreshStats, 60000);
+});
 
 ================================================================================
 Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\public\assets\js\dark-mode.js
@@ -2167,7 +2462,9 @@ $(document).ready(function() {
         order: [[0, 'desc']],
         pageLength: 10,
         deferRender: true,
-        processing: true
+        processing: true,
+        searching: true,        // Mantém o recurso de busca ativo
+        dom: '<"top">rt<"bottom"lip><"clear">' // Remove o campo de busca padrão ("f") da interface
     });
 
     // Tornar a variável newsTable acessível globalmente
@@ -3190,6 +3487,28 @@ class RedisCache implements CacheInterface
         $value = $callback();
         $this->set($key, $value, $ttl);
         return $value;
+    }
+}
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Controllers\AdminController.php
+================================================================================
+
+<?php
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Controllers\AdminController.php
+
+namespace App\Controllers;
+
+use App\Factories\RepositoryFactory;
+
+class AdminController {
+    public function index() {
+        // Carregar todas as notícias para estatísticas
+        $repository = RepositoryFactory::createNewsRepository();
+        $news = $repository->getAll();
+        
+        // Incluir a view de administração
+        require_once __DIR__ . '/../Views/admin.php';
     }
 }
 
@@ -4529,6 +4848,245 @@ class Logger
 }
 
 ================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Views\admin.php
+================================================================================
+
+<?php
+// app/views/admin.php
+?>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administração - Sistema de Notícias</title>
+    
+    <!-- CSS externos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+    <!-- CSS do sistema -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/logs.css">
+    <link rel="stylesheet" href="/assets/css/dark-mode.css">
+    <link rel="stylesheet" href="/assets/css/admin.css">
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- JavaScript do sistema -->
+    <script src="/assets/js/dark-mode.js"></script>
+    <script src="/assets/js/logs.js"></script>
+    <script src="/assets/js/admin.js"></script>
+</head>
+<body>
+    <!-- Botão de modo escuro -->
+    <button id="dark-mode-toggle" class="dark-mode-toggle" aria-label="Alternar modo escuro">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <div class="admin-header">
+        <h1>Painel Administrativo</h1>
+        <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> Voltar para o site</a>
+    </div>
+
+    <div class="admin-container">
+        <!-- Painel de estatísticas gerais -->
+        <div class="admin-panel">
+            <h2><i class="fas fa-chart-bar"></i> Estatísticas do Sistema</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value" id="total-news">
+                        <?php echo count($news ?? []); ?>
+                    </div>
+                    <div class="stat-label">Notícias</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="total-sources">
+                        <?php 
+                            $sources = array_unique(array_column($news ?? [], 'source'));
+                            echo count($sources);
+                        ?>
+                    </div>
+                    <div class="stat-label">Fontes</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="last-update">
+                        <?php
+                            $cacheFile = CACHE_DIR . '/all_news.json';
+                            echo file_exists($cacheFile) ? date("d/m H:i", filemtime($cacheFile)) : 'N/A';
+                        ?>
+                    </div>
+                    <div class="stat-label">Atualização</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção de administração de cache - Movida da página principal -->
+        <div class="admin-panel">
+            <h2><i class="fas fa-database"></i> Gerenciamento de Cache</h2>
+            <div class="cache-stats">
+                <?php
+                $stats = \App\Cache\CacheManager::getStats();
+                ?>
+                <div class="stat-item">
+                    <span class="label">Tipo de Cache:</span>
+                    <span class="value"><?php echo $stats['type']; ?></span>
+                </div>
+                <div class="stat-item">
+                    <span class="label">TTL Padrão:</span>
+                    <span class="value"><?php echo $stats['ttl']; ?> segundos</span>
+                </div>
+                <div class="stat-item">
+                    <span class="label">Status:</span>
+                    <span class="value <?php echo $stats['status'] === 'ativo' ? 'active' : 'inactive'; ?>">
+                        <?php echo $stats['status']; ?>
+                    </span>
+                </div>
+            </div>
+            
+            <div class="cache-actions">
+                <button id="clear-cache-btn" class="admin-btn btn-warning">
+                    <i class="fas fa-trash-alt"></i> Limpar Cache
+                </button>
+                <button id="warm-cache-btn" class="admin-btn btn-info">
+                    <i class="fas fa-fire"></i> Pré-aquecer Cache
+                </button>
+            </div>
+        </div>
+
+        <!-- Área para exibir os logs de depuração - Movida da página principal -->
+        <div id="debug-container" class="admin-panel">
+            <div id="debug-header">
+                <h2><i class="fas fa-file-alt"></i> Log do Sistema</h2>
+                <div class="debug-filters">
+                    <label><input type="checkbox" class="log-filter" value="INFO" checked> INFO</label>
+                    <label><input type="checkbox" class="log-filter" value="WARNING" checked> WARNING</label>
+                    <label><input type="checkbox" class="log-filter" value="ERROR" checked> ERROR</label>
+                    <label><input type="checkbox" class="log-filter" value="DEBUG" checked> DEBUG</label>
+                    <button id="clear-logs-btn" title="Limpa a visualização dos logs (não apaga o arquivo)">Limpar Visualização</button>
+                    <span id="log-count"></span>
+                </div>
+                <div class="debug-search">
+                    <input type="text" id="log-search" placeholder="Buscar nos logs...">
+                    <button id="search-btn">Buscar</button>
+                </div>
+            </div>
+            <div id="debug-log">
+                <div class="log-container">
+                <?php 
+                if (defined('LOG_FILE') && file_exists(LOG_FILE)) {
+                    $lines = file(LOG_FILE, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+                    $lines = array_reverse($lines); // Mais recentes primeiro
+                    
+                    // Armazena o número total de logs
+                    $logCount = count($lines);
+                    
+                    // Limita a exibição aos 100 logs mais recentes para melhor desempenho
+                    $displayLines = array_slice($lines, 0, 100);
+                    
+                    foreach ($displayLines as $line) {
+                        // Extrair os componentes do log: data, nível, contexto, mensagem
+                        if (preg_match('/\[([\d\- :]+)\]\[(INFO|WARNING|ERROR|DEBUG)\](?:\[(.*?)\])?\s*(.*)/', $line, $matches)) {
+                            $timestamp = $matches[1];
+                            $logLevel = $matches[2];
+                            $context = !empty($matches[3]) ? $matches[3] : '';
+                            $logContent = $matches[4];
+                        } else {
+                            // Fallback para outros formatos
+                            if (preg_match('/\[([\d\- :]+)\]/', $line, $dateMatch)) {
+                                $timestamp = $dateMatch[1];
+                                
+                                if (stripos($line, 'erro') !== false || stripos($line, 'falha') !== false) {
+                                    $logLevel = 'ERROR';
+                                } else if (stripos($line, 'aviso') !== false || stripos($line, 'alerta') !== false) {
+                                    $logLevel = 'WARNING';
+                                } else if (stripos($line, 'debug') !== false) {
+                                    $logLevel = 'DEBUG';
+                                } else {
+                                    $logLevel = 'INFO';
+                                }
+                                
+                                if (preg_match('/\]\[(.*?)\]/', $line, $contextMatch)) {
+                                    $context = $contextMatch[1];
+                                } else {
+                                    $context = '';
+                                }
+                                
+                                $logContent = preg_replace('/^\[.*?\](\[.*?\])*\s*/', '', $line);
+                            } else {
+                                $timestamp = '';
+                                $logLevel = 'INFO';
+                                $context = '';
+                                $logContent = $line;
+                            }
+                        }
+                        
+                        $logClass = 'log-' . strtolower($logLevel);
+                        
+                        echo "<div class='log-entry $logClass' data-level='$logLevel'>";
+                        echo "<span class='log-timestamp'>$timestamp</span>";
+                        echo "<span class='log-level'>$logLevel</span>";
+                        if ($context) {
+                            echo "<span class='log-context'>$context</span>";
+                        }
+                        echo "<span class='log-message'>" . htmlspecialchars($logContent) . "</span>";
+                        echo "</div>";
+                    }
+                    
+                    if ($logCount > 100) {
+                        echo "<div class='log-entry log-more'>+ " . ($logCount - 100) . " logs adicionais não exibidos (total: $logCount)</div>";
+                    }
+                } else {
+                    echo "<div class='log-empty'>Nenhum log encontrado.</div>";
+                }
+                ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    $(document).ready(function() {
+        $('#clear-cache-btn').click(function() {
+            if (confirm("Tem certeza que deseja limpar todo o cache?")) {
+                $.post('/api/cache.php', { action: 'clear' })
+                    .done(function(response) {
+                        alert(response.message);
+                        if (response.success) {
+                            $('#last-update').text('N/A');
+                        }
+                    })
+                    .fail(function() {
+                        alert("Erro de comunicação com o servidor");
+                    });
+            }
+        });
+        
+        $('#warm-cache-btn').click(function() {
+            if (confirm("Iniciar pré-aquecimento do cache?")) {
+                $(this).prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Processando...');
+                
+                $.post('/api/cache.php', { action: 'warm' })
+                    .done(function(response) {
+                        alert(response.message);
+                        if (response.success) {
+                            location.reload();
+                        } else {
+                            $('#warm-cache-btn').prop('disabled', false).html('<i class="fas fa-fire"></i> Pré-aquecer Cache');
+                        }
+                    })
+                    .fail(function() {
+                        alert("Erro de comunicação com o servidor");
+                        $('#warm-cache-btn').prop('disabled', false).html('<i class="fas fa-fire"></i> Pré-aquecer Cache');
+                    });
+            }
+        });
+    });
+    </script>
+</body>
+</html>
+
+================================================================================
 Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Views\index.php
 ================================================================================
 
@@ -4566,7 +5124,7 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\View
     <script src="/assets/js/logs.js"></script>
 </head>
 <body>
-    <!-- Adicione este botão no topo da página -->
+    <!-- Botão de modo escuro -->
     <button id="dark-mode-toggle" class="dark-mode-toggle" aria-label="Alternar modo escuro">
         <i class="fas fa-moon"></i>
     </button>
@@ -4577,7 +5135,7 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\View
         $cacheFile = CACHE_DIR . '/all_news.json';
         $cacheTime = 600; // 10 minutos
     ?>
-    <!-- Substitua o div #update-info existente por este -->
+    <!-- Update info existente -->
     <div id="update-info" class="update-info">
         <div class="update-info-icon">
             <i class="fas fa-sync-alt"></i>
@@ -4607,7 +5165,7 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\View
         </button>
     </div>
     
-    <!-- Campo de busca universal (funciona para ambas visualizações) -->
+    <!-- Campo de busca universal -->
     <div class="search-container">
         <div class="search-box">
             <i class="fas fa-search search-icon"></i>
@@ -4618,7 +5176,7 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\View
         </div>
     </div>
 
-    <!-- Agrupar filtros e controles de visualização -->
+    <!-- Controles de filtro -->
     <div class="controls-container">
         <div class="source-filters">
             <span class="filter-title">Filtrar por fonte:</span>
@@ -4638,9 +5196,9 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\View
         </div>
     </div>
 
-    <!-- Substitua o bloco onde mostra as notícias por: -->
+    <!-- Visualizações de notícia -->
     <?php if (isset($news) && is_array($news) && count($news) > 0): ?>
-        <!-- Visualização em cards (padrão) -->
+        <!-- Visualização em cards -->
         <div class="news-grid" id="grid-view">
             <?php foreach ($news as $item): ?>
                 <div class="news-card">
@@ -4673,7 +5231,7 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\View
             <?php endforeach; ?>
         </div>
         
-        <!-- Visualização em tabela (inicialmente oculta) -->
+        <!-- Visualização em tabela -->
         <div id="table-view" style="display: none;">
             <table id="newsTable" class="display" style="width:100%">
                 <thead>
@@ -4721,185 +5279,14 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\View
         <p>Nenhuma notícia encontrada.</p>
     <?php endif; ?>
 
-    <!-- Seção de administração de cache -->
-    <div class="admin-section">
-        <h3>Gerenciamento de Cache</h3>
-        <div class="cache-stats">
-            <?php
-            $stats = \App\Cache\CacheManager::getStats();
-            ?>
-            <div class="stat-item">
-                <span class="label">Tipo de Cache:</span>
-                <span class="value"><?php echo $stats['type']; ?></span>
-            </div>
-            <div class="stat-item">
-                <span class="label">TTL Padrão:</span>
-                <span class="value"><?php echo $stats['ttl']; ?> segundos</span>
-            </div>
-            <div class="stat-item">
-                <span class="label">Status:</span>
-                <span class="value <?php echo $stats['status'] === 'ativo' ? 'active' : 'inactive'; ?>">
-                    <?php echo $stats['status']; ?>
-                </span>
-            </div>
-        </div>
-        
-        <div class="cache-actions">
-            <button id="clear-cache-btn" class="btn btn-warning">
-                <i class="fas fa-trash-alt"></i> Limpar Cache
-            </button>
-            <button id="warm-cache-btn" class="btn btn-info">
-                <i class="fas fa-fire"></i> Pré-aquecer Cache
-            </button>
-        </div>
+    <!-- Adicionar link para a área administrativa -->
+    <div class="admin-link-container">
+        <a href="/admin" class="admin-link">
+            <i class="fas fa-cog"></i> Área Administrativa
+        </a>
     </div>
 
-    <!-- Área para exibir os logs de depuração com melhorias visuais -->
-    <div id="debug-container">
-        <div id="debug-header">
-            <h3>Log do Sistema</h3>
-            <div class="debug-filters">
-                <label><input type="checkbox" class="log-filter" value="INFO" checked> INFO</label>
-                <label><input type="checkbox" class="log-filter" value="WARNING" checked> WARNING</label>
-                <label><input type="checkbox" class="log-filter" value="ERROR" checked> ERROR</label>
-                <label><input type="checkbox" class="log-filter" value="DEBUG" checked> DEBUG</label>
-                <button id="clear-logs-btn" title="Limpa a visualização dos logs (não apaga o arquivo)">Limpar Visualização</button>
-                <span id="log-count"></span>
-            </div>
-            <div class="debug-search">
-                <input type="text" id="log-search" placeholder="Buscar nos logs...">
-                <button id="search-btn">Buscar</button>
-            </div>
-        </div>
-        <div id="debug-log">
-            <div class="log-container">
-            <?php 
-            if (defined('LOG_FILE') && file_exists(LOG_FILE)) {
-                $lines = file(LOG_FILE, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-                $lines = array_reverse($lines); // Mais recentes primeiro
-                
-                // Armazena o número total de logs
-                $logCount = count($lines);
-                
-                // Limita a exibição aos 100 logs mais recentes para melhor desempenho
-                $displayLines = array_slice($lines, 0, 100);
-                
-                foreach ($displayLines as $line) {
-                    // Temos um problema com o formato atual dos logs, vamos tentar extrair as partes importantes
-                    
-                    // Padrão esperado: [DATA][NÍVEL][CONTEXTO] Mensagem
-                    if (preg_match('/\[([\d\- :]+)\]\[(INFO|WARNING|ERROR|DEBUG)\](?:\[(.*?)\])?\s*(.*)/', $line, $matches)) {
-                        $timestamp = $matches[1];
-                        $logLevel = $matches[2];
-                        $context = !empty($matches[3]) ? $matches[3] : '';
-                        $logContent = $matches[4];
-                    } else {
-                        // Fallback para logs antigos ou com formato diferente
-                        // Tenta encontrar pelo menos a data e alguma indicação de nível
-                        if (preg_match('/\[([\d\- :]+)\]/', $line, $dateMatch)) {
-                            $timestamp = $dateMatch[1];
-                            
-                            // Identifica o nível com base em palavras-chave comuns
-                            if (stripos($line, 'erro') !== false || stripos($line, 'falha') !== false) {
-                                $logLevel = 'ERROR';
-                            } else if (stripos($line, 'aviso') !== false || stripos($line, 'alerta') !== false) {
-                                $logLevel = 'WARNING';
-                            } else if (stripos($line, 'debug') !== false) {
-                                $logLevel = 'DEBUG';
-                            } else {
-                                $logLevel = 'INFO';
-                            }
-                            
-                            // Extrai o contexto (geralmente entre colchetes após a data)
-                            if (preg_match('/\]\[(.*?)\]/', $line, $contextMatch)) {
-                                $context = $contextMatch[1];
-                            } else {
-                                $context = '';
-                            }
-                            
-                            // A mensagem é o resto da linha após os metadados
-                            $logContent = preg_replace('/^\[.*?\](\[.*?\])*\s*/', '', $line);
-                        } else {
-                            // Se não conseguir extrair nada, usa valores padrão
-                            $timestamp = '';
-                            $logLevel = 'INFO';
-                            $context = '';
-                            $logContent = $line;
-                        }
-                    }
-                    
-                    // Define a classe CSS baseada no nível do log
-                    $logClass = 'log-' . strtolower($logLevel);
-                    
-                    echo "<div class='log-entry $logClass' data-level='$logLevel'>";
-                    echo "<span class='log-timestamp'>$timestamp</span>";
-                    echo "<span class='log-level'>$logLevel</span>";
-                    if ($context) {
-                        echo "<span class='log-context'>$context</span>";
-                    }
-                    echo "<span class='log-message'>" . htmlspecialchars($logContent) . "</span>";
-                    echo "</div>";
-                }
-                
-                if ($logCount > 100) {
-                    echo "<div class='log-entry log-more'>+ " . ($logCount - 100) . " logs adicionais não exibidos (total: $logCount)</div>";
-                }
-            } else {
-                echo "<div class='log-empty'>Nenhum log encontrado.</div>";
-            }
-            ?>
-            </div>
-        </div>
-    </div>
-
-    <!-- Exemplos de uso dos novos logs -->
-    <?php
-    // log_info("Usuário fez login", "Auth");
-    // log_warning("Múltiplas tentativas de login", "Auth");
-    // log_error("Falha na conexão com o banco de dados", "Database");
-    // log_debug("Query executada: SELECT * FROM users", "SQL");
-    // debug_log("Operação personalizada", "CUSTOM", "Context");
-    ?>
-    
-    <!-- Adicione este script JavaScript -->
-    <script>
-    $(document).ready(function() {
-        $('#clear-cache-btn').click(function() {
-            if (confirm("Tem certeza que deseja limpar todo o cache?")) {
-                $.post('/api/cache.php', { action: 'clear' })
-                    .done(function(response) {
-                        alert(response.message);
-                        if (response.success) {
-                            location.reload();
-                        }
-                    })
-                    .fail(function() {
-                        alert("Erro de comunicação com o servidor");
-                    });
-            }
-        });
-        
-        $('#warm-cache-btn').click(function() {
-            if (confirm("Iniciar pré-aquecimento do cache?")) {
-                $(this).prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Processando...');
-                
-                $.post('/api/cache.php', { action: 'warm' })
-                    .done(function(response) {
-                        alert(response.message);
-                        if (response.success) {
-                            location.reload();
-                        } else {
-                            $('#warm-cache-btn').prop('disabled', false).html('<i class="fas fa-fire"></i> Pré-aquecer Cache');
-                        }
-                    })
-                    .fail(function() {
-                        alert("Erro de comunicação com o servidor");
-                        $('#warm-cache-btn').prop('disabled', false).html('<i class="fas fa-fire"></i> Pré-aquecer Cache');
-                    });
-            }
-        });
-    });
-    </script>
+    <!-- Scripts JS permanecem os mesmos -->
 </body>
 </html>
 

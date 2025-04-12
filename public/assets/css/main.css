@@ -282,3 +282,47 @@ body.dark-mode .search-clear {
         margin: 5px 0;
     }
 }
+
+/* Adicionar ao final do arquivo main.css */
+.admin-link-container {
+    margin-top: 40px;
+    text-align: center;
+    padding: 20px 0;
+    border-top: 1px solid #e2e8f0;
+}
+
+.admin-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    color: #718096;
+    font-size: 14px;
+    text-decoration: none;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.admin-link:hover {
+    background-color: #f7fafc;
+    color: #4a5568;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.admin-link i {
+    margin-right: 6px;
+}
+
+body.dark-mode .admin-link-container {
+    border-top-color: #4a5568;
+}
+
+body.dark-mode .admin-link {
+    color: #a0aec0;
+    border-color: #4a5568;
+}
+
+body.dark-mode .admin-link:hover {
+    background-color: #2d3748;
+    color: #e2e8f0;
+}
