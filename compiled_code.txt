@@ -1,6 +1,7 @@
 ESTRUTURA DO DIRETÓRIO:
 ================================================================================
 
+├── .env.example
 ├── .gitignore
 ├── .phpunit.result.cache
 ├── README.md
@@ -10,6 +11,7 @@ ESTRUTURA DO DIRETÓRIO:
 ├── composer.json
 ├── composer.lock
 ├── config
+│   ├── config.example.php
 │   ├── config.php
 │   └── scrapers_config.php
 ├── phpunit.xml
@@ -77,6 +79,7 @@ ESTRUTURA DO DIRETÓRIO:
     │   ├── g1_sample.html
     │   └── uol_sample.html
     └── temp
+        ├── .gitkeep
         ├── cache_test_67fac04f00e85test_8c32d1183251df9828f929b935ae0419.cache
         ├── cache_test_67fac04f03079test_bfbcaeebdd80b99dd4d72414d41f564e.cache
         └── cache_test_67fac0510eef4test_cdbdc580eadbc0455a846c1680a056c2.cache
@@ -120,7 +123,8 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\composer.jso
     "type": "project",
     "require": {
         "php": ">=7.4",
-        "predis/predis": "^2.3"
+        "predis/predis": "^2.3",
+        "vlucas/phpdotenv": "^5.6"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
@@ -176,7 +180,7 @@ try {
 }
 
 ================================================================================
-Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\config\config.php
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\config\config.example.php
 ================================================================================
 
 <?php
@@ -239,23 +243,142 @@ if (!function_exists('log_debug')) {
 }
 
 /**
- * Configurações de Cache
+ * Configurações de Cache - SUBSTITUA COM SUAS CREDENCIAIS
  */
-define('CACHE_TYPE', 'redis'); // Se o teste acima funcionar
+define('CACHE_TYPE', 'file'); // 'redis', 'memcached', ou 'file'
+define('CACHE_PREFIX', 'news_');
+define('CACHE_TTL', 600); // 10 minutos
 
-// Configurações Redis
+// Configurações Redis - SUBSTITUA COM SUAS CREDENCIAIS
 define('REDIS_HOST', '127.0.0.1');
 define('REDIS_PORT', 6379);
-define('REDIS_PASSWORD', null); // Altere para sua senha, se necessário
+define('REDIS_PASSWORD', null); // Altere para sua senha
 define('REDIS_DATABASE', 0);
 
-// Configurações Memcached
+// Configurações Memcached - SUBSTITUA COM SUAS CREDENCIAIS
 define('MEMCACHED_HOST', '127.0.0.1');
 define('MEMCACHED_PORT', 11211);
 
-// Configurações gerais de cache
-define('CACHE_PREFIX', 'news_');
-define('CACHE_TTL', 600); // 10 minutos
+/**
+ * Função para obter a instância de cache
+ * 
+ * @return App\Cache\CacheInterface
+ */
+function getCache()
+{
+    static $cache = null;
+    
+    if ($cache === null) {
+        $config = [
+            'prefix' => CACHE_PREFIX,
+            'ttl' => CACHE_TTL,
+            'directory' => CACHE_DIR . '/data/',
+        ];
+        
+        // Adiciona configurações específicas dependendo do tipo
+        switch (CACHE_TYPE) {
+            case 'redis':
+                $config['host'] = REDIS_HOST;
+                $config['port'] = REDIS_PORT;
+                $config['password'] = REDIS_PASSWORD;
+                $config['database'] = REDIS_DATABASE;
+                break;
+                
+            case 'memcached':
+                $config['servers'] = [
+                    [
+                        'host' => MEMCACHED_HOST,
+                        'port' => MEMCACHED_PORT,
+                        'weight' => 100
+                    ]
+                ];
+                break;
+        }
+        
+        // Utiliza a fábrica para criar a implementação
+        $cache = \App\Cache\CacheFactory::create(CACHE_TYPE, $config);
+    }
+    
+    return $cache;
+}
+?>
+
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\config\config.php
+================================================================================
+
+<?php
+date_default_timezone_set('America/Sao_Paulo');
+define('CACHE_DIR', __DIR__ . '/../cache');
+define('LOG_DIR', __DIR__ . '/../logs');
+if (!is_dir(LOG_DIR)) {
+    mkdir(LOG_DIR, 0777, true);
+}
+define('LOG_FILE', LOG_DIR . '/debug.log');
+
+// Usa variáveis de ambiente ou valores padrão
+define('CACHE_TYPE', getenv('CACHE_TYPE') ?: 'file');
+define('CACHE_PREFIX', getenv('CACHE_PREFIX') ?: 'news_');
+define('CACHE_TTL', getenv('CACHE_TTL') ?: 600);
+
+define('REDIS_HOST', getenv('REDIS_HOST') ?: '127.0.0.1');
+define('REDIS_PORT', getenv('REDIS_PORT') ?: 6379);
+define('REDIS_PASSWORD', getenv('REDIS_PASSWORD') ?: null);
+define('REDIS_DATABASE', getenv('REDIS_DATABASE') ?: 0);
+
+define('MEMCACHED_HOST', getenv('MEMCACHED_HOST') ?: '127.0.0.1');
+define('MEMCACHED_PORT', getenv('MEMCACHED_PORT') ?: 11211);
+
+// Define constantes para níveis de log apenas se não estiverem definidas
+if (!defined('LOG_INFO'))    define('LOG_INFO', 'INFO');
+if (!defined('LOG_WARNING')) define('LOG_WARNING', 'WARNING');
+if (!defined('LOG_ERROR'))   define('LOG_ERROR', 'ERROR');
+if (!defined('LOG_DEBUG'))   define('LOG_DEBUG', 'DEBUG');
+
+/**
+ * Função aprimorada de log com suporte a níveis
+ * 
+ * @param string $message Mensagem a ser registrada
+ * @param string $level Nível do log (INFO, WARNING, ERROR, DEBUG)
+ * @param string $context Contexto opcional para o log
+ * @return bool Sucesso da operação
+ */
+function debug_log($message, $level = 'INFO', $context = '') {
+    $date = date("Y-m-d H:i:s");
+    $contextInfo = $context ? "[$context]" : "";
+    // Formato corrigido: [DATA][NÍVEL]mensagem (sem quebras de linha no nível)
+    $entry = "[$date][$level]$contextInfo $message" . PHP_EOL;
+    return file_put_contents(LOG_FILE, $entry, FILE_APPEND);
+}
+
+/**
+ * Funções auxiliares para simplificar os logs em diferentes níveis
+ * Cada função é definida apenas se não existir
+ */
+if (!function_exists('log_info')) {
+    function log_info($message, $context = '') {
+        return debug_log($message, LOG_INFO, $context);
+    }
+}
+
+if (!function_exists('log_warning')) {
+    function log_warning($message, $context = '') {
+        return debug_log($message, LOG_WARNING, $context);
+    }
+}
+
+if (!function_exists('log_error')) {
+    function log_error($message, $context = '') {
+        return debug_log($message, LOG_ERROR, $context);
+    }
+}
+
+if (!function_exists('log_debug')) {
+    function log_debug($message, $context = '') {
+        return debug_log($message, LOG_DEBUG, $context);
+    }
+}
 
 /**
  * Função para obter a instância de cache
@@ -327,8 +450,12 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\public\index
 <?php
 // filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\public\index.php
 
-// Carrega o autoloader do Composer
+// Carregar o autoloader do Composer
 require_once __DIR__ . '/../vendor/autoload.php';
+
+// Carregar variáveis de ambiente
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
+$dotenv->safeLoad(); // Não falha se .env não existir
 
 // Usa o namespace correto para o controller
 use App\Controllers\NewsController;
@@ -3486,6 +3613,9 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\View
                 $lines = file(LOG_FILE, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
                 $lines = array_reverse($lines); // Mais recentes primeiro
                 
+                // Armazena o número total de logs
+                $logCount = count($lines);
+                
                 // Limita a exibição aos 100 logs mais recentes para melhor desempenho
                 $displayLines = array_slice($lines, 0, 100);
                 
@@ -3559,13 +3689,11 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\View
 
     <!-- Exemplos de uso dos novos logs -->
     <?php
-    log_info("Usuário fez login", "Auth");
-    log_warning("Múltiplas tentativas de login", "Auth");
-    log_error("Falha na conexão com o banco de dados", "Database");
-    log_debug("Query executada: SELECT * FROM users", "SQL");
-
-    // Ou continue usando a função genérica com nível personalizado
-    debug_log("Operação personalizada", "CUSTOM", "Context");
+    // log_info("Usuário fez login", "Auth");
+    // log_warning("Múltiplas tentativas de login", "Auth");
+    // log_error("Falha na conexão com o banco de dados", "Database");
+    // log_debug("Query executada: SELECT * FROM users", "SQL");
+    // debug_log("Operação personalizada", "CUSTOM", "Context");
     ?>
     
     <!-- Adicione este script JavaScript -->
