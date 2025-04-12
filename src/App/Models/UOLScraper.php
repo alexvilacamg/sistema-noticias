@@ -3,8 +3,6 @@
 
 namespace App\Models;
 
-require_once 'AbstractNewsScraper.php';
-
 class UOLScraper extends AbstractNewsScraper
 {
     public function __construct()

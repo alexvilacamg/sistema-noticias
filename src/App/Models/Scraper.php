@@ -34,7 +34,6 @@ class Scraper
             $this->reportProgress("Processando fonte: " . $scraperName);
             
             try {
-                // Cada $scraper é algo que herda AbstractNewsScraper e implementa fetchNews()
                 $startTime = microtime(true);
                 $sourceNews = $scraper->fetchNews($forceUpdate);
                 $endTime = microtime(true);
@@ -42,7 +41,7 @@ class Scraper
                 
                 $this->reportProgress("Concluído " . $scraperName . ": " . count($sourceNews) . " notícias em " . $timeSpent . "s");
                 $news = array_merge($news, $sourceNews);
-            } catch (Exception $e) {
+            } catch (\Exception $e) { // Note o namespace global para Exception
                 $this->reportProgress("ERRO em " . $scraperName . ": " . $e->getMessage());
             }
         }
@@ -61,13 +60,12 @@ class Scraper
 
     private function normalizeDate(string $date): string
     {
-        // Aqui segue o código que você já tem
         $date = trim($date);
         if (strpos($date, "T") !== false) {
             try {
-                $dt = new \DateTime($date);
+                $dt = new \DateTime($date); // Note o uso de \ para indicar namespace global
                 return $dt->format('Y-m-d\TH:i:sP');
-            } catch (Exception $e) {
+            } catch (\Exception $e) { // Também namespace global para Exception
                 // tenta formatos abaixo
             }
         }

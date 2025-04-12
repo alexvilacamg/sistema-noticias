@@ -4,6 +4,7 @@
 namespace App\Models;
 
 use App\Utils\HttpClient;
+use App\Utils\Logger;
 
 /**
  * Classe abstrata que cuida de:
@@ -68,19 +69,19 @@ abstract class AbstractNewsScraper implements NewsScraperInterface
         $convmap = [0x80, 0x10FFFF, 0, 0x10FFFF];
         $html = mb_encode_numericentity($html, $convmap, 'UTF-8');
 
-        $dom = new \DOMDocument();
+        $dom = new \DOMDocument(); // Note o \ para indicar namespace global
         libxml_use_internal_errors(true);
         $dom->loadHTML($html);
         libxml_clear_errors();
 
-        return new \DOMXPath($dom);
+        return new \DOMXPath($dom); // Note o \ para indicar namespace global
     }
 
     /**
      * Método simples de log, para centralizar prefixos.
      */
-    protected function log(string $message, $level = LOG_INFO): void
+    protected function log(string $message, $level = 'INFO'): void
     {
-        debug_log($message, $level, get_class($this));
+        Logger::log($message, $level, get_class($this));
     }
 }

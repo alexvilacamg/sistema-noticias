@@ -21,6 +21,7 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 
 // Usa o namespace correto
 use App\Models\Scraper;
+use App\Utils\Logger;
 
 // Função para enviar evento para o cliente
 function sendEvent($message, $type = "progress") {
@@ -114,12 +115,15 @@ try {
         'timestamp' => date('Y-m-d H:i:s')
     ], 'complete');
     
-} catch (Exception $e) {
+} catch (\Exception $e) { // Note o namespace global
     // Captura qualquer exceção e envia como evento de erro
     sendEvent([
         'status' => 'error',
         'message' => 'Erro durante a atualização: ' . $e->getMessage()
     ], 'error');
+    
+    // Registra no log
+    Logger::error('Erro durante a atualização: ' . $e->getMessage(), 'API');
 } finally {
     // Aguarda 1 segundo antes de encerrar a conexão
     sleep(1);
