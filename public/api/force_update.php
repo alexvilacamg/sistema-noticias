@@ -16,9 +16,11 @@ header('X-Accel-Buffering: no'); // Para servidores Nginx
 @ob_end_clean();
 if (ob_get_level() == 0) ob_start();
 
-// Inclui as configurações e classes necessárias
-require_once __DIR__ . '/../../config/config.php';
-require_once __DIR__ . '/../../app/models/Scraper.php';
+// Carrega o autoloader do Composer
+require_once __DIR__ . '/../../vendor/autoload.php';
+
+// Usa o namespace correto
+use App\Models\Scraper;
 
 // Função para enviar evento para o cliente
 function sendEvent($message, $type = "progress") {

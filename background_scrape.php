@@ -1,7 +1,10 @@
 <?php
 // background_scrape.php
 
-require_once __DIR__ . '/app/models/Scraper.php';
+// Carrega o autoloader do Composer
+require_once __DIR__ . '/vendor/autoload.php';
+
+use App\Models\Scraper;
 
 $scraper = new Scraper();
 $articles = $scraper->getAllPoliticalNews();

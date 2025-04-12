@@ -1,4 +1,8 @@
 <?php
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Utils\HttpClient.php
+
+namespace App\Utils;
+
 class HttpClient {
     /**
      * Executa uma requisição GET na URL informada com os headers fornecidos.

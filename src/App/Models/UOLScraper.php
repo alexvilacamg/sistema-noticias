@@ -1,4 +1,8 @@
 <?php
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Models\UOLScraper.php
+
+namespace App\Models;
+
 require_once 'AbstractNewsScraper.php';
 
 class UOLScraper extends AbstractNewsScraper

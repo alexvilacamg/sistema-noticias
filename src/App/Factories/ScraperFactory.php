@@ -1,14 +1,11 @@
 <?php
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Factories\ScraperFactory.php
 
-// Ajuste caminhos conforme necessário, mas em geral ficaria assim:
-require_once __DIR__ . '/../../../config/scrapers_config.php';
+namespace App\Factories;
 
-// IMPORTANTE: adicionar require_once para cada scraper que estiver na config
-// se não estiver usando autoload PSR-4/Composer. 
-require_once __DIR__ . '/../Models/G1Scraper.php';
-require_once __DIR__ . '/../Models/UOLScraper.php';
-require_once __DIR__ . '/../Models/FolhaScraper.php';
-// Se tiver EstadaoScraper, ou outros, inclua aqui também
+use App\Models\G1Scraper;
+use App\Models\UOLScraper;
+use App\Models\FolhaScraper;
 
 class ScraperFactory
 {
@@ -24,10 +21,13 @@ class ScraperFactory
 
         $scrapers = [];
         foreach ($scraperClasses as $className) {
-            // Agora class_exists($className) retornará true, pois já importamos as classes
-            if (class_exists($className)) {
+            // Constrói o nome completo da classe com namespace
+            $fullClassName = 'App\\Models\\' . $className;
+            
+            // Verifica se a classe existe
+            if (class_exists($fullClassName)) {
                 // Instancia dinamicamente
-                $scrapers[] = new $className();
+                $scrapers[] = new $fullClassName();
             }
         }
         return $scrapers;

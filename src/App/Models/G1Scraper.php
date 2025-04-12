@@ -1,4 +1,8 @@
 <?php
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Models\G1Scraper.php
+
+namespace App\Models;
+
 require_once 'AbstractNewsScraper.php';
 
 class G1Scraper extends AbstractNewsScraper

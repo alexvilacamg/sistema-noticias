@@ -1,6 +1,9 @@
 <?php
-require_once 'NewsScraperInterface.php';
-require_once __DIR__ . '/../Utils/HttpClient.php';
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Models\AbstractNewsScraper.php
+
+namespace App\Models;
+
+use App\Utils\HttpClient;
 
 /**
  * Classe abstrata que cuida de:

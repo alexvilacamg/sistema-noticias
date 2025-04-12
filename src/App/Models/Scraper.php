@@ -1,6 +1,9 @@
 <?php
-require_once __DIR__ . '/../Factories/ScraperFactory.php';
-// Se precisar, inclua 'require_once' de classes que não estejam em autoload.
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\Models\Scraper.php
+
+namespace App\Models;
+
+use App\Factories\ScraperFactory;
 
 class Scraper
 {
@@ -62,26 +65,26 @@ class Scraper
         $date = trim($date);
         if (strpos($date, "T") !== false) {
             try {
-                $dt = new DateTime($date);
+                $dt = new \DateTime($date);
                 return $dt->format('Y-m-d\TH:i:sP');
             } catch (Exception $e) {
                 // tenta formatos abaixo
             }
         }
-        $dt = DateTime::createFromFormat('Y-m-d H:i:s', $date, new DateTimeZone('America/Sao_Paulo'));
+        $dt = \DateTime::createFromFormat('Y-m-d H:i:s', $date, new \DateTimeZone('America/Sao_Paulo'));
         if ($dt !== false) {
             return $dt->format('Y-m-d\TH:i:sP');
         }
-        $dt = DateTime::createFromFormat('d/m/Y H:i:s', $date, new DateTimeZone('America/Sao_Paulo'));
+        $dt = \DateTime::createFromFormat('d/m/Y H:i:s', $date, new \DateTimeZone('America/Sao_Paulo'));
         if ($dt !== false) {
             return $dt->format('Y-m-d\TH:i:sP');
         }
-        $dt = DateTime::createFromFormat('d/m/Y H:i', $date, new DateTimeZone('America/Sao_Paulo'));
+        $dt = \DateTime::createFromFormat('d/m/Y H:i', $date, new \DateTimeZone('America/Sao_Paulo'));
         if ($dt !== false) {
             return $dt->format('Y-m-d\TH:i:sP');
         }
         if (strtotime($date) !== false) {
-            $dt = new DateTime($date);
+            $dt = new \DateTime($date);
             return $dt->format('Y-m-d\TH:i:sP');
         }
         return "1970-01-01T00:00:00+00:00";
