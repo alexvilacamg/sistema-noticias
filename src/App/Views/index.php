@@ -110,10 +110,8 @@
                     <div class="news-meta">
                         <span class="news-date">
                             <?php 
-                            if (!empty($item['published_at'])) {
+                            if (!empty($item['published_at']) && $item['published_at'] !== "1970-01-01T00:00:00+00:00") {
                                 echo '<i class="fas fa-calendar-alt"></i> ' . date("d/m/Y H:i", strtotime($item['published_at']));
-                            } elseif (!empty($item['publishedAt']) && $item['publishedAt'] !== "1970-01-01T00:00:00+00:00") {
-                                echo '<i class="fas fa-calendar-alt"></i> ' . date("d/m/Y H:i", strtotime($item['publishedAt']));
                             } else {
                                 echo '<i class="fas fa-calendar-alt"></i> Data não disponível';
                             }
@@ -145,11 +143,8 @@
                     <tr>
                         <td data-order="<?php echo isset($item['published_at']) ? $item['published_at'] : ''; ?>">
                             <?php 
-                            if (!empty($item['published_at'])) {
+                            if (!empty($item['published_at']) && $item['published_at'] !== "1970-01-01T00:00:00+00:00") {
                                 echo date("d/m/Y H:i", strtotime($item['published_at']));
-                            } elseif (!empty($item['publishedAt'])) {
-                                // Verifica o nome alternativo que pode estar sendo usado
-                                echo date("d/m/Y H:i", strtotime($item['publishedAt']));
                             } else {
                                 echo "Data não disponível";
                             }

@@ -100,7 +100,7 @@ class FolhaScraper extends AbstractNewsScraper
                     'url'         => $articleUrl,
                     'description' => $description,
                     'author'      => $author,
-                    'publishedAt' => $publishedAt,
+                    'published_at' => $publishedAt,  // modificado de publishedAt para published_at
                     'source'      => 'Folha'
                 ];
             }
@@ -158,3 +158,4 @@ class FolhaScraper extends AbstractNewsScraper
         ];
     }
 }
+``` 

@@ -119,7 +119,7 @@ class G1Scraper extends AbstractNewsScraper
             'url'         => $articleUrl,
             'description' => $description,
             'author'      => $author ?: 'Não disponível',
-            'publishedAt' => $publishedAt ?: 'Data não informada.',
+            'published_at' => $publishedAt ?: null,  // modificado de publishedAt para published_at
             'source'      => 'G1'
         ];
     }

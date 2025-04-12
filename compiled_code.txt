@@ -6,6 +6,7 @@ ESTRUTURA DO DIRETÓRIO:
 ├── .phpunit.result.cache
 ├── README.md
 ├── background_scrape.php
+├── check_dates.php
 ├── compile_code.py
 ├── compiled_code.txt
 ├── composer.json
@@ -124,6 +125,36 @@ file_put_contents($cacheFile, json_encode($articles));
 echo "Scraping concluído com sucesso!";
 ?>
 
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\check_dates.php
+================================================================================
+
+<?php
+// filepath: c:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\check_dates.php
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+try {
+    // Conectar ao SQLite
+    $db = new PDO("sqlite:" . __DIR__ . '/database.sqlite');
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+    // Buscar e mostrar as datas
+    $stmt = $db->query("SELECT title, published_at FROM news LIMIT 20");
+    
+    echo "FORMATO DAS DATAS NO BANCO:\n";
+    echo "====================================\n";
+    
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo "Título: " . substr($row['title'], 0, 30) . "...\n";
+        echo "Data Raw: [" . $row['published_at'] . "]\n";
+        echo "strtotime: " . (strtotime($row['published_at']) ? 'OK' : 'FALHA') . "\n";
+        echo "====================================\n";
+    }
+} catch (Exception $e) {
+    echo "Erro: " . $e->getMessage();
+}
 
 ================================================================================
 Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\composer.json
@@ -3114,20 +3145,9 @@ class FolhaScraper extends AbstractNewsScraper
 
             // Data (pego da listagem)
             $timeNode = $xpath->query(".//time[contains(@class,'c-headline__dateline')]", $node);
-            $publishedAt = 'Data não informada.';
-            if ($timeNode && $timeNode->length > 0) {
-                // Primeiro tenta pegar do atributo datetime
-                $publishedAtAttr = trim($timeNode->item(0)->getAttribute('datetime'));
-                if ($publishedAtAttr) {
-                    $publishedAt = $publishedAtAttr;
-                } else {
-                    // Se não existir, pega o texto dentro de <time>
-                    $timeText = trim($timeNode->item(0)->nodeValue);
-                    if ($timeText) {
-                        $publishedAt = $timeText;
-                    }
-                }
-            }
+            $publishedAt = ($timeNode->length > 0) ? 
+                trim($timeNode->item(0)->getAttribute('datetime')) : 
+                null; // Retornar null em vez de string
 
             // Autor (normalmente não aparece no listing, então vamos buscar na página do artigo)
             $author = 'Não disponível';
@@ -3314,7 +3334,9 @@ class G1Scraper extends AbstractNewsScraper
 
         // Data de publicação
         $timeNodes = $xpath->query("//div[contains(@class, 'mc-article-header')]//time[@itemprop='datePublished']");
-        $publishedAt = $timeNodes->length > 0 ? $timeNodes->item(0)->getAttribute('datetime') : 'Data não informada.';
+        $publishedAt = ($timeNodes->length > 0) ? 
+            trim($timeNodes->item(0)->getAttribute('datetime')) : 
+            null; // Retornar null em vez de string
         
         // Autor
         $author = '';
@@ -3445,6 +3467,11 @@ class Scraper
 
     private function normalizeDate(string $date): string
     {
+        // Se a data for um texto como "Data não informada.", retorna null
+        if ($date === 'Data não informada.' || empty(trim($date))) {
+            return "1970-01-01T00:00:00+00:00"; // Data padrão para não disponível
+        }
+        
         $date = trim($date);
         if (strpos($date, "T") !== false) {
             try {
@@ -3538,12 +3565,14 @@ class UOLScraper extends AbstractNewsScraper
             
             // Data do listing
             $timeNodes = $xpath->query(".//*[contains(@class, 'thumb-date')]", $node);
-            $publishedAt = ($timeNodes->length > 0) ? trim($timeNodes->item(0)->nodeValue) : 'Data não informada';
+            $publishedAt = ($timeNodes->length > 0) ? 
+                trim($timeNodes->item(0)->getAttribute('datetime')) : 
+                null; // Retornar null em vez de string
             
             $details = $this->scrapeArticle($link, $headers);
             if ($details) {
                 // Se o artigo tiver data válida, substitui a data do listing
-                if (!empty($details['publishedAt']) && $details['publishedAt'] !== 'Data não informada.') {
+                if (!empty($details['publishedAt']) && $details['publishedAt'] !== null) {
                     $publishedAt = $details['publishedAt'];
                 }
                 $newsItems[] = [
@@ -3595,7 +3624,9 @@ class UOLScraper extends AbstractNewsScraper
         
         // Data
         $timeNodes = $xpath->query("//div[contains(@class, 'solar-date')]//time[@class='date']");
-        $publishedAt = ($timeNodes->length > 0) ? trim($timeNodes->item(0)->getAttribute('datetime')) : 'Data não informada.';
+        $publishedAt = ($timeNodes->length > 0) ? 
+            trim($timeNodes->item(0)->getAttribute('datetime')) : 
+            null; // Retornar null em vez de string
         
         return [
             'description' => $description,
@@ -4251,8 +4282,12 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\View
                     <div class="news-meta">
                         <span class="news-date">
                             <?php 
-                            if (!empty($item['publishedAt']) && $item['publishedAt'] !== "1970-01-01T00:00:00+00:00") {
+                            if (!empty($item['published_at'])) {
+                                echo '<i class="fas fa-calendar-alt"></i> ' . date("d/m/Y H:i", strtotime($item['published_at']));
+                            } elseif (!empty($item['publishedAt']) && $item['publishedAt'] !== "1970-01-01T00:00:00+00:00") {
                                 echo '<i class="fas fa-calendar-alt"></i> ' . date("d/m/Y H:i", strtotime($item['publishedAt']));
+                            } else {
+                                echo '<i class="fas fa-calendar-alt"></i> Data não disponível';
                             }
                             ?>
                         </span>
@@ -4280,9 +4315,12 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\View
                 <tbody>
                     <?php foreach ($news as $item): ?>
                     <tr>
-                        <td data-order="<?php echo $item['publishedAt'] ?? ''; ?>">
+                        <td data-order="<?php echo isset($item['published_at']) ? $item['published_at'] : ''; ?>">
                             <?php 
-                            if (!empty($item['publishedAt']) && $item['publishedAt'] !== "1970-01-01T00:00:00+00:00") {
+                            if (!empty($item['published_at'])) {
+                                echo date("d/m/Y H:i", strtotime($item['published_at']));
+                            } elseif (!empty($item['publishedAt'])) {
+                                // Verifica o nome alternativo que pode estar sendo usado
                                 echo date("d/m/Y H:i", strtotime($item['publishedAt']));
                             } else {
                                 echo "Data não disponível";

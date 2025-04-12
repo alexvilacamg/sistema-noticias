@@ -59,10 +59,15 @@ class Scraper
         }
 
         $this->reportProgress("Normalizando datas de " . count($news) . " notícias...");
-        // Normaliza datas
+        // Normaliza datas - alterado para usar published_at consistentemente
         foreach ($news as &$item) {
-            if (!empty($item['publishedAt'])) {
-                $item['publishedAt'] = $this->normalizeDate($item['publishedAt']);
+            // Verifica o campo antigo (publishedAt) e o novo (published_at)
+            if (isset($item['publishedAt']) && !isset($item['published_at'])) {
+                $item['published_at'] = $this->normalizeDate($item['publishedAt']);
+                // Opcional: remova o campo antigo para limpar os dados
+                // unset($item['publishedAt']);
+            } else if (isset($item['published_at'])) {
+                $item['published_at'] = $this->normalizeDate($item['published_at']);
             }
         }
         

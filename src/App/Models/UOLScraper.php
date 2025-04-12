@@ -64,15 +64,15 @@ class UOLScraper extends AbstractNewsScraper
             $details = $this->scrapeArticle($link, $headers);
             if ($details) {
                 // Se o artigo tiver data válida, substitui a data do listing
-                if (!empty($details['publishedAt']) && $details['publishedAt'] !== null) {
-                    $publishedAt = $details['publishedAt'];
+                if (!empty($details['published_at']) && $details['published_at'] !== null) {
+                    $publishedAt = $details['published_at'];
                 }
                 $newsItems[] = [
                     'title'       => $title,
                     'url'         => $link,
                     'description' => $details['description'] ?? 'Descrição não disponível.',
                     'author'      => $details['author'] ?? 'Não disponível',
-                    'publishedAt' => $publishedAt,
+                    'published_at' => $publishedAt,
                     'source'      => 'UOL'
                 ];
             } else {
@@ -81,7 +81,7 @@ class UOLScraper extends AbstractNewsScraper
                     'url'         => $link,
                     'description' => 'Descrição não disponível.',
                     'author'      => 'Não disponível',
-                    'publishedAt' => $publishedAt,
+                    'published_at' => $publishedAt,
                     'source'      => 'UOL'
                 ];
             }
@@ -123,7 +123,7 @@ class UOLScraper extends AbstractNewsScraper
         return [
             'description' => $description,
             'author'      => $author,
-            'publishedAt' => $publishedAt
+            'published_at' => $publishedAt
         ];
     }
 }

@@ -128,7 +128,10 @@ class SqliteNewsRepository implements NewsRepositoryInterface
             $stmt->bindValue(':description', $data['description'] ?? '');
             $stmt->bindValue(':source', $data['source'] ?? 'Desconhecido');
             $stmt->bindValue(':author', $data['author'] ?? 'Desconhecido');
-            $stmt->bindValue(':published_at', $data['publishedAt'] ?? date('Y-m-d H:i:s'));
+            
+            // Modificar esta linha - usar published_at e verificar ambos os formatos para compatibilidade
+            $published_at = $data['published_at'] ?? $data['publishedAt'] ?? date('Y-m-d H:i:s');
+            $stmt->bindValue(':published_at', $published_at);
             
             return $stmt->execute();
         } catch (\Exception $e) {
