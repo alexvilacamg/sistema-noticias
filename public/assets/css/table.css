@@ -141,3 +141,11 @@ body.dark-mode .dataTables_filter input:focus {
     outline: none;
     box-shadow: 0 0 0 1px #63b3ed;
 }
+
+/* Adicionar ao final */
+/* Melhor espaçamento quando campo de busca padrão é removido */
+div.dataTables_wrapper div.dataTables_length, 
+div.dataTables_wrapper div.dataTables_info, 
+div.dataTables_wrapper div.dataTables_paginate {
+    margin-top: 10px;
+}

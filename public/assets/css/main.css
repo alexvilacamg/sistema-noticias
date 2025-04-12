@@ -179,6 +179,78 @@ h1 {
     border-color: #4299e1;
 }
 
+/* Estilos para o campo de busca universal */
+.search-container {
+    margin: 15px 0;
+    width: 100%;
+}
+
+.search-box {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 40px 10px 40px;
+    border: 1px solid #e2e8f0;
+    border-radius: 30px;
+    font-size: 16px;
+    transition: all 0.3s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+}
+
+.search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #718096;
+}
+
+.search-clear {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #a0aec0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    display: none;
+    padding: 0;
+    line-height: 1;
+}
+
+.search-clear:hover {
+    color: #718096;
+}
+
+/* Estilo para o modo escuro */
+body.dark-mode .search-input {
+    background-color: #2d3748;
+    border-color: #4a5568;
+    color: #e2e8f0;
+}
+
+body.dark-mode .search-input:focus {
+    border-color: #63b3ed;
+    box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.3);
+}
+
+body.dark-mode .search-icon,
+body.dark-mode .search-clear {
+    color: #a0aec0;
+}
+
 /* Animações e efeitos globais */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }

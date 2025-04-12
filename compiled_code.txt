@@ -7,6 +7,7 @@ ESTRUTURA DO DIRETÓRIO:
 ├── README.md
 ├── background_scrape.php
 ├── check_dates.php
+├── check_field_names.php
 ├── compile_code.py
 ├── compiled_code.txt
 ├── composer.json
@@ -37,6 +38,7 @@ ESTRUTURA DO DIRETÓRIO:
 │   │       ├── logs.js
 │   │       ├── main.js
 │   │       ├── scraper.js
+│   │       ├── universal-search.js
 │   │       └── view-switcher.js
 │   ├── css
 │   │   └── style.css
@@ -155,6 +157,65 @@ try {
     }
 } catch (Exception $e) {
     echo "Erro: " . $e->getMessage();
+}
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\check_field_names.php
+================================================================================
+
+<?php
+require_once __DIR__ . '/vendor/autoload.php';
+
+// Carregar variáveis de ambiente
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->safeLoad();
+
+echo "=== VERIFICAÇÃO DE NOMENCLATURA ===\n";
+
+try {
+    // Obter o repositório
+    $repository = App\Factories\RepositoryFactory::createNewsRepository();
+    
+    // Buscar todas as notícias
+    $news = $repository->getAll();
+    
+    echo "Analisando " . count($news) . " notícias...\n";
+    $withPublishedAt = 0;
+    $withPublishedAtSnakeCase = 0;
+    
+    foreach ($news as $index => $item) {
+        echo "Notícia #" . ($index + 1) . ": ";
+        echo "'" . substr($item['title'], 0, 30) . "...'\n";
+        
+        // Verificar campos
+        echo "   - ";
+        if (array_key_exists('publishedAt', $item)) {
+            echo "Usa 'publishedAt' (camelCase)\n";
+            $withPublishedAt++;
+        }
+        if (array_key_exists('published_at', $item)) {
+            echo "Usa 'published_at' (snake_case)\n";
+            $withPublishedAtSnakeCase++;
+        }
+        if (!array_key_exists('publishedAt', $item) && !array_key_exists('published_at', $item)) {
+            echo "ERRO: Nenhum campo de data encontrado!\n";
+        }
+    }
+    
+    echo "\n=== RESULTADO DA VERIFICAÇÃO ===\n";
+    echo "Total de notícias: " . count($news) . "\n";
+    echo "Com 'publishedAt' (camelCase): $withPublishedAt\n";
+    echo "Com 'published_at' (snake_case): $withPublishedAtSnakeCase\n";
+    
+    if ($withPublishedAt > 0) {
+        echo "\nATENÇÃO: Ainda existem $withPublishedAt notícias usando o formato antigo 'publishedAt'.\n";
+        echo "Execute o script normalize_fields.php para completar a migração.\n";
+    } else {
+        echo "\nTodas as notícias estão usando o formato padronizado 'published_at'. ✓\n";
+    }
+    
+} catch (Exception $e) {
+    echo "ERRO: " . $e->getMessage() . "\n";
 }
 
 ================================================================================
@@ -347,7 +408,7 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\normalize_fi
 ================================================================================
 
 <?php
-// Script para normalizar os campos no banco de dados
+// Script para normalizar as inconsistências de nomenclatura no banco de dados
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -357,41 +418,67 @@ $dotenv->safeLoad();
 
 use App\Utils\Logger;
 
-echo "Normalizando campos no banco de dados...\n";
+echo "=== NORMALIZAÇÃO DE CAMPOS DO BANCO DE DADOS ===\n";
+echo "Padronizando nomenclatura de publishedAt para published_at...\n\n";
 
 try {
-    // Conectar ao SQLite
-    $dbPath = __DIR__ . '/database.sqlite';
-    $db = new PDO("sqlite:$dbPath");
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // Conectar ao banco de dados
+    $repository = App\Factories\RepositoryFactory::createNewsRepository();
+    $dbType = getenv('DB_TYPE') ?: 'sqlite';
     
-    // Obter todas as notícias
-    $stmt = $db->query("SELECT * FROM news");
-    $news = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-    echo "Encontradas " . count($news) . " notícias no banco de dados.\n";
-    
-    // Verificar e atualizar registros que precisam de normalização
-    $count = 0;
-    foreach ($news as $item) {
-        // Se o campo published_at estiver vazio ou NULL, podemos ter um problema
-        if (empty($item['published_at']) || $item['published_at'] == '1970-01-01T00:00:00+00:00') {
-            echo "ID " . $item['id'] . ": Campo published_at vazio ou inválido.\n";
-            $count++;
+    if ($dbType === 'sqlite') {
+        // Migração específica para SQLite
+        $dbPath = __DIR__ . '/database.sqlite';
+        $db = new PDO("sqlite:$dbPath");
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+        // Buscar notícias com publishedAt em vez de published_at
+        $stmt = $db->query("SELECT * FROM news");
+        $news = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        echo "Encontradas " . count($news) . " notícias no banco de dados.\n";
+        
+        $updatedCount = 0;
+        $emptyCount = 0;
+        
+        // Verificar cada notícia
+        foreach ($news as $item) {
+            $needsUpdate = false;
+            $published_at = $item['published_at'] ?? null;
             
-            // Atualizar o registro se possível
-            $stmt = $db->prepare("UPDATE news SET published_at = :date WHERE id = :id");
-            $stmt->bindValue(':date', date('Y-m-d H:i:s'));
-            $stmt->bindValue(':id', $item['id']);
-            $stmt->execute();
+            // Verificar campos nulos ou vazios
+            if (empty($published_at) || $published_at === '1970-01-01T00:00:00+00:00') {
+                echo "ID " . $item['id'] . ": Campo published_at vazio ou inválido.\n";
+                $needsUpdate = true;
+                $emptyCount++;
+            }
+            
+            if ($needsUpdate) {
+                $updatedCount++;
+                
+                // Atualizar com data atual
+                $stmt = $db->prepare("UPDATE news SET published_at = :date WHERE id = :id");
+                $stmt->bindValue(':date', date('Y-m-d H:i:s'));
+                $stmt->bindValue(':id', $item['id']);
+                $stmt->execute();
+            }
         }
+        
+        echo "\nRelatório de Normalização:\n";
+        echo "- Total de registros processados: " . count($news) . "\n";
+        echo "- Registros atualizados: $updatedCount\n";
+        echo "- Campos vazios corrigidos: $emptyCount\n";
+        
+    } else if ($dbType === 'mysql') {
+        echo "Executando migração para MySQL...\n";
+        // Implemente código específico para MySQL aqui
     }
     
-    echo "Total de " . $count . " registros normalizados.\n";
-    echo "Normalização concluída com sucesso!\n";
+    echo "\nNormalização concluída com sucesso!\n";
     
 } catch (Exception $e) {
-    echo "Erro: " . $e->getMessage() . "\n";
+    echo "ERRO: " . $e->getMessage() . "\n";
+    Logger::error('Erro na normalização de campos: ' . $e->getMessage(), 'Migration');
 }
 
 ================================================================================
@@ -1088,6 +1175,24 @@ body.dark-mode .news-meta {
     color: #999;
 }
 
+/* Estilo para mensagem de nenhum resultado */
+.no-results {
+    width: 100%;
+    text-align: center;
+    padding: 40px 20px;
+    color: #718096;
+    font-style: italic;
+    font-size: 16px;
+    background: rgba(0,0,0,0.03);
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+body.dark-mode .no-results {
+    background: rgba(255,255,255,0.05);
+    color: #a0aec0;
+}
+
 ================================================================================
 Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\public\assets\css\dark-mode.css
 ================================================================================
@@ -1631,6 +1736,78 @@ h1 {
     border-color: #4299e1;
 }
 
+/* Estilos para o campo de busca universal */
+.search-container {
+    margin: 15px 0;
+    width: 100%;
+}
+
+.search-box {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 40px 10px 40px;
+    border: 1px solid #e2e8f0;
+    border-radius: 30px;
+    font-size: 16px;
+    transition: all 0.3s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+}
+
+.search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #718096;
+}
+
+.search-clear {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #a0aec0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    display: none;
+    padding: 0;
+    line-height: 1;
+}
+
+.search-clear:hover {
+    color: #718096;
+}
+
+/* Estilo para o modo escuro */
+body.dark-mode .search-input {
+    background-color: #2d3748;
+    border-color: #4a5568;
+    color: #e2e8f0;
+}
+
+body.dark-mode .search-input:focus {
+    border-color: #63b3ed;
+    box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.3);
+}
+
+body.dark-mode .search-icon,
+body.dark-mode .search-clear {
+    color: #a0aec0;
+}
+
 /* Animações e efeitos globais */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
@@ -2136,6 +2313,122 @@ $(document).ready(function() {
         
         // Inicia a conexão SSE
         setupEventSource();
+    });
+});
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\public\assets\js\universal-search.js
+================================================================================
+
+/**
+ * Implementação de busca universal para cartões e tabela
+ */
+$(document).ready(function() {
+    const $searchInput = $('#universal-search');
+    const $clearButton = $('#clear-search');
+    const $newsCards = $('.news-card');
+    const dataTable = $('#newsTable').DataTable();
+    
+    // Função para sincronizar a busca com o DataTable quando estivermos no modo tabela
+    function syncWithDataTable(searchTerm) {
+        if ($('#table-view').is(':visible')) {
+            dataTable.search(searchTerm).draw();
+        }
+    }
+    
+    // Função para limpar o campo de busca
+    function clearSearch() {
+        $searchInput.val('');
+        $searchInput.trigger('input');
+        $clearButton.hide();
+    }
+    
+    // Mostrar/ocultar o botão limpar
+    $searchInput.on('input', function() {
+        const searchTerm = $(this).val().toLowerCase().trim();
+        
+        // Mostrar/ocultar botão de limpar
+        if (searchTerm.length > 0) {
+            $clearButton.show();
+        } else {
+            $clearButton.hide();
+        }
+        
+        // Filtrar cartões no modo grid
+        if ($('#grid-view').is(':visible')) {
+            filterCards(searchTerm);
+        }
+        
+        // Sincronizar com DataTable no modo tabela
+        syncWithDataTable(searchTerm);
+    });
+    
+    // Função para filtrar cartões
+    function filterCards(searchTerm) {
+        if (!searchTerm) {
+            // Se não houver termo de busca, mostra todos os cartões
+            // (respeitando o filtro de fonte atual)
+            $('.source-filter.active').trigger('click');
+            return;
+        }
+        
+        $newsCards.each(function() {
+            const $card = $(this);
+            const title = $card.find('.news-title').text().toLowerCase();
+            const description = $card.find('.news-description').text().toLowerCase();
+            const author = $card.find('.news-author').text().toLowerCase();
+            const source = $card.find('.news-source').text().toLowerCase();
+            
+            // Verifica se o termo de busca existe em qualquer campo do cartão
+            const matches = title.includes(searchTerm) || 
+                           description.includes(searchTerm) || 
+                           author.includes(searchTerm) || 
+                           source.includes(searchTerm);
+            
+            // Mostra ou oculta com base no resultado da busca
+            if (matches) {
+                $card.show();
+            } else {
+                $card.hide();
+            }
+        });
+        
+        // Mostra mensagem se não houver resultados
+        const visibleCards = $newsCards.filter(':visible').length;
+        if (visibleCards === 0) {
+            if ($('#no-results').length === 0) {
+                $('#grid-view').append('<div id="no-results" class="no-results">Nenhum resultado encontrado para "' + searchTerm + '"</div>');
+            }
+        } else {
+            $('#no-results').remove();
+        }
+    }
+    
+    // Limpar busca ao clicar no botão
+    $clearButton.on('click', clearSearch);
+    
+    // Ao alternar entre visualizações, sincroniza o campo de busca
+    $('#grid-view-btn, #table-view-btn').on('click', function() {
+        const searchTerm = $searchInput.val();
+        if (searchTerm) {
+            setTimeout(function() {
+                if ($('#grid-view').is(':visible')) {
+                    filterCards(searchTerm.toLowerCase().trim());
+                } else {
+                    syncWithDataTable(searchTerm);
+                }
+            }, 10);
+        }
+    });
+    
+    // Quando aplicamos um filtro de fonte, respeitamos também o termo de busca
+    $('.source-filter').on('click', function() {
+        const searchTerm = $searchInput.val().toLowerCase().trim();
+        if (searchTerm && $('#grid-view').is(':visible')) {
+            setTimeout(function() {
+                filterCards(searchTerm);
+            }, 10);
+        }
     });
 });
 
@@ -3504,15 +3797,19 @@ class Scraper
         }
 
         $this->reportProgress("Normalizando datas de " . count($news) . " notícias...");
-        // Normaliza datas - alterado para usar published_at consistentemente
+        // Padronizar para usar apenas published_at
         foreach ($news as &$item) {
-            // Verifica o campo antigo (publishedAt) e o novo (published_at)
             if (isset($item['publishedAt']) && !isset($item['published_at'])) {
+                // Converter de publishedAt para published_at
                 $item['published_at'] = $this->normalizeDate($item['publishedAt']);
-                // Opcional: remova o campo antigo para limpar os dados
-                // unset($item['publishedAt']);
-            } else if (isset($item['published_at'])) {
+                // Remover o campo antigo para evitar duplicidade
+                unset($item['publishedAt']);
+            } elseif (isset($item['published_at'])) {
+                // Normalizar o campo correto
                 $item['published_at'] = $this->normalizeDate($item['published_at']);
+            } else {
+                // Garantir que sempre haja um campo published_at
+                $item['published_at'] = date('Y-m-d\TH:i:sP');
             }
         }
         
@@ -3791,6 +4088,9 @@ class MysqlNewsRepository implements NewsRepositoryInterface
             // Verificar se a notícia já existe
             $existing = DB::table('news')->where('url', $data['url'])->first();
             
+            // Garantir uso consistente de published_at
+            $published_at = $data['published_at'] ?? $data['publishedAt'] ?? null;
+            
             if ($existing) {
                 // Atualizar
                 DB::table('news')
@@ -3798,7 +4098,7 @@ class MysqlNewsRepository implements NewsRepositoryInterface
                     ->update([
                         'title' => $data['title'],
                         'description' => $data['description'] ?? '',
-                        'published_at' => $data['publishedAt'] ?? null,
+                        'published_at' => $published_at,
                         'source_id' => $sourceId,
                         'author_id' => $authorId,
                         'updated_at' => now()
@@ -3809,7 +4109,7 @@ class MysqlNewsRepository implements NewsRepositoryInterface
                     'title' => $data['title'],
                     'url' => $data['url'],
                     'description' => $data['description'] ?? '',
-                    'published_at' => $data['publishedAt'] ?? null,
+                    'published_at' => $published_at,
                     'source_id' => $sourceId,
                     'author_id' => $authorId,
                     'created_at' => now(),
@@ -4050,6 +4350,9 @@ class SqliteNewsRepository implements NewsRepositoryInterface
             // Verificar se já existe
             $exists = $this->findByUrl($data['url']);
             
+            // Simplificar para usar apenas published_at, com fallback
+            $published_at = $data['published_at'] ?? $data['publishedAt'] ?? date('Y-m-d H:i:s');
+            
             if ($exists) {
                 // Atualizar
                 $stmt = $this->db->prepare("
@@ -4073,15 +4376,12 @@ class SqliteNewsRepository implements NewsRepositoryInterface
                 ");
             }
             
-            // Definir parâmetros - usando bindValue em vez de bindParam
+            // Definir parâmetros
             $stmt->bindValue(':title', $data['title']);
             $stmt->bindValue(':url', $data['url']);
             $stmt->bindValue(':description', $data['description'] ?? '');
             $stmt->bindValue(':source', $data['source'] ?? 'Desconhecido');
             $stmt->bindValue(':author', $data['author'] ?? 'Desconhecido');
-            
-            // Modificar esta linha - usar published_at e verificar ambos os formatos para compatibilidade
-            $published_at = $data['published_at'] ?? $data['publishedAt'] ?? date('Y-m-d H:i:s');
             $stmt->bindValue(':published_at', $published_at);
             
             return $stmt->execute();
@@ -4261,6 +4561,7 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\View
     <script src="/assets/js/main.js"></script>
     <script src="/assets/js/dark-mode.js"></script>
     <script src="/assets/js/view-switcher.js"></script>
+    <script src="/assets/js/universal-search.js"></script>
     <script src="/assets/js/scraper.js"></script>
     <script src="/assets/js/logs.js"></script>
 </head>
@@ -4306,6 +4607,17 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\src\App\View
         </button>
     </div>
     
+    <!-- Campo de busca universal (funciona para ambas visualizações) -->
+    <div class="search-container">
+        <div class="search-box">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" id="universal-search" placeholder="Buscar notícias..." class="search-input">
+            <button id="clear-search" class="search-clear" title="Limpar busca">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
     <!-- Agrupar filtros e controles de visualização -->
     <div class="controls-container">
         <div class="source-filters">

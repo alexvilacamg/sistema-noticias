@@ -30,7 +30,9 @@ $(document).ready(function() {
         order: [[0, 'desc']],
         pageLength: 10,
         deferRender: true,
-        processing: true
+        processing: true,
+        searching: true,        // Mantém o recurso de busca ativo
+        dom: '<"top">rt<"bottom"lip><"clear">' // Remove o campo de busca padrão ("f") da interface
     });
 
     // Tornar a variável newsTable acessível globalmente

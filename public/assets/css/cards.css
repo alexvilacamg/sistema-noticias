@@ -89,3 +89,21 @@ body.dark-mode .news-meta {
     border-top-color: #333;
     color: #999;
 }
+
+/* Estilo para mensagem de nenhum resultado */
+.no-results {
+    width: 100%;
+    text-align: center;
+    padding: 40px 20px;
+    color: #718096;
+    font-style: italic;
+    font-size: 16px;
+    background: rgba(0,0,0,0.03);
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+body.dark-mode .no-results {
+    background: rgba(255,255,255,0.05);
+    color: #a0aec0;
+}

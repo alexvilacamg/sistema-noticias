@@ -27,6 +27,7 @@
     <script src="/assets/js/main.js"></script>
     <script src="/assets/js/dark-mode.js"></script>
     <script src="/assets/js/view-switcher.js"></script>
+    <script src="/assets/js/universal-search.js"></script>
     <script src="/assets/js/scraper.js"></script>
     <script src="/assets/js/logs.js"></script>
 </head>
@@ -72,6 +73,17 @@
         </button>
     </div>
     
+    <!-- Campo de busca universal (funciona para ambas visualizações) -->
+    <div class="search-container">
+        <div class="search-box">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" id="universal-search" placeholder="Buscar notícias..." class="search-input">
+            <button id="clear-search" class="search-clear" title="Limpar busca">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
     <!-- Agrupar filtros e controles de visualização -->
     <div class="controls-container">
         <div class="source-filters">
