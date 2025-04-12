@@ -1,1 +1,40 @@
+# Diretórios de dados e cache
+/cache/
+/logs/
+/tests/temp/
+
+# Arquivos compilados
+compiled_code.txt
+compile_code.py
+
+# Dependências gerenciadas pelo Composer
 /vendor/
+
+# Arquivos de configuração de ambiente
+.env
+*.env.local
+*.env.development
+*.env.test
+*.env.production
+
+# Configuração com credenciais reais
+/config/config.php
+
+# Arquivos de saída de teste
+.phpunit.result.cache
+.coverage
+
+# Arquivos específicos de IDE
+.idea/
+.vscode/
+*.sublime-*
+*.swp
+*.swo
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos temporários PHP
+*.log
+*.cache

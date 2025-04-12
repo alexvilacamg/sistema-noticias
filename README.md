@@ -7,7 +7,7 @@ Um sistema em PHP para coletar e exibir as principais notícias de política dos
 - [Recursos](#recursos)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
 - [Estrutura do Projeto](#estrutura-do-projeto)
-- [Instalação e Uso](#instalação-e-uso)
+- [Instalação](#instalacao)
 - [Automação e Cache](#automação-e-cache)
 - [Contribuição](#contribuição)
 - [Licença](#licença)
@@ -62,36 +62,14 @@ sistema-noticias/
 │   └── index.php
 └── background_scrape.php
 
-## Instalação e Uso
+## Instalação
 
-### Pré-requisitos
-- PHP 7.0 ou superior
-- Git (para clonar o repositório)
-
-### Clonando o Repositório
-
-No terminal, execute:
-
-git clone https://github.com/seu-usuario/sistema-noticias.git
-
-### Configuração
-
-1. **Configurar o PHP:**  
-   Certifique-se de ter o PHP instalado e configurado no seu PATH.
-
-2. **Ajustar Configurações Globais:**  
-   Edite o arquivo `config/config.php` se necessário. Ele já define o fuso horário, os diretórios de cache e logs, e a função de depuração.
-
-### Execução
-
-Para testar o sistema localmente, abra um terminal, navegue até a pasta do projeto e execute o servidor embutido do PHP:
-
-php -S localhost:8000 -t public
-
-Depois, abra o navegador e acesse:
-[http://localhost:8000](http://localhost:8000)
-
-A página exibirá a tabela interativa com as notícias e uma área com os logs de depuração.
+1. Clone o repositório
+2. Execute `composer install`
+3. Copie `.env.example` para `.env`
+4. Configure suas credenciais no arquivo `.env`
+5. Certifique-se de que os diretórios `cache` e `logs` são graváveis
+6. Acesse a aplicação via navegador
 
 ## Automação e Cache
 
