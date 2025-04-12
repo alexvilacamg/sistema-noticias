@@ -1,0 +1,262 @@
+/* Estilos para a área de logs */
+#debug-container {
+    margin-top: 30px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+#debug-header {
+    background: #f1f1f1;
+    padding: 15px;
+    border-bottom: 1px solid #e1e1e1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#debug-header h3 {
+    margin: 0;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.debug-filters {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    background: rgba(0,0,0,0.03);
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+.debug-filters label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s;
+}
+
+.debug-filters label:hover {
+    background: rgba(0,0,0,0.05);
+}
+
+.debug-search {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+#log-search {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+button#search-btn, button#clear-logs-btn {
+    background: #718096;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+button#search-btn:hover, button#clear-logs-btn:hover {
+    background: #4a5568;
+}
+
+button#clear-logs-btn {
+    background: #e53e3e;
+}
+
+button#clear-logs-btn:hover {
+    background: #c53030;
+}
+
+/* Log entries */
+#debug-log {
+    max-height: 300px;
+    overflow-y: auto;
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.log-container {
+    padding: 10px 0;
+}
+
+.log-entry {
+    padding: 8px 15px;
+    margin-bottom: 2px;
+    border-left: 4px solid transparent;
+    display: flex;
+    align-items: center;
+    transition: background 0.2s;
+}
+
+.log-entry:hover {
+    background-color: rgba(0,0,0,0.03);
+}
+
+.log-timestamp {
+    min-width: 160px;
+    color: #718096;
+    font-size: 12px;
+}
+
+.log-context {
+    min-width: 120px;
+    color: #0277bd;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.log-level {
+    min-width: 70px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: bold;
+    margin-right: 10px;
+    color: white !important;
+}
+
+/* Níveis de log */
+.log-info .log-level {
+    background-color: #3182ce;
+    color: white !important;
+}
+
+.log-warning .log-level {
+    background-color: #dd6b20;
+    color: white !important;
+}
+
+.log-error .log-level {
+    background-color: #e53e3e;
+    color: white !important;
+}
+
+.log-debug .log-level {
+    background-color: #718096;
+    color: white !important;
+}
+
+.log-more {
+    text-align: center;
+    color: #6c757d;
+    font-style: italic;
+    padding: 5px;
+}
+
+.log-empty {
+    padding: 20px;
+    text-align: center;
+    color: #666;
+    font-style: italic;
+}
+
+.log-highlight {
+    background-color: #ffeb3b;
+    color: #000;
+}
+
+.log-hidden {
+    display: none;
+}
+
+/* Logs no modo escuro */
+body.dark-mode #debug-container {
+    background: #1e1e1e;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+body.dark-mode #debug-header {
+    background: #2d2d2d;
+    border-color: #444;
+}
+
+body.dark-mode .debug-filters {
+    background: rgba(255,255,255,0.05);
+}
+
+body.dark-mode .debug-filters label:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+body.dark-mode #log-search {
+    background: #2d2d2d;
+    border-color: #444;
+    color: #e0e0e0;
+}
+
+body.dark-mode #debug-log {
+    background-color: #1e1e1e;
+}
+
+body.dark-mode .log-container {
+    background-color: #1e1e1e;
+}
+
+body.dark-mode .log-entry {
+    background-color: #2d2d2d;
+    border-left-color: inherit;
+    color: #e0e0e0;
+}
+
+body.dark-mode .log-entry:hover {
+    background-color: #3a3a3a;
+}
+
+body.dark-mode .log-info {
+    border-left-color: #4299e1;
+}
+
+body.dark-mode .log-warning {
+    border-left-color: #ed8936;
+    background-color: rgba(237, 137, 54, 0.1);
+}
+
+body.dark-mode .log-error {
+    border-left-color: #f56565;
+    background-color: rgba(245, 101, 101, 0.1);
+}
+
+body.dark-mode .log-debug {
+    border-left-color: #a0aec0;
+}
+
+body.dark-mode .log-timestamp {
+    color: #a0aec0;
+}
+
+body.dark-mode .log-message {
+    color: #e2e8f0;
+}
+
+body.dark-mode .log-context {
+    color: #63b3ed;
+}
+
+body.dark-mode .log-more {
+    color: #a0aec0;
+}

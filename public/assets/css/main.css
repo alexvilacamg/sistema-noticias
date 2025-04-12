@@ -1,0 +1,212 @@
+/* Estilos gerais */
+body {
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    line-height: 1.5;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+h1 {
+    font-size: 2.2rem;
+    color: #2a2a72;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #e7e7e7;
+    padding-bottom: 0.5rem;
+}
+
+/* Estilo para o painel de atualização */
+.update-info {
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.update-info-icon {
+    background-color: #4299e1;
+    color: white;
+    font-size: 24px;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.update-info-content {
+    padding: 15px 20px;
+    flex-grow: 1;
+}
+
+.update-data {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.update-data .label {
+    font-size: 12px;
+    color: #718096;
+    display: block;
+}
+
+.update-data .value {
+    font-size: 14px;
+    font-weight: bold;
+    color: #2d3748;
+    display: block;
+}
+
+/* Botões e controles */
+.btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 15px;
+}
+
+.btn-primary {
+    background: #4299e1;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #3182ce;
+    box-shadow: 0 4px 8px rgba(49, 130, 206, 0.2);
+}
+
+#force-update-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Controles de filtro e visualização */
+.controls-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.source-filters {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.filter-title {
+    font-weight: bold;
+    color: #718096;
+}
+
+.source-filter {
+    padding: 5px 15px;
+    background: #f7fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.source-filter:hover, .source-filter.active {
+    background: #4299e1;
+    color: white;
+    border-color: #4299e1;
+}
+
+.source-filter[data-source="g1"].active {
+    background: #c4170c;
+    border-color: #c4170c;
+}
+
+.source-filter[data-source="uol"].active {
+    background: #1e4b9b;
+    border-color: #1e4b9b;
+}
+
+.source-filter[data-source="folha"].active {
+    background: #2661a8;
+    border-color: #2661a8;
+}
+
+/* Controles de visualização */
+.view-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+}
+
+.view-btn {
+    width: 36px;
+    height: 36px;
+    background: #f7fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.view-btn:hover, .view-btn.active {
+    background: #4299e1;
+    color: white;
+    border-color: #4299e1;
+}
+
+/* Animações e efeitos globais */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes rotating {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+#force-update-btn:disabled i {
+    animation: rotating 1.5s linear infinite;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    body { padding: 10px; }
+    h1 { font-size: 1.8rem; }
+    .controls-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .view-controls {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+    .source-filters, .view-controls {
+        margin: 5px 0;
+    }
+}

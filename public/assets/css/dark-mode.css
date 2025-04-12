@@ -1,0 +1,86 @@
+/* Estilos para o modo escuro */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+body.dark-mode h1 {
+    color: #bb86fc;
+    border-bottom-color: #333;
+}
+
+/* Botão de toggle do modo escuro */
+.dark-mode-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #f0f0f0;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: background 0.3s;
+}
+
+body.dark-mode .dark-mode-toggle {
+    background: #333;
+    color: #bb86fc;
+}
+
+/* Ajustes para controles no modo escuro */
+body.dark-mode .btn-primary {
+    background: #4a5568;
+}
+
+body.dark-mode .btn-primary:hover {
+    background: #2d3748;
+}
+
+body.dark-mode .view-btn {
+    background: #2d3748;
+    border-color: #4a5568;
+    color: #e2e8f0;
+}
+
+body.dark-mode .view-btn:hover, 
+body.dark-mode .view-btn.active {
+    background: #4a5568;
+    border-color: #718096;
+}
+
+body.dark-mode .source-filter {
+    background: #2d3748;
+    border-color: #4a5568;
+    color: #e2e8f0;
+}
+
+/* Painel de atualização no modo escuro */
+body.dark-mode .update-info {
+    background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%) !important;
+    color: #e2e8f0 !important;
+    border: 1px solid #4a5568;
+}
+
+body.dark-mode .update-info-icon {
+    background-color: #4a5568;
+    color: #e2e8f0;
+}
+
+body.dark-mode .update-info-content {
+    color: #e2e8f0 !important;
+}
+
+body.dark-mode .update-data .label {
+    color: #a0aec0;
+}
+
+body.dark-mode .update-data .value {
+    color: #e2e8f0 !important;
+}
+
+body.dark-mode .update-empty {
+    color: #e2e8f0 !important;
+}

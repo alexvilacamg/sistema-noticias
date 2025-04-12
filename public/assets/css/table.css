@@ -1,0 +1,143 @@
+/* Estilos para a tabela de notícias */
+#newsTable {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#newsTable th {
+    background-color: #f7fafc;
+    color: #4a5568;
+    font-weight: 600;
+    text-align: left;
+    padding: 12px 15px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+#newsTable td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+#newsTable tr:last-child td {
+    border-bottom: none;
+}
+
+.news-link {
+    color: #2a4365;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.news-link:hover {
+    text-decoration: underline;
+    color: #3182ce;
+}
+
+.description-preview {
+    font-size: 13px;
+    color: #718096;
+    margin-top: 5px;
+    line-height: 1.4;
+}
+
+.source-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    color: white;
+    font-weight: bold;
+}
+
+/* Ajustes para DataTables */
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_processing,
+.dataTables_wrapper .dataTables_paginate {
+    margin-bottom: 10px;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: #4299e1;
+    border-color: #4299e1;
+    color: white !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: #3182ce;
+    border-color: #3182ce;
+}
+
+/* Tabela no modo escuro */
+body.dark-mode #newsTable {
+    border-color: #4a5568;
+}
+
+body.dark-mode #newsTable th {
+    background-color: #2d3748;
+    color: #e2e8f0;
+    border-bottom-color: #4a5568;
+}
+
+body.dark-mode #newsTable td {
+    border-bottom-color: #4a5568;
+    color: #e2e8f0;
+}
+
+body.dark-mode .news-link {
+    color: #63b3ed;
+}
+
+body.dark-mode .news-link:hover {
+    color: #90cdf4;
+}
+
+body.dark-mode .description-preview {
+    color: #a0aec0;
+}
+
+/* DataTables no modo escuro */
+body.dark-mode .dataTables_wrapper .dataTables_length,
+body.dark-mode .dataTables_wrapper .dataTables_filter,
+body.dark-mode .dataTables_wrapper .dataTables_info,
+body.dark-mode .dataTables_wrapper .dataTables_processing,
+body.dark-mode .dataTables_wrapper .dataTables_paginate {
+    color: #e2e8f0;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button {
+    color: #e2e8f0 !important;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    color: #2d3748 !important;
+    background: #63b3ed;
+    border-color: #63b3ed;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    color: #2d3748 !important;
+    background: #4299e1;
+    border-color: #4299e1;
+}
+
+/* Inputs no modo escuro */
+body.dark-mode .dataTables_length select,
+body.dark-mode .dataTables_filter input {
+    background-color: #2d3748;
+    color: #e2e8f0;
+    border-color: #4a5568;
+}
+
+body.dark-mode .dataTables_length select:focus,
+body.dark-mode .dataTables_filter input:focus {
+    border-color: #63b3ed;
+    outline: none;
+    box-shadow: 0 0 0 1px #63b3ed;
+}
