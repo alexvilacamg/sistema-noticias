@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="/css/style.css">
     <!-- DataTables CSS -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"/>
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <!-- jQuery (necessário para o DataTables) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- DataTables JS -->
@@ -91,10 +93,574 @@
         }
 
         .log-level {
-            min-width: 80px;
+            min-width: 70px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 11px;
             font-weight: bold;
-            text-transform: uppercase;
             margin-right: 10px;
+            color: white !important; /* Forçar branco para todos os modos */
+        }
+
+        /* Estilos corretos para os níveis de log com cores de fundo */
+        .log-info .log-level {
+            background-color: #3182ce;
+            color: white !important;
+        }
+
+        .log-warning .log-level {
+            background-color: #dd6b20;
+            color: white !important;
+        }
+
+        .log-error .log-level {
+            background-color: #e53e3e;
+            color: white !important;
+        }
+
+        .log-debug .log-level {
+            background-color: #718096;
+            color: white !important;
+        }
+
+        /* Adicione ao <head> ou ao seu arquivo CSS */
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: #2a2a72;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #e7e7e7;
+            padding-bottom: 0.5rem;
+        }
+
+        /* Tornar a interface responsiva */
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            h1 { font-size: 1.8rem; }
+            #newsTable th, #newsTable td { padding: 8px 5px; }
+        }
+
+        /* Estilos para os cards de notícias */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .news-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 15px;
+            position: relative;
+            transition: transform 0.2s, box-shadow 0.2s;
+            animation: fadeIn 0.5s ease-in-out;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .news-source {
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .g1 { background-color: #c4170c; }
+        .uol { background-color: #1e4b9b; }
+        .folha { background-color: #2661a8; }
+
+        .news-title {
+            font-size: 18px;
+            margin-top: 10px;
+            margin-bottom: 8px;
+        }
+
+        .news-title a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .news-title a:hover {
+            color: #0066cc;
+        }
+
+        .news-description {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.4;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #888;
+            font-size: 12px;
+            border-top: 1px solid #eee;
+            padding-top: 8px;
+        }
+
+        /* Estilos para o modo escuro */
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode h1 {
+            color: #bb86fc;
+            border-bottom-color: #333;
+        }
+
+        body.dark-mode .news-card {
+            background: #1e1e1e;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        body.dark-mode .news-title a {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .news-description {
+            color: #aaa;
+        }
+
+        /* Botão de toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: background 0.3s;
+        }
+
+        body.dark-mode .dark-mode-toggle {
+            background: #333;
+            color: #bb86fc;
+        }
+
+        /* Estilo para o painel de atualização */
+        .update-info {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .update-info {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            color: #e2e8f0;
+            border: 1px solid #4a5568;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .update-info-icon {
+            background-color: #4299e1;
+            color: white;
+            font-size: 24px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body.dark-mode .update-info-icon {
+            background-color: #4a5568;
+            color: #e2e8f0;
+        }
+
+        .update-info-content {
+            padding: 15px 20px;
+            flex-grow: 1;
+        }
+
+        body.dark-mode .update-info-content {
+            color: #e2e8f0;
+        }
+
+        .update-data {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .update-data .label {
+            font-size: 12px;
+            color: #718096;
+            display: block;
+        }
+
+        body.dark-mode .update-data .label {
+            color: #a0aec0;
+        }
+
+        .update-data .value {
+            font-size: 14px;
+            font-weight: bold;
+            color: #2d3748;
+            display: block;
+        }
+
+        body.dark-mode .update-data .value {
+            color: #e2e8f0;
+        }
+
+        /* Novo estilo para o botão de atualização */
+        .btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0 15px;
+        }
+
+        .btn-primary {
+            background: #4299e1;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #3182ce;
+            box-shadow: 0 4px 8px rgba(49, 130, 206, 0.2);
+        }
+
+        body.dark-mode .btn-primary {
+            background: #4a5568;
+        }
+
+        body.dark-mode .btn-primary:hover {
+            background: #2d3748;
+        }
+
+        #force-update-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        #force-update-btn:disabled i {
+            animation: rotating 1.5s linear infinite;
+        }
+
+        @keyframes rotating {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Melhorias para a área de debug */
+        #debug-container {
+            margin-top: 30px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode #debug-container {
+            background: #1e1e1e;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        #debug-header {
+            background: #f1f1f1;
+            padding: 15px;
+            border-bottom: 1px solid #e1e1e1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        body.dark-mode #debug-header {
+            background: #2d2d2d;
+            border-color: #444;
+        }
+
+        #debug-header h3 {
+            margin: 0;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .debug-filters {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+            background: rgba(0,0,0,0.03);
+            padding: 8px 12px;
+            border-radius: 5px;
+        }
+
+        body.dark-mode .debug-filters {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .debug-filters label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s;
+        }
+
+        .debug-filters label:hover {
+            background: rgba(0,0,0,0.05);
+        }
+
+        body.dark-mode .debug-filters label:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .debug-search {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        #log-search {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        body.dark-mode #log-search {
+            background: #2d2d2d;
+            border-color: #444;
+            color: #e0e0e0;
+        }
+
+        button#search-btn, button#clear-logs-btn {
+            background: #718096;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        button#search-btn:hover, button#clear-logs-btn:hover {
+            background: #4a5568;
+        }
+
+        button#clear-logs-btn {
+            background: #e53e3e;
+        }
+
+        button#clear-logs-btn:hover {
+            background: #c53030;
+        }
+
+        /* Melhorias para as entradas de log */
+        .log-entry {
+            padding: 8px 15px;
+            margin-bottom: 2px;
+            border-left: 4px solid transparent;
+            display: flex;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .log-entry:hover {
+            background-color: rgba(0,0,0,0.03);
+        }
+
+        body.dark-mode .log-entry:hover {
+            background-color: rgba(255,255,255,0.03);
+        }
+
+        .log-timestamp {
+            min-width: 160px;
+            color: #718096;
+            font-size: 12px;
+        }
+
+        body.dark-mode .log-timestamp {
+            color: #a0aec0;
+        }
+
+        .source-filters {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .filter-title {
+            font-weight: bold;
+            color: #718096;
+        }
+
+        .source-filter {
+            padding: 5px 15px;
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .source-filter:hover, .source-filter.active {
+            background: #4299e1;
+            color: white;
+            border-color: #4299e1;
+        }
+
+        .source-filter[data-source="g1"].active {
+            background: #c4170c;
+            border-color: #c4170c;
+        }
+
+        .source-filter[data-source="uol"].active {
+            background: #1e4b9b;
+            border-color: #1e4b9b;
+        }
+
+        .source-filter[data-source="folha"].active {
+            background: #2661a8;
+            border-color: #2661a8;
+        }
+
+        body.dark-mode .source-filter {
+            background: #2d3748;
+            border-color: #4a5568;
+            color: #e2e8f0;
+        }
+
+        /* Ajustar toda a área de logs para o modo escuro */
+        body.dark-mode #debug-log {
+            background-color: #1e1e1e; /* Fundo escuro */
+        }
+
+        body.dark-mode .log-container {
+            background-color: #1e1e1e;
+        }
+
+        body.dark-mode .log-entry {
+            background-color: #2d2d2d; /* Um pouco mais claro que o fundo */
+            border-left-color: inherit; /* Manter cores de borda */
+            color: #e0e0e0; /* Texto claro para contraste */
+        }
+
+        body.dark-mode .log-entry:hover {
+            background-color: #3a3a3a; /* Destacar no hover */
+        }
+
+        /* Cores de borda específicas por nível no modo escuro */
+        body.dark-mode .log-info {
+            border-left-color: #4299e1; /* Azul mais brilhante */
+        }
+
+        body.dark-mode .log-warning {
+            border-left-color: #ed8936; /* Laranja mais brilhante */
+            background-color: rgba(237, 137, 54, 0.1); /* Fundo sutilmente colorido */
+        }
+
+        body.dark-mode .log-error {
+            border-left-color: #f56565; /* Vermelho mais brilhante */
+            background-color: rgba(245, 101, 101, 0.1); /* Fundo sutilmente colorido */
+        }
+
+        body.dark-mode .log-debug {
+            border-left-color: #a0aec0;
+        }
+
+        /* Ajustar cores do texto no modo escuro */
+        body.dark-mode .log-timestamp {
+            color: #a0aec0; /* Cinza azulado claro */
+        }
+
+        body.dark-mode .log-message {
+            color: #e2e8f0; /* Quase branco */
+        }
+
+        body.dark-mode .log-context {
+            color: #63b3ed; /* Azul claro */
+        }
+
+        body.dark-mode .log-more {
+            color: #a0aec0;
+        }
+
+        /* Correção específica para o contraste no modo escuro da seção de atualização */
+        html body.dark-mode .update-info {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%) !important;
+            color: #e2e8f0 !important;
+        }
+
+        html body.dark-mode .update-data .label,
+        html body.dark-mode .update-data .value,
+        html body.dark-mode .update-info-content {
+            color: #e2e8f0 !important;
+        }
+
+        html body.dark-mode .update-empty {
+            color: #e2e8f0 !important;
         }
     </style>
     <script>
@@ -259,66 +825,130 @@
                 // Inicia a conexão SSE
                 setupEventSource();
             });
+
+            // Script para filtrar notícias por fonte
+            $('.source-filter').click(function() {
+                const source = $(this).data('source');
+                
+                // Atualiza classes ativas
+                $('.source-filter').removeClass('active');
+                $(this).addClass('active');
+                
+                if (source === 'all') {
+                    $('.news-card').show();
+                } else {
+                    $('.news-card').hide();
+                    $(`.news-card .news-source.${source}`).parent().show();
+                }
+            });
+        });
+
+        // Adicione este script para o toggle do modo escuro
+        document.addEventListener('DOMContentLoaded', function() {
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            
+            // Verifica preferência salva ou sistema
+            const currentTheme = localStorage.getItem('theme');
+            if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+                document.body.classList.add('dark-mode');
+            }
+            
+            darkModeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                
+                // Salva preferência
+                if (document.body.classList.contains('dark-mode')) {
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    localStorage.setItem('theme', 'light');
+                }
+            });
         });
     </script>
 </head>
 <body>
+    <!-- Adicione este botão no topo da página -->
+    <button id="dark-mode-toggle" class="dark-mode-toggle" aria-label="Alternar modo escuro">
+        <i class="fas fa-moon"></i>
+    </button>
+
     <h1>Notícias de Política</h1>
     <?php 
         require_once __DIR__ . '/../../config/config.php';
         $cacheFile = CACHE_DIR . '/all_news.json';
         $cacheTime = 600; // 10 minutos
-        if (file_exists($cacheFile)) {
-            $lastUpdate = filemtime($cacheFile);
-            $nextUpdate = $lastUpdate + $cacheTime;
-            echo "<div id='update-info'>";
-            echo "<strong>Última atualização:</strong> " . date("d/m/Y H:i:s", $lastUpdate) . "<br>";
-            echo "<strong>Próxima atualização (estimada):</strong> " . date("d/m/Y H:i:s", $nextUpdate);
-            echo "</div>";
-        } else {
-            echo "<div id='update-info'><strong>Nenhuma atualização realizada.</strong></div>";
-        }
     ?>
+    <!-- Substitua o div #update-info existente por este -->
+    <div id="update-info" class="update-info">
+        <div class="update-info-icon">
+            <i class="fas fa-sync-alt"></i>
+        </div>
+        <div class="update-info-content">
+            <?php if (file_exists($cacheFile)): ?>
+                <div class="update-data">
+                    <div>
+                        <span class="label">Última atualização:</span>
+                        <span class="value"><?php echo date("d/m/Y H:i:s", filemtime($cacheFile)); ?></span>
+                    </div>
+                    <div>
+                        <span class="label">Próxima atualização:</span>
+                        <span class="value"><?php echo date("d/m/Y H:i:s", filemtime($cacheFile) + $cacheTime); ?></span>
+                    </div>
+                    <div>
+                        <span class="label">Total de notícias:</span>
+                        <span class="value"><?php echo count($news); ?></span>
+                    </div>
+                </div>
+            <?php else: ?>
+                <div class="update-empty">Nenhuma atualização realizada</div>
+            <?php endif; ?>
+        </div>
+        <button id="force-update-btn" class="btn btn-primary">
+            <i class="fas fa-sync-alt"></i> Forçar Atualização
+        </button>
+    </div>
     
-    <!-- Botão para forçar atualização com indicador discreto -->
-    <button id="force-update-btn">Forçar Atualização</button>
-    <span id="loading-indicator"></span>
-    
+    <!-- Adicione antes da tabela de notícias -->
+    <div class="source-filters">
+        <span class="filter-title">Filtrar por fonte:</span>
+        <button class="source-filter active" data-source="all">Todas</button>
+        <button class="source-filter" data-source="g1">G1</button>
+        <button class="source-filter" data-source="uol">UOL</button>
+        <button class="source-filter" data-source="folha">Folha</button>
+    </div>
+
     <?php if (isset($news) && is_array($news) && count($news) > 0): ?>
-        <table id="newsTable">
-            <thead>
-                <tr>
-                    <th>Publicado em</th>
-                    <th>Veículo</th>
-                    <th>Título</th>
-                    <th>Descrição</th>
-                    <th>Autor</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($news as $item): ?>
-                    <tr>
-                        <td data-order="<?php echo $item['publishedAt'] ?: ''; ?>">
+        <!-- Substitua a tabela existente por esta estrutura de cards -->
+        <div class="news-grid">
+            <?php foreach ($news as $item): ?>
+                <div class="news-card">
+                    <span class="news-source <?php echo strtolower($item['source']); ?>">
+                        <?php echo $item['source']; ?>
+                    </span>
+                    <h3 class="news-title">
+                        <a href="<?php echo $item['url']; ?>" target="_blank">
+                            <?php echo $item['title'] ?? 'Sem título'; ?>
+                        </a>
+                    </h3>
+                    <p class="news-description"><?php echo $item['description'] ?: 'Descrição não disponível.'; ?></p>
+                    <div class="news-meta">
+                        <span class="news-date">
                             <?php 
-                                if (!empty($item['publishedAt']) && $item['publishedAt'] !== "1970-01-01T00:00:00+00:00" && strtotime($item['publishedAt']) !== false) {
-                                    echo date("d/m/Y H:i", strtotime($item['publishedAt']));
-                                } else {
-                                    echo 'Data não informada.';
-                                }
+                            if (!empty($item['publishedAt']) && $item['publishedAt'] !== "1970-01-01T00:00:00+00:00") {
+                                echo '<i class="fas fa-calendar-alt"></i> ' . date("d/m/Y H:i", strtotime($item['publishedAt']));
+                            }
                             ?>
-                        </td>
-                        <td><?php echo $item['source'] ?: 'Fonte não informada.'; ?></td>
-                        <td>
-                            <a href="<?php echo $item['url']; ?>" target="_blank">
-                                <?php echo $item['title'] ?? 'Sem título'; ?>
-                            </a>
-                        </td>
-                        <td><?php echo $item['description'] ?: 'Descrição não disponível.'; ?></td>
-                        <td><?php echo $item['author'] ?: 'Autor não disponível.'; ?></td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                        </span>
+                        <span class="news-author">
+                            <?php if ($item['author'] && $item['author'] !== 'Não disponível'): ?>
+                                <i class="fas fa-user"></i> <?php echo $item['author']; ?>
+                            <?php endif; ?>
+                        </span>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
     <?php else: ?>
         <p>Nenhuma notícia encontrada.</p>
     <?php endif; ?>
@@ -326,7 +956,7 @@
     <!-- Área para exibir os logs de depuração com melhorias visuais -->
     <div id="debug-container">
         <div id="debug-header">
-            <h3>Debug Logs</h3>
+            <h3>Log do Sistema</h3>
             <div class="debug-filters">
                 <label><input type="checkbox" class="log-filter" value="INFO" checked> INFO</label>
                 <label><input type="checkbox" class="log-filter" value="WARNING" checked> WARNING</label>
@@ -429,263 +1059,5 @@
     // Ou continue usando a função genérica com nível personalizado
     debug_log("Operação personalizada", "CUSTOM", "Context");
     ?>
-
-    <!-- Estilos CSS para a área de debug -->
-    <style>
-        #debug-container {
-            margin-top: 30px;
-            background: #f8f9fa;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        
-        #debug-header {
-            background: #f1f1f1;
-            padding: 10px 15px;
-            border-bottom: 1px solid #ddd;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        #debug-header h3 {
-            margin: 0;
-            font-size: 16px;
-            color: #333;
-        }
-        
-        .debug-filters {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        
-        .debug-filters label {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            cursor: pointer;
-            user-select: none;
-        }
-        
-        .debug-search {
-            display: flex;
-            gap: 5px;
-            margin-top: 10px;
-            width: 100%;
-        }
-        
-        #log-search {
-            flex: 1;
-            padding: 5px 10px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-        }
-        
-        button#search-btn, button#clear-logs-btn {
-            background: #6c757d;
-            color: white;
-            border: none;
-            border-radius: 3px;
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-        
-        button#clear-logs-btn {
-            background: #dc3545;
-        }
-        
-        #debug-log {
-            max-height: 300px;
-            overflow-y: auto;
-            font-family: monospace;
-            font-size: 13px;
-            line-height: 1.5;
-        }
-        
-        .log-container {
-            padding: 10px 0;
-        }
-        
-        .log-entry {
-            display: flex;
-            padding: 2px 10px;
-            margin-bottom: 1px;
-            border-left: 4px solid transparent;
-        }
-        
-        .log-entry:hover {
-            background-color: rgba(0,0,0,0.05);
-        }
-        
-        .log-timestamp {
-            min-width: 160px;
-            color: #666;
-        }
-        
-        .log-level {
-            min-width: 80px;
-            font-weight: bold;
-        }
-        
-        .log-message {
-            flex: 1;
-        }
-        
-        .log-context {
-            min-width: 120px;
-            color: #0277bd;
-            font-style: italic;
-        }
-        
-        /* Cores para os diferentes níveis de log */
-        .log-info {
-            border-left-color: #0d6efd;
-        }
-        .log-info .log-level {
-            color: #0d6efd;
-        }
-        
-        .log-warning {
-            border-left-color: #ffc107;
-            background-color: rgba(255, 243, 205, 0.3);
-        }
-        .log-warning .log-level {
-            color: #856404;
-        }
-        
-        .log-error {
-            border-left-color: #dc3545;
-            background-color: rgba(248, 215, 218, 0.3);
-        }
-        .log-error .log-level {
-            color: #721c24;
-        }
-        
-        .log-debug {
-            border-left-color: #6c757d;
-        }
-        .log-debug .log-level {
-            color: #6c757d;
-        }
-        
-        .log-more {
-            text-align: center;
-            color: #6c757d;
-            font-style: italic;
-            padding: 5px;
-        }
-        
-        .log-empty {
-            padding: 20px;
-            text-align: center;
-            color: #666;
-            font-style: italic;
-        }
-        
-        /* Para destacar resultados de busca */
-        .log-highlight {
-            background-color: #ffeb3b;
-            color: #000;
-        }
-        
-        /* Log oculto por filtro */
-        .log-hidden {
-            display: none;
-        }
-    </style>
-
-    <!-- JavaScript para interatividade da área de debug -->
-    <script>
-        $(document).ready(function() {
-            // Contador de logs inicial
-            updateLogCount();
-            
-            // Filtrar logs por nível
-            $('.log-filter').change(function() {
-                let activeFilters = [];
-                $('.log-filter:checked').each(function() {
-                    activeFilters.push($(this).val());
-                });
-                
-                $('.log-entry').each(function() {
-                    const logLevel = $(this).data('level');
-                    if (!logLevel || activeFilters.includes(logLevel)) {
-                        $(this).removeClass('log-hidden');
-                    } else {
-                        $(this).addClass('log-hidden');
-                    }
-                });
-                
-                updateLogCount();
-            });
-            
-            // Busca nos logs
-            $('#search-btn').click(function() {
-                searchLogs();
-            });
-            
-            $('#log-search').keypress(function(e) {
-                if (e.which == 13) { // Enter key
-                    searchLogs();
-                }
-            });
-            
-            // Limpar visualização
-            $('#clear-logs-btn').click(function() {
-                $('.log-container').empty()
-                    .append('<div class="log-empty">Logs limpos da visualização.</div>');
-                updateLogCount();
-            });
-            
-            function searchLogs() {
-                const searchText = $('#log-search').val().toLowerCase();
-                
-                // Remove destacamento anterior
-                $('.log-message').find('mark').contents().unwrap();
-                
-                if (!searchText) {
-                    return;
-                }
-                
-                let matchCount = 0;
-                
-                // Para cada entrada de log visível
-                $('.log-entry:not(.log-hidden)').each(function() {
-                    const $message = $(this).find('.log-message');
-                    const messageText = $message.text();
-                    
-                    if (messageText.toLowerCase().includes(searchText)) {
-                        // Destaca o texto encontrado
-                        const regex = new RegExp('(' + searchText.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + ')', 'gi');
-                        const highlighted = messageText.replace(regex, '<mark>$1</mark>');
-                        $message.html(highlighted);
-                        matchCount++;
-                    }
-                });
-                
-                // Feedback da busca
-                if (matchCount > 0) {
-                    alert(`Encontradas ${matchCount} ocorrências para "${searchText}"`);
-                } else {
-                    alert(`Nenhuma ocorrência encontrada para "${searchText}"`);
-                }
-            }
-            
-            function updateLogCount() {
-                const totalLogs = $('.log-entry').length;
-                const visibleLogs = $('.log-entry:not(.log-hidden)').length;
-                
-                if (totalLogs === visibleLogs) {
-                    $('#log-count').text(`${totalLogs} logs`);
-                } else {
-                    $('#log-count').text(`${visibleLogs} de ${totalLogs} logs`);
-                }
-            }
-        });
-    </script>
 </body>
 </html>

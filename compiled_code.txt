@@ -160,10 +160,9 @@ abstract class AbstractNewsScraper implements NewsScraperInterface
     /**
      * Método simples de log, para centralizar prefixos.
      */
-    protected function log(string $message): void
+    protected function log(string $message, $level = LOG_INFO): void
     {
-        // Pode customizar o prefixo da classe, se desejar
-        debug_log("[" . static::class . "] " . $message);
+        debug_log($message, $level, get_class($this));
     }
 }
 
@@ -218,7 +217,8 @@ class FolhaScraper extends AbstractNewsScraper
         
         // Seleciona cada bloco <li> com a classe "c-headline c-headline--newslist"
         $nodes = $xpath->query("//li[contains(@class, 'c-headline') and contains(@class, 'c-headline--newslist')]");
-        $this->log("[Folha] | Listagem: Nós encontrados = " . $nodes->length);
+        $this->log("[Folha] | Listagem: Nós encontrados = " . $nodes->length, LOG_INFO);
+        $this->log("[UOL] | Listagem: Itens encontrados = " . $nodes->length, LOG_INFO);
         
         foreach ($nodes as $node) {
             // Extrai URL do artigo
@@ -393,7 +393,7 @@ class G1Scraper extends AbstractNewsScraper
         
         // Seleciona os links dos artigos na página de listagem
         $nodes = $xpath->query("//a[contains(@class, 'feed-post-link')]");
-        $this->log("[G1] | Listagem: Nós encontrados = " . $nodes->length);
+        $this->log("[G1] | Listagem: Nós encontrados = " . $nodes->length, LOG_INFO);
         
         $articleLinks = [];
         foreach ($nodes as $node) {
@@ -633,7 +633,7 @@ class UOLScraper extends AbstractNewsScraper
         
         // Busca nós com a classe "thumbnails-item" (excluindo itemAds)
         $nodes = $xpath->query("//div[contains(@class, 'thumbnails-item') and not(contains(@class, 'itemAds'))]");
-        $this->log("[UOL] | Listagem: Itens encontrados = " . $nodes->length);
+        $this->log("[UOL] | Listagem: Itens encontrados = " . $nodes->length, LOG_INFO);
         
         foreach ($nodes as $node) {
             if (!$node instanceof \DOMElement) continue;
@@ -846,6 +846,20 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\views\in
         .text-success { color: #2e7d32; font-weight: bold; }
         .text-info { color: #0277bd; }
         .text-danger { color: #c62828; font-weight: bold; }
+        /* Estilos específicos para a área de log */
+        .log-context {
+            min-width: 120px;
+            color: #0277bd;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .log-level {
+            min-width: 80px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-right: 10px;
+        }
     </style>
     <script>
         $(document).ready(function(){
@@ -1073,21 +1087,370 @@ Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\views\in
         <p>Nenhuma notícia encontrada.</p>
     <?php endif; ?>
 
-    <!-- Área para exibir os logs de depuração -->
-    <div id="debug-log">
-        <h3>Debug Logs</h3>
-        <pre>
-<?php 
-if (defined('LOG_FILE') && file_exists(LOG_FILE)) {
-    $lines = file(LOG_FILE, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-    $lines = array_reverse($lines);
-    echo htmlspecialchars(implode("\n", $lines));
-} else {
-    echo "Nenhum log encontrado.";
-}
-?>
-        </pre>
+    <!-- Área para exibir os logs de depuração com melhorias visuais -->
+    <div id="debug-container">
+        <div id="debug-header">
+            <h3>Debug Logs</h3>
+            <div class="debug-filters">
+                <label><input type="checkbox" class="log-filter" value="INFO" checked> INFO</label>
+                <label><input type="checkbox" class="log-filter" value="WARNING" checked> WARNING</label>
+                <label><input type="checkbox" class="log-filter" value="ERROR" checked> ERROR</label>
+                <label><input type="checkbox" class="log-filter" value="DEBUG" checked> DEBUG</label>
+                <button id="clear-logs-btn" title="Limpa a visualização dos logs (não apaga o arquivo)">Limpar Visualização</button>
+                <span id="log-count"></span>
+            </div>
+            <div class="debug-search">
+                <input type="text" id="log-search" placeholder="Buscar nos logs...">
+                <button id="search-btn">Buscar</button>
+            </div>
+        </div>
+        <div id="debug-log">
+            <div class="log-container">
+            <?php 
+            if (defined('LOG_FILE') && file_exists(LOG_FILE)) {
+                $lines = file(LOG_FILE, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+                $lines = array_reverse($lines); // Mais recentes primeiro
+                $logCount = count($lines);
+                
+                // Limita a exibição aos 100 logs mais recentes para melhor desempenho
+                $displayLines = array_slice($lines, 0, 100);
+                
+                foreach ($displayLines as $line) {
+                    // Temos um problema com o formato atual dos logs, vamos tentar extrair as partes importantes
+                    
+                    // Padrão esperado: [DATA][NÍVEL][CONTEXTO] Mensagem
+                    if (preg_match('/\[([\d\- :]+)\]\[(INFO|WARNING|ERROR|DEBUG)\](?:\[(.*?)\])?\s*(.*)/', $line, $matches)) {
+                        $timestamp = $matches[1];
+                        $logLevel = $matches[2];
+                        $context = !empty($matches[3]) ? $matches[3] : '';
+                        $logContent = $matches[4];
+                    } else {
+                        // Fallback para logs antigos ou com formato diferente
+                        // Tenta encontrar pelo menos a data e alguma indicação de nível
+                        if (preg_match('/\[([\d\- :]+)\]/', $line, $dateMatch)) {
+                            $timestamp = $dateMatch[1];
+                            
+                            // Identifica o nível com base em palavras-chave comuns
+                            if (stripos($line, 'erro') !== false || stripos($line, 'falha') !== false) {
+                                $logLevel = 'ERROR';
+                            } else if (stripos($line, 'aviso') !== false || stripos($line, 'alerta') !== false) {
+                                $logLevel = 'WARNING';
+                            } else if (stripos($line, 'debug') !== false) {
+                                $logLevel = 'DEBUG';
+                            } else {
+                                $logLevel = 'INFO';
+                            }
+                            
+                            // Extrai o contexto (geralmente entre colchetes após a data)
+                            if (preg_match('/\]\[(.*?)\]/', $line, $contextMatch)) {
+                                $context = $contextMatch[1];
+                            } else {
+                                $context = '';
+                            }
+                            
+                            // A mensagem é o resto da linha após os metadados
+                            $logContent = preg_replace('/^\[.*?\](\[.*?\])*\s*/', '', $line);
+                        } else {
+                            // Se não conseguir extrair nada, usa valores padrão
+                            $timestamp = '';
+                            $logLevel = 'INFO';
+                            $context = '';
+                            $logContent = $line;
+                        }
+                    }
+                    
+                    // Define a classe CSS baseada no nível do log
+                    $logClass = 'log-' . strtolower($logLevel);
+                    
+                    echo "<div class='log-entry $logClass' data-level='$logLevel'>";
+                    echo "<span class='log-timestamp'>$timestamp</span>";
+                    echo "<span class='log-level'>$logLevel</span>";
+                    if ($context) {
+                        echo "<span class='log-context'>$context</span>";
+                    }
+                    echo "<span class='log-message'>" . htmlspecialchars($logContent) . "</span>";
+                    echo "</div>";
+                }
+                
+                if ($logCount > 100) {
+                    echo "<div class='log-entry log-more'>+ " . ($logCount - 100) . " logs adicionais não exibidos (total: $logCount)</div>";
+                }
+            } else {
+                echo "<div class='log-empty'>Nenhum log encontrado.</div>";
+            }
+            ?>
+            </div>
+        </div>
     </div>
+
+    <!-- Exemplos de uso dos novos logs -->
+    <?php
+    log_info("Usuário fez login", "Auth");
+    log_warning("Múltiplas tentativas de login", "Auth");
+    log_error("Falha na conexão com o banco de dados", "Database");
+    log_debug("Query executada: SELECT * FROM users", "SQL");
+
+    // Ou continue usando a função genérica com nível personalizado
+    debug_log("Operação personalizada", "CUSTOM", "Context");
+    ?>
+
+    <!-- Estilos CSS para a área de debug -->
+    <style>
+        #debug-container {
+            margin-top: 30px;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        #debug-header {
+            background: #f1f1f1;
+            padding: 10px 15px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        #debug-header h3 {
+            margin: 0;
+            font-size: 16px;
+            color: #333;
+        }
+        
+        .debug-filters {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .debug-filters label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .debug-search {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+            width: 100%;
+        }
+        
+        #log-search {
+            flex: 1;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        
+        button#search-btn, button#clear-logs-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        
+        button#clear-logs-btn {
+            background: #dc3545;
+        }
+        
+        #debug-log {
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        
+        .log-container {
+            padding: 10px 0;
+        }
+        
+        .log-entry {
+            display: flex;
+            padding: 2px 10px;
+            margin-bottom: 1px;
+            border-left: 4px solid transparent;
+        }
+        
+        .log-entry:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .log-timestamp {
+            min-width: 160px;
+            color: #666;
+        }
+        
+        .log-level {
+            min-width: 80px;
+            font-weight: bold;
+        }
+        
+        .log-message {
+            flex: 1;
+        }
+        
+        .log-context {
+            min-width: 120px;
+            color: #0277bd;
+            font-style: italic;
+        }
+        
+        /* Cores para os diferentes níveis de log */
+        .log-info {
+            border-left-color: #0d6efd;
+        }
+        .log-info .log-level {
+            color: #0d6efd;
+        }
+        
+        .log-warning {
+            border-left-color: #ffc107;
+            background-color: rgba(255, 243, 205, 0.3);
+        }
+        .log-warning .log-level {
+            color: #856404;
+        }
+        
+        .log-error {
+            border-left-color: #dc3545;
+            background-color: rgba(248, 215, 218, 0.3);
+        }
+        .log-error .log-level {
+            color: #721c24;
+        }
+        
+        .log-debug {
+            border-left-color: #6c757d;
+        }
+        .log-debug .log-level {
+            color: #6c757d;
+        }
+        
+        .log-more {
+            text-align: center;
+            color: #6c757d;
+            font-style: italic;
+            padding: 5px;
+        }
+        
+        .log-empty {
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-style: italic;
+        }
+        
+        /* Para destacar resultados de busca */
+        .log-highlight {
+            background-color: #ffeb3b;
+            color: #000;
+        }
+        
+        /* Log oculto por filtro */
+        .log-hidden {
+            display: none;
+        }
+    </style>
+
+    <!-- JavaScript para interatividade da área de debug -->
+    <script>
+        $(document).ready(function() {
+            // Contador de logs inicial
+            updateLogCount();
+            
+            // Filtrar logs por nível
+            $('.log-filter').change(function() {
+                let activeFilters = [];
+                $('.log-filter:checked').each(function() {
+                    activeFilters.push($(this).val());
+                });
+                
+                $('.log-entry').each(function() {
+                    const logLevel = $(this).data('level');
+                    if (!logLevel || activeFilters.includes(logLevel)) {
+                        $(this).removeClass('log-hidden');
+                    } else {
+                        $(this).addClass('log-hidden');
+                    }
+                });
+                
+                updateLogCount();
+            });
+            
+            // Busca nos logs
+            $('#search-btn').click(function() {
+                searchLogs();
+            });
+            
+            $('#log-search').keypress(function(e) {
+                if (e.which == 13) { // Enter key
+                    searchLogs();
+                }
+            });
+            
+            // Limpar visualização
+            $('#clear-logs-btn').click(function() {
+                $('.log-container').empty()
+                    .append('<div class="log-empty">Logs limpos da visualização.</div>');
+                updateLogCount();
+            });
+            
+            function searchLogs() {
+                const searchText = $('#log-search').val().toLowerCase();
+                
+                // Remove destacamento anterior
+                $('.log-message').find('mark').contents().unwrap();
+                
+                if (!searchText) {
+                    return;
+                }
+                
+                let matchCount = 0;
+                
+                // Para cada entrada de log visível
+                $('.log-entry:not(.log-hidden)').each(function() {
+                    const $message = $(this).find('.log-message');
+                    const messageText = $message.text();
+                    
+                    if (messageText.toLowerCase().includes(searchText)) {
+                        // Destaca o texto encontrado
+                        const regex = new RegExp('(' + searchText.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + ')', 'gi');
+                        const highlighted = messageText.replace(regex, '<mark>$1</mark>');
+                        $message.html(highlighted);
+                        matchCount++;
+                    }
+                });
+                
+                // Feedback da busca
+                if (matchCount > 0) {
+                    alert(`Encontradas ${matchCount} ocorrências para "${searchText}"`);
+                } else {
+                    alert(`Nenhuma ocorrência encontrada para "${searchText}"`);
+                }
+            }
+            
+            function updateLogCount() {
+                const totalLogs = $('.log-entry').length;
+                const visibleLogs = $('.log-entry:not(.log-hidden)').length;
+                
+                if (totalLogs === visibleLogs) {
+                    $('#log-count').text(`${totalLogs} logs`);
+                } else {
+                    $('#log-count').text(`${visibleLogs} de ${totalLogs} logs`);
+                }
+            }
+        });
+    </script>
 </body>
 </html>
 
@@ -1105,10 +1468,54 @@ if (!is_dir(LOG_DIR)) {
 }
 define('LOG_FILE', LOG_DIR . '/debug.log');
 
-function debug_log($message) {
+// Define constantes para níveis de log apenas se não estiverem definidas
+if (!defined('LOG_INFO'))    define('LOG_INFO', 'INFO');
+if (!defined('LOG_WARNING')) define('LOG_WARNING', 'WARNING');
+if (!defined('LOG_ERROR'))   define('LOG_ERROR', 'ERROR');
+if (!defined('LOG_DEBUG'))   define('LOG_DEBUG', 'DEBUG');
+
+/**
+ * Função aprimorada de log com suporte a níveis
+ * 
+ * @param string $message Mensagem a ser registrada
+ * @param string $level Nível do log (INFO, WARNING, ERROR, DEBUG)
+ * @param string $context Contexto opcional para o log
+ * @return bool Sucesso da operação
+ */
+function debug_log($message, $level = 'INFO', $context = '') {
     $date = date("Y-m-d H:i:s");
-    $entry = "[$date] $message" . PHP_EOL;
-    file_put_contents(LOG_FILE, $entry, FILE_APPEND);
+    $contextInfo = $context ? "[$context]" : "";
+    // Formato corrigido: [DATA][NÍVEL]mensagem (sem quebras de linha no nível)
+    $entry = "[$date][$level]$contextInfo $message" . PHP_EOL;
+    return file_put_contents(LOG_FILE, $entry, FILE_APPEND);
+}
+
+/**
+ * Funções auxiliares para simplificar os logs em diferentes níveis
+ * Cada função é definida apenas se não existir
+ */
+if (!function_exists('log_info')) {
+    function log_info($message, $context = '') {
+        return debug_log($message, LOG_INFO, $context);
+    }
+}
+
+if (!function_exists('log_warning')) {
+    function log_warning($message, $context = '') {
+        return debug_log($message, LOG_WARNING, $context);
+    }
+}
+
+if (!function_exists('log_error')) {
+    function log_error($message, $context = '') {
+        return debug_log($message, LOG_ERROR, $context);
+    }
+}
+
+if (!function_exists('log_debug')) {
+    function log_debug($message, $context = '') {
+        return debug_log($message, LOG_DEBUG, $context);
+    }
 }
 ?>
 
