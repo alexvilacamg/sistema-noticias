@@ -1,13 +1,13 @@
 <?php
 
 // Ajuste caminhos conforme necessário, mas em geral ficaria assim:
-require_once __DIR__ . '/../../config/scrapers_config.php';
+require_once __DIR__ . '/../../../config/scrapers_config.php';
 
 // IMPORTANTE: adicionar require_once para cada scraper que estiver na config
 // se não estiver usando autoload PSR-4/Composer. 
-require_once __DIR__ . '/../models/G1Scraper.php';
-require_once __DIR__ . '/../models/UOLScraper.php';
-require_once __DIR__ . '/../models/FolhaScraper.php';
+require_once __DIR__ . '/../Models/G1Scraper.php';
+require_once __DIR__ . '/../Models/UOLScraper.php';
+require_once __DIR__ . '/../Models/FolhaScraper.php';
 // Se tiver EstadaoScraper, ou outros, inclua aqui também
 
 class ScraperFactory
@@ -20,7 +20,7 @@ class ScraperFactory
     public static function createAllScrapers(): array
     {
         // Carrega o array de nomes de classes do config
-        $scraperClasses = require __DIR__ . '/../../config/scrapers_config.php';
+        $scraperClasses = require __DIR__ . '/../../../config/scrapers_config.php';
 
         $scrapers = [];
         foreach ($scraperClasses as $className) {

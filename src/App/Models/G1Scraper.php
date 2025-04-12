@@ -5,7 +5,7 @@ class G1Scraper extends AbstractNewsScraper
 {
     public function __construct()
     {
-        $cacheFile = __DIR__ . '/../../cache/g1_news.json';
+        $cacheFile = __DIR__ . '/../../../cache/g1_news.json';
         $cacheTime = 600; // 10 minutos
         parent::__construct($cacheFile, $cacheTime);
         $this->log("[G1] | Inicializado: Cache definido para 10 minutos.");

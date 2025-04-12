@@ -1,6 +1,6 @@
 <?php
 require_once 'NewsScraperInterface.php';
-require_once __DIR__ . '/../utils/HttpClient.php';
+require_once __DIR__ . '/../Utils/HttpClient.php';
 
 /**
  * Classe abstrata que cuida de:

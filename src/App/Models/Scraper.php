@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../factories/ScraperFactory.php';
+require_once __DIR__ . '/../Factories/ScraperFactory.php';
 // Se precisar, inclua 'require_once' de classes que não estejam em autoload.
 
 class Scraper
