@@ -1,0 +1,1106 @@
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\background_scrape.php
+================================================================================
+
+<?php
+// background_scrape.php
+
+require_once __DIR__ . '/app/models/Scraper.php';
+
+$scraper = new Scraper();
+$articles = $scraper->getAllPoliticalNews();
+
+$cacheFile = __DIR__ . '/cache/all_news.json';
+if (!is_dir(__DIR__ . '/cache')) {
+    mkdir(__DIR__ . '/cache', 0777, true);
+}
+
+file_put_contents($cacheFile, json_encode($articles));
+echo "Scraping concluído com sucesso!";
+?>
+
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\controllers\NewsController.php
+================================================================================
+
+<?php
+require_once __DIR__ . '/../models/Scraper.php';
+
+class NewsController {
+    public function index() {
+        $scraper = new Scraper();
+        $news = $scraper->getAllPoliticalNews();
+        require_once __DIR__ . '/../views/index.php';
+    }
+}
+?>
+
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\factories\ScraperFactory.php
+================================================================================
+
+<?php
+
+// Ajuste caminhos conforme necessário, mas em geral ficaria assim:
+require_once __DIR__ . '/../../config/scrapers_config.php';
+
+// IMPORTANTE: adicionar require_once para cada scraper que estiver na config
+// se não estiver usando autoload PSR-4/Composer. 
+require_once __DIR__ . '/../models/G1Scraper.php';
+require_once __DIR__ . '/../models/UOLScraper.php';
+require_once __DIR__ . '/../models/FolhaScraper.php';
+// Se tiver EstadaoScraper, ou outros, inclua aqui também
+
+class ScraperFactory
+{
+    /**
+     * Lê config/scrapers_config.php e instancia cada classe listada.
+     *
+     * @return array Array de instâncias de scrapers
+     */
+    public static function createAllScrapers(): array
+    {
+        // Carrega o array de nomes de classes do config
+        $scraperClasses = require __DIR__ . '/../../config/scrapers_config.php';
+
+        $scrapers = [];
+        foreach ($scraperClasses as $className) {
+            // Agora class_exists($className) retornará true, pois já importamos as classes
+            if (class_exists($className)) {
+                // Instancia dinamicamente
+                $scrapers[] = new $className();
+            }
+        }
+        return $scrapers;
+    }
+}
+
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models\AbstractNewsScraper.php
+================================================================================
+
+<?php
+require_once 'NewsScraperInterface.php';
+require_once __DIR__ . '/../utils/HttpClient.php';
+
+/**
+ * Classe abstrata que cuida de:
+ * - Cache (getFromCache / saveToCache)
+ * - Obter HTML via HttpClient
+ * - Criação de DOMXPath (createDomXPath)
+ * - Logging padronizado (log)
+ */
+abstract class AbstractNewsScraper implements NewsScraperInterface
+{
+    protected $cacheFile;
+    protected $cacheTime;
+
+    public function __construct($cacheFile, $cacheTime = 600)
+    {
+        $this->cacheFile = $cacheFile;
+        $this->cacheTime = $cacheTime;
+    }
+
+    /**
+     * Tenta recuperar os dados do cache, se válido.
+     */
+    protected function getFromCache(): ?array
+    {
+        if (file_exists($this->cacheFile) && ((time() - filemtime($this->cacheFile)) < $this->cacheTime)) {
+            $this->log("Utilizando cache do arquivo: " . $this->cacheFile);
+            $data = file_get_contents($this->cacheFile);
+            $newsItems = json_decode($data, true);
+            if (is_array($newsItems)) {
+                return $newsItems;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Salva os dados no cache.
+     */
+    protected function saveToCache(array $data): void
+    {
+        if (!is_dir(dirname($this->cacheFile))) {
+            mkdir(dirname($this->cacheFile), 0777, true);
+        }
+        file_put_contents($this->cacheFile, json_encode($data));
+    }
+
+    /**
+     * Obtém o HTML de uma URL usando HttpClient.
+     */
+    protected function getHtml(string $url, array $headers = []): ?string
+    {
+        $this->log("getHtml: Buscando HTML de " . $url);
+        return HttpClient::get($url, $headers);
+    }
+
+    /**
+     * Cria um DOMDocument e DOMXPath a partir de uma string HTML, já tratando encoding e supressão de erros.
+     */
+    protected function createDomXPath(string $html): ?\DOMXPath
+    {
+        // Converter encoding para evitar problemas de caracteres
+        $convmap = [0x80, 0x10FFFF, 0, 0x10FFFF];
+        $html = mb_encode_numericentity($html, $convmap, 'UTF-8');
+
+        $dom = new \DOMDocument();
+        libxml_use_internal_errors(true);
+        $dom->loadHTML($html);
+        libxml_clear_errors();
+
+        return new \DOMXPath($dom);
+    }
+
+    /**
+     * Método simples de log, para centralizar prefixos.
+     */
+    protected function log(string $message): void
+    {
+        // Pode customizar o prefixo da classe, se desejar
+        debug_log("[" . static::class . "] " . $message);
+    }
+}
+
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models\FolhaScraper.php
+================================================================================
+
+<?php
+require_once 'AbstractNewsScraper.php';
+
+class FolhaScraper extends AbstractNewsScraper
+{
+    public function __construct()
+    {
+        $cacheFile = __DIR__ . '/../../cache/folha_news.json';
+        $cacheTime = 600; // 10 minutos
+        parent::__construct($cacheFile, $cacheTime);
+        $this->log("[Folha] | Inicializado: Cache definido para 10 minutos.");
+    }
+
+    public function fetchNews(bool $forceUpdate = false): array
+    {
+        if (!$forceUpdate) {
+            $cached = $this->getFromCache();
+            if ($cached !== null) {
+                $this->log("[Folha] | Cache: Utilizando dados do cache.");
+                return $cached;
+            }
+        }
+        
+        $this->log("[Folha] | Scraping: Iniciando scraping da página de listagem.");
+        $url = 'https://www1.folha.uol.com.br/poder/';
+        $headers = [
+            'User-Agent' => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36",
+            'Referer'    => "https://www.google.com/"
+        ];
+        
+        $html = $this->getHtml($url, $headers);
+        if ($html === null) {
+            $this->log("[Folha] | Erro: Falha ao obter HTML da listagem.");
+            return [];
+        }
+        
+        $xpath = $this->createDomXPath($html);
+        if (!$xpath) {
+            $this->log("[Folha] | Erro: Falha ao criar DOMXPath.");
+            return [];
+        }
+
+        $newsItems = [];
+        
+        // Seleciona cada bloco <li> com a classe "c-headline c-headline--newslist"
+        $nodes = $xpath->query("//li[contains(@class, 'c-headline') and contains(@class, 'c-headline--newslist')]");
+        $this->log("[Folha] | Listagem: Nós encontrados = " . $nodes->length);
+        
+        foreach ($nodes as $node) {
+            // Extrai URL do artigo
+            $linkNode = $xpath->query(".//div[contains(@class,'c-headline__content')]/a", $node);
+            if (!$linkNode || $linkNode->length === 0) {
+                continue;
+            }
+            $articleUrl = $linkNode->item(0)->getAttribute('href');
+
+            // Título (pego da listagem)
+            $titleNode = $xpath->query(".//h2[contains(@class,'c-headline__title')]", $node);
+            $title = '';
+            if ($titleNode && $titleNode->length > 0) {
+                $title = trim($titleNode->item(0)->nodeValue);
+            }
+
+            // Descrição (pego da listagem)
+            $descNode = $xpath->query(".//p[contains(@class,'c-headline__standfirst')]", $node);
+            $description = 'Descrição não disponível.';
+            if ($descNode && $descNode->length > 0) {
+                $description = trim($descNode->item(0)->nodeValue);
+            }
+
+            // Data (pego da listagem)
+            $timeNode = $xpath->query(".//time[contains(@class,'c-headline__dateline')]", $node);
+            $publishedAt = 'Data não informada.';
+            if ($timeNode && $timeNode->length > 0) {
+                // Primeiro tenta pegar do atributo datetime
+                $publishedAtAttr = trim($timeNode->item(0)->getAttribute('datetime'));
+                if ($publishedAtAttr) {
+                    $publishedAt = $publishedAtAttr;
+                } else {
+                    // Se não existir, pega o texto dentro de <time>
+                    $timeText = trim($timeNode->item(0)->nodeValue);
+                    if ($timeText) {
+                        $publishedAt = $timeText;
+                    }
+                }
+            }
+
+            // Autor (normalmente não aparece no listing, então vamos buscar na página do artigo)
+            $author = 'Não disponível';
+
+            // Agora buscamos dados detalhados no artigo individual
+            $articleDetails = $this->scrapeArticle($articleUrl, $headers);
+            if ($articleDetails) {
+                // Se os detalhes tiverem autor, data ou até título/descrição melhores, use-os
+                if (!empty($articleDetails['author'])) {
+                    $author = $articleDetails['author'];
+                }
+                // Se quiser sobrepor título/descrição/data, também pode:
+                // if (!empty($articleDetails['title'])) { $title = $articleDetails['title']; }
+                // if (!empty($articleDetails['description'])) { $description = $articleDetails['description']; }
+                // if (!empty($articleDetails['publishedAt']) && $articleDetails['publishedAt'] !== 'Data não informada.') {
+                //    $publishedAt = $articleDetails['publishedAt'];
+                // }
+            }
+
+            if ($title && $articleUrl) {
+                $newsItems[] = [
+                    'title'       => $title,
+                    'url'         => $articleUrl,
+                    'description' => $description,
+                    'author'      => $author,
+                    'publishedAt' => $publishedAt,
+                    'source'      => 'Folha'
+                ];
+            }
+        }
+        
+        $this->log("[Folha] | Concluído: Scraping finalizado. Artigos encontrados = " . count($newsItems));
+        $this->saveToCache($newsItems);
+        return $newsItems;
+    }
+
+    /**
+     * Faz uma segunda requisição para o artigo e extrai autor, data, etc.
+     */
+    private function scrapeArticle(string $articleUrl, array $headers): ?array
+    {
+        $this->log("[Folha] | scrapeArticle: Buscando HTML do artigo: " . $articleUrl);
+        $html = $this->getHtml($articleUrl, $headers);
+        if ($html === null) {
+            $this->log("[Folha] | scrapeArticle: Erro ao obter HTML do artigo: " . $articleUrl);
+            return null;
+        }
+
+        $xpath = $this->createDomXPath($html);
+        if (!$xpath) {
+            $this->log("[Folha] | scrapeArticle: Falha ao criar DOMXPath no artigo: " . $articleUrl);
+            return null;
+        }
+
+        // Exemplo de como pegar o autor:
+        //   <div class="c-news__wrap">
+        //     <div class="c-signature">
+        //       <strong class="c-signature__author">
+        //         <a href="...">Catia Seabra</a>
+        //       </strong>
+        //     </div>
+        //   </div>
+        $authorNodes = $xpath->query("//div[contains(@class, 'c-news__wrap')]//div[contains(@class, 'c-signature')]//strong[contains(@class, 'c-signature__author')]/a");
+        $author = ($authorNodes->length > 0)
+            ? trim($authorNodes->item(0)->nodeValue)
+            : 'Não disponível';
+
+        $this->log("[Folha] | scrapeArticle: Autor extraído = " . $author);
+
+        // Se quiser, pode extrair título, descrição, data daqui também.
+        // Exemplo rápido (ajuste se for preciso):
+        $titleNodes = $xpath->query("//h1[contains(@class, 'c-content-head__title')]");
+        $title = $titleNodes->length > 0 ? trim($titleNodes->item(0)->nodeValue) : '';
+
+        // Retorna só o que for precisar
+        return [
+            'author' => $author,
+            'title'  => $title,
+            // 'description' => ...,
+            // 'publishedAt' => ...
+        ];
+    }
+}
+
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models\G1Scraper.php
+================================================================================
+
+<?php
+require_once 'AbstractNewsScraper.php';
+
+class G1Scraper extends AbstractNewsScraper
+{
+    public function __construct()
+    {
+        $cacheFile = __DIR__ . '/../../cache/g1_news.json';
+        $cacheTime = 600; // 10 minutos
+        parent::__construct($cacheFile, $cacheTime);
+        $this->log("[G1] | Inicializado: Cache definido para 10 minutos.");
+    }
+
+    public function fetchNews(bool $forceUpdate = false): array
+    {
+        if (!$forceUpdate) {
+            $cached = $this->getFromCache();
+            if ($cached !== null) {
+                $this->log("[G1] | Cache: Utilizando dados do cache.");
+                return $cached;
+            }
+        }
+        
+        $this->log("[G1] | Scraping: Iniciando scraping da página de listagem.");
+        $url = 'https://g1.globo.com/politica/';
+        $headers = [
+            'User-Agent' => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36"
+        ];
+
+        $html = $this->getHtml($url, $headers);
+        if ($html === null) {
+            $this->log("[G1] | Erro: Falha ao obter HTML da listagem.");
+            return [];
+        }
+        
+        // Em vez do DOMDocument manual, usamos:
+        $xpath = $this->createDomXPath($html);
+        if (!$xpath) {
+            $this->log("[G1] | Erro: Falha ao criar DOMXPath.");
+            return [];
+        }
+
+        $newsItems = [];
+        
+        // Seleciona os links dos artigos na página de listagem
+        $nodes = $xpath->query("//a[contains(@class, 'feed-post-link')]");
+        $this->log("[G1] | Listagem: Nós encontrados = " . $nodes->length);
+        
+        $articleLinks = [];
+        foreach ($nodes as $node) {
+            if (!$node instanceof \DOMElement) {
+                continue;
+            }
+            $link = $node->getAttribute('href');
+            if ($link && !in_array($link, $articleLinks)) {
+                $articleLinks[] = $link;
+            }
+        }
+        
+        foreach ($articleLinks as $articleUrl) {
+            $details = $this->scrapeArticle($articleUrl, $headers);
+            if ($details) {
+                $newsItems[] = $details;
+            }
+        }
+        
+        $this->log("[G1] | Concluído: Scraping finalizado. Artigos encontrados = " . count($newsItems));
+        $this->saveToCache($newsItems);
+        return $newsItems;
+    }
+    
+    private function scrapeArticle(string $articleUrl, array $headers): ?array
+    {
+        $html = $this->getHtml($articleUrl, $headers);
+        if ($html === null) {
+            $this->log("[G1] | Erro: Falha ao obter HTML do artigo: " . $articleUrl);
+            return null;
+        }
+        
+        // Cria DOMXPath via método auxiliar
+        $xpath = $this->createDomXPath($html);
+        if (!$xpath) {
+            $this->log("[G1] | Erro: DOMXPath nulo no artigo: " . $articleUrl);
+            return null;
+        }
+        
+        // Título
+        $titleNodes = $xpath->query("//div[contains(@class, 'mc-article-header')]//h1[@itemprop='headline']");
+        $title = $titleNodes->length > 0 ? trim($titleNodes->item(0)->nodeValue) : '';
+        
+        // Descrição
+        $descNodes = $xpath->query("//div[contains(@class, 'mc-article-header')]//h2[contains(@class, 'content-head__subtitle') and @itemprop='alternativeHeadline']");
+        $description = $descNodes->length > 0 ? trim($descNodes->item(0)->nodeValue) : 'Descrição não disponível.';
+
+        // Data de publicação
+        $timeNodes = $xpath->query("//div[contains(@class, 'mc-article-header')]//time[@itemprop='datePublished']");
+        $publishedAt = $timeNodes->length > 0 ? $timeNodes->item(0)->getAttribute('datetime') : 'Data não informada.';
+        
+        // Autor
+        $author = '';
+        $authorNodes = $xpath->query("//div[contains(@class, 'mc-article-header')]//p[contains(@class, 'content-publication-data__from')]");
+        if ($authorNodes->length > 0) {
+            $aNodes = $xpath->query(".//a", $authorNodes->item(0));
+            if ($aNodes->length > 0) {
+                $author = trim($aNodes->item(0)->nodeValue);
+            }
+        }
+        
+        if (!$title) {
+            $this->log("[G1] | Alerta: Título não extraído para artigo: " . $articleUrl);
+            return null;
+        }
+        
+        return [
+            'title'       => $title,
+            'url'         => $articleUrl,
+            'description' => $description,
+            'author'      => $author ?: 'Não disponível',
+            'publishedAt' => $publishedAt ?: 'Data não informada.',
+            'source'      => 'G1'
+        ];
+    }
+}
+
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models\NewsScraperInterface.php
+================================================================================
+
+<?php
+interface NewsScraperInterface {
+    /**
+     * Método para buscar notícias do portal específico.
+     *
+     * @return array Array de notícias.
+     */
+    public function fetchNews(): array;
+}
+?>
+
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models\Scraper.php
+================================================================================
+
+<?php
+require_once __DIR__ . '/../factories/ScraperFactory.php';
+// Se precisar, inclua 'require_once' de classes que não estejam em autoload.
+
+class Scraper
+{
+    private $scrapers = [];
+
+    public function __construct()
+    {
+        // Em vez de instanciar manualmente, carregamos via factory:
+        $this->scrapers = ScraperFactory::createAllScrapers();
+    }
+
+    public function getAllPoliticalNews(bool $forceUpdate = false): array
+    {
+        $news = [];
+        foreach ($this->scrapers as $scraper) {
+            // Cada $scraper é algo que herda AbstractNewsScraper e implementa fetchNews()
+            $news = array_merge($news, $scraper->fetchNews($forceUpdate));
+        }
+
+        // Normaliza datas (você já tem esse método):
+        foreach ($news as &$item) {
+            if (!empty($item['publishedAt'])) {
+                $item['publishedAt'] = $this->normalizeDate($item['publishedAt']);
+            }
+        }
+        return $news;
+    }
+
+    private function normalizeDate(string $date): string
+    {
+        // Aqui segue o código que você já tem
+        $date = trim($date);
+        if (strpos($date, "T") !== false) {
+            try {
+                $dt = new DateTime($date);
+                return $dt->format('Y-m-d\TH:i:sP');
+            } catch (Exception $e) {
+                // tenta formatos abaixo
+            }
+        }
+        $dt = DateTime::createFromFormat('Y-m-d H:i:s', $date, new DateTimeZone('America/Sao_Paulo'));
+        if ($dt !== false) {
+            return $dt->format('Y-m-d\TH:i:sP');
+        }
+        $dt = DateTime::createFromFormat('d/m/Y H:i:s', $date, new DateTimeZone('America/Sao_Paulo'));
+        if ($dt !== false) {
+            return $dt->format('Y-m-d\TH:i:sP');
+        }
+        $dt = DateTime::createFromFormat('d/m/Y H:i', $date, new DateTimeZone('America/Sao_Paulo'));
+        if ($dt !== false) {
+            return $dt->format('Y-m-d\TH:i:sP');
+        }
+        if (strtotime($date) !== false) {
+            $dt = new DateTime($date);
+            return $dt->format('Y-m-d\TH:i:sP');
+        }
+        return "1970-01-01T00:00:00+00:00";
+    }
+}
+
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\models\UOLScraper.php
+================================================================================
+
+<?php
+require_once 'AbstractNewsScraper.php';
+
+class UOLScraper extends AbstractNewsScraper
+{
+    public function __construct()
+    {
+        $cacheFile = __DIR__ . '/../../cache/uol_news.json';
+        $cacheTime = 600;
+        parent::__construct($cacheFile, $cacheTime);
+        $this->log("[UOL] | Inicializado: Cache definido para 10 minutos.");
+    }
+
+    public function fetchNews(bool $forceUpdate = false): array
+    {
+        if (!$forceUpdate) {
+            $cached = $this->getFromCache();
+            if ($cached !== null) {
+                $this->log("[UOL] | Cache: Utilizando dados do cache.");
+                return $cached;
+            }
+        }
+        
+        $this->log("[UOL] | Scraping: Iniciando scraping da página de listagem.");
+        $url = 'https://noticias.uol.com.br/politica/';
+        $headers = [
+            'User-Agent' => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36",
+            'Referer'    => "https://www.google.com/"
+        ];
+        
+        $html = $this->getHtml($url, $headers);
+        if ($html === null) {
+            $this->log("[UOL] | Erro: Falha ao obter HTML da listagem.");
+            return [];
+        }
+
+        $xpath = $this->createDomXPath($html);
+        if (!$xpath) {
+            $this->log("[UOL] | Erro: Falha ao criar DOMXPath.");
+            return [];
+        }
+        
+        $newsItems = [];
+        
+        // Busca nós com a classe "thumbnails-item" (excluindo itemAds)
+        $nodes = $xpath->query("//div[contains(@class, 'thumbnails-item') and not(contains(@class, 'itemAds'))]");
+        $this->log("[UOL] | Listagem: Itens encontrados = " . $nodes->length);
+        
+        foreach ($nodes as $node) {
+            if (!$node instanceof \DOMElement) continue;
+            $aTag = $node->getElementsByTagName('a')->item(0);
+            if (!$aTag) continue;
+            $link = $aTag->getAttribute('href');
+            
+            $titleNodes = $xpath->query(".//h3[contains(@class, 'thumb-title')]", $node);
+            $title = ($titleNodes->length > 0) ? trim($titleNodes->item(0)->nodeValue) : 'Sem título';
+            
+            // Data do listing
+            $timeNodes = $xpath->query(".//*[contains(@class, 'thumb-date')]", $node);
+            $publishedAt = ($timeNodes->length > 0) ? trim($timeNodes->item(0)->nodeValue) : 'Data não informada';
+            
+            $details = $this->scrapeArticle($link, $headers);
+            if ($details) {
+                // Se o artigo tiver data válida, substitui a data do listing
+                if (!empty($details['publishedAt']) && $details['publishedAt'] !== 'Data não informada.') {
+                    $publishedAt = $details['publishedAt'];
+                }
+                $newsItems[] = [
+                    'title'       => $title,
+                    'url'         => $link,
+                    'description' => $details['description'] ?? 'Descrição não disponível.',
+                    'author'      => $details['author'] ?? 'Não disponível',
+                    'publishedAt' => $publishedAt,
+                    'source'      => 'UOL'
+                ];
+            } else {
+                $newsItems[] = [
+                    'title'       => $title,
+                    'url'         => $link,
+                    'description' => 'Descrição não disponível.',
+                    'author'      => 'Não disponível',
+                    'publishedAt' => $publishedAt,
+                    'source'      => 'UOL'
+                ];
+            }
+        }
+        
+        $this->log("[UOL] | Concluído: Scraping finalizado. Artigos encontrados = " . count($newsItems));
+        $this->saveToCache($newsItems);
+        return $newsItems;
+    }
+    
+    private function scrapeArticle(string $articleUrl, array $headers): ?array
+    {
+        $html = $this->getHtml($articleUrl, $headers);
+        if ($html === null) {
+            $this->log("[UOL] | Erro: Falha ao obter HTML do artigo: " . $articleUrl);
+            return null;
+        }
+        
+        $xpath = $this->createDomXPath($html);
+        if (!$xpath) {
+            $this->log("[UOL] | Erro: DOMXPath nulo no artigo: " . $articleUrl);
+            return null;
+        }
+        
+        // Primeiro parágrafo do container "jupiter-paragraph-fragment"
+        $paraNodes = $xpath->query("//div[contains(@class, 'jupiter-paragraph-fragment')]//p");
+        $description = ($paraNodes->length > 0) ? trim($paraNodes->item(0)->nodeValue) : 'Descrição não disponível.';
+        
+        // Autor
+        $authorNodes = $xpath->query("//div[contains(@class, 'solar-author-names')]//a[contains(@class, 'solar-author-name')]");
+        $author = ($authorNodes->length > 0) ? trim($authorNodes->item(0)->nodeValue) : 'Não disponível';
+        
+        // Data
+        $timeNodes = $xpath->query("//div[contains(@class, 'solar-date')]//time[@class='date']");
+        $publishedAt = ($timeNodes->length > 0) ? trim($timeNodes->item(0)->getAttribute('datetime')) : 'Data não informada.';
+        
+        return [
+            'description' => $description,
+            'author'      => $author,
+            'publishedAt' => $publishedAt
+        ];
+    }
+}
+
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\utils\HttpClient.php
+================================================================================
+
+<?php
+class HttpClient {
+    /**
+     * Executa uma requisição GET na URL informada com os headers fornecidos.
+     */
+    public static function get(string $url, array $headers = []): ?string {
+        // Ajusta o tempo máximo de execução do script para 15 segundos
+        set_time_limit(15);
+        
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        // Define o tempo máximo de execução para o cURL (em segundos)
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        // Define o tempo máximo de conexão (em segundos)
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+
+        if (!empty($headers)) {
+            $formattedHeaders = [];
+            foreach ($headers as $key => $value) {
+                $formattedHeaders[] = $key . ": " . $value;
+            }
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $formattedHeaders);
+        }
+        
+        $html = curl_exec($ch);
+        if ($html === false) {
+            debug_log("[HttpClient] | Erro ao obter HTML de $url: " . curl_error($ch));
+            curl_close($ch);
+            return null;
+        }
+        curl_close($ch);
+        return $html;
+    }
+}
+?>
+
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\app\views\index.php
+================================================================================
+
+<?php
+// app/views/index.php
+?>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Notícias de Política</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"/>
+    <!-- jQuery (necessário para o DataTables) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        thead {
+            background-color: #f5f5f5;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+        tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+        /* Área para exibir os logs de depuração */
+        #debug-log {
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-top: 20px;
+            max-height: 250px;
+            overflow-y: scroll;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        /* Área para exibir informações de atualização */
+        #update-info {
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+        #force-update-btn {
+            margin-bottom: 20px;
+            padding: 8px 16px;
+            background: #1976d2;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #force-update-btn:hover {
+            background: #1565c0;
+        }
+        /* Indicador de carregamento discreto */
+        #loading-indicator {
+            display: inline-block;
+            margin-left: 10px;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            color: #555;
+        }
+    </style>
+    <script>
+        $(document).ready(function(){
+            $('#newsTable').DataTable({
+                language: {
+                    "decimal":        "",
+                    "emptyTable":     "Nenhuma notícia encontrada",
+                    "info":           "Mostrando de _START_ até _END_ de _TOTAL_ entradas",
+                    "infoEmpty":      "Mostrando 0 até 0 de 0 entradas",
+                    "infoFiltered":   "(filtrado de _MAX_ entradas no total)",
+                    "thousands":      ".",
+                    "lengthMenu":     "Mostrar _MENU_ entradas",
+                    "loadingRecords": "Carregando...",
+                    "processing":     "Processando...",
+                    "search":         "Buscar:",
+                    "zeroRecords":    "Nenhum registro encontrado",
+                    "paginate": {
+                        "first":      "Primeiro",
+                        "last":       "Último",
+                        "next":       "Próximo",
+                        "previous":   "Anterior"
+                    },
+                    "aria": {
+                        "sortAscending":  ": ativar para classificar em ordem crescente",
+                        "sortDescending": ": ativar para classificar em ordem decrescente"
+                    }
+                },
+                order: [[0, 'desc']], // Ordena pela coluna de data usando o valor ISO no atributo data-order.
+                pageLength: 10
+            });
+            
+            // Ao clicar no botão "Forçar Atualização"
+            $('#force-update-btn').click(function(){
+                // Exibe indicador de carregamento
+                $('#loading-indicator').text("Atualizando...");
+                $.ajax({
+                    url: '/api/force_update.php',
+                    method: 'GET',
+                    dataType: 'json',
+                    complete: function() {
+                        // Atualiza indicador para sucesso por 2 segundos antes de recarregar
+                        $('#loading-indicator').text("Atualização concluída");
+                        setTimeout(function(){
+                            $('#loading-indicator').text("");
+                            location.reload();
+                        }, 2000);
+                    },
+                    error: function(error) {
+                        console.error('Erro ao atualizar:', error);
+                        $('#loading-indicator').text("Erro na atualização");
+                        setTimeout(function(){
+                            $('#loading-indicator').text("");
+                        }, 2000);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Notícias de Política</h1>
+    <?php 
+        require_once __DIR__ . '/../../config/config.php';
+        $cacheFile = CACHE_DIR . '/all_news.json';
+        $cacheTime = 600; // 10 minutos
+        if (file_exists($cacheFile)) {
+            $lastUpdate = filemtime($cacheFile);
+            $nextUpdate = $lastUpdate + $cacheTime;
+            echo "<div id='update-info'>";
+            echo "<strong>Última atualização:</strong> " . date("d/m/Y H:i:s", $lastUpdate) . "<br>";
+            echo "<strong>Próxima atualização (estimada):</strong> " . date("d/m/Y H:i:s", $nextUpdate);
+            echo "</div>";
+        } else {
+            echo "<div id='update-info'><strong>Nenhuma atualização realizada.</strong></div>";
+        }
+    ?>
+    
+    <!-- Botão para forçar atualização com indicador discreto -->
+    <button id="force-update-btn">Forçar Atualização</button>
+    <span id="loading-indicator"></span>
+    
+    <?php if (isset($news) && is_array($news) && count($news) > 0): ?>
+        <table id="newsTable">
+            <thead>
+                <tr>
+                    <th>Publicado em</th>
+                    <th>Veículo</th>
+                    <th>Título</th>
+                    <th>Descrição</th>
+                    <th>Autor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($news as $item): ?>
+                    <tr>
+                        <td data-order="<?php echo $item['publishedAt'] ?: ''; ?>">
+                            <?php 
+                                if (!empty($item['publishedAt']) && $item['publishedAt'] !== "1970-01-01T00:00:00+00:00" && strtotime($item['publishedAt']) !== false) {
+                                    echo date("d/m/Y H:i", strtotime($item['publishedAt']));
+                                } else {
+                                    echo 'Data não informada.';
+                                }
+                            ?>
+                        </td>
+                        <td><?php echo $item['source'] ?: 'Fonte não informada.'; ?></td>
+                        <td>
+                            <a href="<?php echo $item['url']; ?>" target="_blank">
+                                <?php echo $item['title'] ?? 'Sem título'; ?>
+                            </a>
+                        </td>
+                        <td><?php echo $item['description'] ?: 'Descrição não disponível.'; ?></td>
+                        <td><?php echo $item['author'] ?: 'Autor não disponível.'; ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php else: ?>
+        <p>Nenhuma notícia encontrada.</p>
+    <?php endif; ?>
+
+    <!-- Área para exibir os logs de depuração -->
+    <div id="debug-log">
+        <h3>Debug Logs</h3>
+        <pre>
+<?php 
+if (defined('LOG_FILE') && file_exists(LOG_FILE)) {
+    $lines = file(LOG_FILE, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    $lines = array_reverse($lines);
+    echo htmlspecialchars(implode("\n", $lines));
+} else {
+    echo "Nenhum log encontrado.";
+}
+?>
+        </pre>
+    </div>
+</body>
+</html>
+
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\config\config.php
+================================================================================
+
+<?php
+date_default_timezone_set('America/Sao_Paulo');
+define('CACHE_DIR', __DIR__ . '/../cache');
+define('LOG_DIR', __DIR__ . '/../logs');
+if (!is_dir(LOG_DIR)) {
+    mkdir(LOG_DIR, 0777, true);
+}
+define('LOG_FILE', LOG_DIR . '/debug.log');
+
+function debug_log($message) {
+    $date = date("Y-m-d H:i:s");
+    $entry = "[$date] $message" . PHP_EOL;
+    file_put_contents(LOG_FILE, $entry, FILE_APPEND);
+}
+?>
+
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\config\scrapers_config.php
+================================================================================
+
+<?php
+/**
+ * Lista de classes que representam cada portal.
+ * Basta adicionar/remover nomes de classes aqui
+ * para incluir/retirar scrapers sem editar o resto do código.
+ */
+return [
+    'G1Scraper',
+    'UOLScraper',
+    'FolhaScraper',    
+    // Adicione aqui novos scrapers, ex: 'PortalXYZScraper',
+];
+
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\public\index.php
+================================================================================
+
+<?php
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../app/controllers/NewsController.php';
+
+$controller = new NewsController();
+$controller->index();
+?>
+
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\public\api\force_update.php
+================================================================================
+
+<?php
+// Inicia o buffer e ativa exibição de erros (para depuração - remova display_errors depois)
+// ini_set('display_errors', 1);
+// error_reporting(E_ALL);
+
+ob_start();
+header('Content-Type: application/json');
+
+// Inclua as configurações globais (certifique-se de que o config/config.php NÃO tenha saída extra)
+require_once __DIR__ . '/../../config/config.php';
+require_once __DIR__ . '/../../app/models/Scraper.php';
+
+$scraper = new Scraper();
+$articles = $scraper->getAllPoliticalNews(true); // Força atualização
+
+$cacheDir = __DIR__ . '/../../cache';
+if (!is_dir($cacheDir)) {
+    mkdir($cacheDir, 0777, true);
+}
+$cacheFile = $cacheDir . '/all_news.json';
+file_put_contents($cacheFile, json_encode($articles));
+
+$response = [
+    'status' => 'success',
+    'message' => 'Atualização forçada realizada com sucesso!',
+    'articles_count' => count($articles)
+];
+
+// Limpa qualquer saída que possa ter sido gerada antes do JSON
+ob_end_clean();
+echo json_encode($response);
+?>
+
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\public\api\news.php
+================================================================================
+
+<?php
+header('Content-Type: application/json');
+
+// Define o caminho para o arquivo de cache
+$cacheFile = __DIR__ . '/../../cache/all_news.json';
+
+if (file_exists($cacheFile)) {
+    echo file_get_contents($cacheFile);
+} else {
+    echo json_encode([]);
+}
+?>
+
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\public\css\style.css
+================================================================================
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+h1 {
+    color: #333;
+}
+
+
+================================================================================
+Arquivo: C:\Users\alexa\OneDrive\Área de Trabalho\sistema-noticias\public\js\script.js
+================================================================================
+
+// Função que busca as notícias via endpoint JSON
+function fetchNews() {
+    fetch('/public/api/news.php')
+        .then(response => response.json())
+        .then(data => updateNews(data))
+        .catch(error => console.error('Erro ao buscar notícias:', error));
+}
+
+// Atualiza o conteúdo do container com as notícias recebidas
+function updateNews(data) {
+    const container = document.getElementById('newsContainer');
+    if (data && data.length > 0) {
+        let html = '<ul>';
+        data.forEach(item => {
+            html += `<li>
+                        <a href="${item.url}" target="_blank">${item.title}</a>
+                        <p>${item.description}</p>
+                     </li>`;
+        });
+        html += '</ul>';
+        container.innerHTML = html;
+    } else {
+        container.innerHTML = '<p>Nenhuma notícia encontrada.</p>';
+    }
+}
+
+// Chamada inicial para carregar as notícias imediatamente
+fetchNews();
+
+// Atualiza as notícias a cada 60 segundos (60000 milissegundos)
+setInterval(fetchNews, 60000);
+
+
