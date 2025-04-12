@@ -82,6 +82,20 @@
         .text-success { color: #2e7d32; font-weight: bold; }
         .text-info { color: #0277bd; }
         .text-danger { color: #c62828; font-weight: bold; }
+        /* Estilos específicos para a área de log */
+        .log-context {
+            min-width: 120px;
+            color: #0277bd;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .log-level {
+            min-width: 80px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-right: 10px;
+        }
     </style>
     <script>
         $(document).ready(function(){
@@ -338,16 +352,47 @@
                 $displayLines = array_slice($lines, 0, 100);
                 
                 foreach ($displayLines as $line) {
-                    // Processa a linha para extrair nível, data e mensagem
-                    $logLevel = 'INFO'; // Nível padrão
+                    // Temos um problema com o formato atual dos logs, vamos tentar extrair as partes importantes
                     
-                    if (preg_match('/\[(.*?)\]\[(INFO|WARNING|ERROR|DEBUG)\](.*)/', $line, $matches)) {
+                    // Padrão esperado: [DATA][NÍVEL][CONTEXTO] Mensagem
+                    if (preg_match('/\[([\d\- :]+)\]\[(INFO|WARNING|ERROR|DEBUG)\](?:\[(.*?)\])?\s*(.*)/', $line, $matches)) {
                         $timestamp = $matches[1];
                         $logLevel = $matches[2];
-                        $logContent = $matches[3];
+                        $context = !empty($matches[3]) ? $matches[3] : '';
+                        $logContent = $matches[4];
                     } else {
-                        $timestamp = '';
-                        $logContent = $line;
+                        // Fallback para logs antigos ou com formato diferente
+                        // Tenta encontrar pelo menos a data e alguma indicação de nível
+                        if (preg_match('/\[([\d\- :]+)\]/', $line, $dateMatch)) {
+                            $timestamp = $dateMatch[1];
+                            
+                            // Identifica o nível com base em palavras-chave comuns
+                            if (stripos($line, 'erro') !== false || stripos($line, 'falha') !== false) {
+                                $logLevel = 'ERROR';
+                            } else if (stripos($line, 'aviso') !== false || stripos($line, 'alerta') !== false) {
+                                $logLevel = 'WARNING';
+                            } else if (stripos($line, 'debug') !== false) {
+                                $logLevel = 'DEBUG';
+                            } else {
+                                $logLevel = 'INFO';
+                            }
+                            
+                            // Extrai o contexto (geralmente entre colchetes após a data)
+                            if (preg_match('/\]\[(.*?)\]/', $line, $contextMatch)) {
+                                $context = $contextMatch[1];
+                            } else {
+                                $context = '';
+                            }
+                            
+                            // A mensagem é o resto da linha após os metadados
+                            $logContent = preg_replace('/^\[.*?\](\[.*?\])*\s*/', '', $line);
+                        } else {
+                            // Se não conseguir extrair nada, usa valores padrão
+                            $timestamp = '';
+                            $logLevel = 'INFO';
+                            $context = '';
+                            $logContent = $line;
+                        }
                     }
                     
                     // Define a classe CSS baseada no nível do log
@@ -356,6 +401,9 @@
                     echo "<div class='log-entry $logClass' data-level='$logLevel'>";
                     echo "<span class='log-timestamp'>$timestamp</span>";
                     echo "<span class='log-level'>$logLevel</span>";
+                    if ($context) {
+                        echo "<span class='log-context'>$context</span>";
+                    }
                     echo "<span class='log-message'>" . htmlspecialchars($logContent) . "</span>";
                     echo "</div>";
                 }
@@ -485,6 +533,12 @@
         
         .log-message {
             flex: 1;
+        }
+        
+        .log-context {
+            min-width: 120px;
+            color: #0277bd;
+            font-style: italic;
         }
         
         /* Cores para os diferentes níveis de log */
